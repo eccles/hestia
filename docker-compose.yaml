@@ -1,0 +1,143 @@
+version: "3.6"
+
+services:
+
+  portainer:
+    image: portainer/portainer
+    restart: always
+    command: -H unix:///var/run/docker.sock
+    environment:
+      - TZ=${TZ}
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./portainer/data:/data
+      - ./shared:/shared
+      - /etc/localtime:/etc/localtime:ro
+
+  organizr:
+    image: organizrtools/organizr-v2
+    restart: always
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    ports:
+      - "9001:80"
+    volumes:
+      - ./organizr:/config
+      - ./shared:/shared
+      - /etc/localtime:/etc/localtime:ro
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    depends_on:
+      - mariadb
+    environment:
+      - PMA_HOST=mariadb
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - TZ=${TZ}
+    hostname: phpmyadmin
+    ports:
+      - "9002:80"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+
+  mariadb:
+    image: linuxserver/mariadb
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    hostname: mariadb
+    ports:
+      - target: 3306
+        published: 3306
+        protocol: tcp
+        mode: host
+    volumes:
+      - ./mariadb:/config
+      - ./db:/var/lib/mysql
+      - /etc/localtime:/etc/localtime:ro
+
+  watchtower:
+    image: v2tec/watchtower
+    restart: always
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/localtime:/etc/localtime:ro
+    command: --schedule "0 0 4 * * *" --cleanup
+
+  homeassistant:
+    image: homeassistant/home-assistant
+    restart: always
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+      - /dev/ttyUSB1:/dev/ttyUSB1
+      - /dev/ttyACM0:/dev/ttyACM0
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    ports:
+      - "9003:8123"
+    privileged: true
+    volumes:
+      - ./homeassistant:/config
+      - ./shared:/shared
+      - /etc/localtime:/etc/localtime:ro
+
+  plexms:
+    restart: always
+    image: plexinc/pms-docker
+    environment:
+      - TZ=${TZ}
+      - HOSTNAME="Docker Plex"
+      - PLEX_CLAIM=${PLEX_CLAIM}
+      - PLEX_UID=${PUID}
+      - PLEX_GID=${PGID}
+    network_mode: host
+    volumes:
+      - ./plexms:/config
+      - ./Plex_tmp:/transcode
+      - /Share:/data
+      - ./shared:/shared
+      - /etc/localtime:/etc/localtime:ro
+
+  tautulli:
+    image: linuxserver/tautulli
+    restart: always
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    ports:
+      - "9004:8181"
+    volumes:
+      - ./tautulli/config:/config
+      - ./tautulli/logs:/logs:ro
+      - ./shared:/shared
+      - /etc/localtime:/etc/localtime:ro
+
+  glances:
+    image: vimagick/glances
+    restart: always
+    environment:
+      - GLANCES_OPT=-w
+      - TZ=${TZ}
+    network_mode: host
+    pid: host
+    volumes:
+      - ./glances:/etc/glances
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/localtime:/etc/localtime:ro
