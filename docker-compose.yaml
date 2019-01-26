@@ -7,72 +7,34 @@ services:
     restart: always
     command: -H unix:///var/run/docker.sock
     environment:
-      - TZ=${TZ}
+      - TZ
     ports:
-      - "9000:9000"
+      - "${PORT_PORTAINER}:9000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./portainer/data:/data
-      - ./shared:/shared
       - /etc/localtime:/etc/localtime:ro
 
   organizr:
     image: organizrtools/organizr-v2
     restart: always
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
+      - PUID
+      - PGID
+      - TZ
     ports:
-      - "9001:80"
+      - "${PORT_ORGANIZR}:80"
     volumes:
       - ./organizr:/config
-      - ./shared:/shared
-      - /etc/localtime:/etc/localtime:ro
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    restart: always
-    depends_on:
-      - mariadb
-    environment:
-      - PMA_HOST=mariadb
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_USER=${MYSQL_USER}
-      - TZ=${TZ}
-    hostname: phpmyadmin
-    ports:
-      - "9002:80"
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-
-  mariadb:
-    image: linuxserver/mariadb
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-    hostname: mariadb
-    ports:
-      - target: 3306
-        published: 3306
-        protocol: tcp
-        mode: host
-    volumes:
-      - ./mariadb:/config
-      - ./db:/var/lib/mysql
       - /etc/localtime:/etc/localtime:ro
 
   watchtower:
     image: v2tec/watchtower
     restart: always
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
+      - PUID
+      - PGID
+      - TZ
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /etc/localtime:/etc/localtime:ro
@@ -86,24 +48,23 @@ services:
       - /dev/ttyUSB1:/dev/ttyUSB1
       - /dev/ttyACM0:/dev/ttyACM0
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
+      - PUID
+      - PGID
+      - TZ
     ports:
-      - "9003:8123"
+      - "${PORT_HOMEASSISTANT}:8123"
     privileged: true
     volumes:
       - ./homeassistant:/config
-      - ./shared:/shared
       - /etc/localtime:/etc/localtime:ro
 
   plexms:
     restart: always
     image: plexinc/pms-docker
     environment:
-      - TZ=${TZ}
+      - TZ
       - HOSTNAME="Docker Plex"
-      - PLEX_CLAIM=${PLEX_CLAIM}
+      - PLEX_CLAIM
       - PLEX_UID=${PUID}
       - PLEX_GID=${PGID}
     network_mode: host
@@ -111,22 +72,20 @@ services:
       - ./plexms:/config
       - ./Plex_tmp:/transcode
       - /Share:/data
-      - ./shared:/shared
       - /etc/localtime:/etc/localtime:ro
 
   tautulli:
     image: linuxserver/tautulli
     restart: always
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
+      - PUID
+      - PGID
+      - TZ
     ports:
-      - "9004:8181"
+      - "${PORT_TAUTULLI}:8181"
     volumes:
       - ./tautulli/config:/config
       - ./tautulli/logs:/logs:ro
-      - ./shared:/shared
       - /etc/localtime:/etc/localtime:ro
 
   glances:
@@ -134,10 +93,31 @@ services:
     restart: always
     environment:
       - GLANCES_OPT=-w
-      - TZ=${TZ}
+      - TZ
     network_mode: host
     pid: host
     volumes:
       - ./glances:/etc/glances
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/localtime:/etc/localtime:ro
+
+  db:
+    image: postgres:11.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_DB
+      - POSTGRES_PASSWORD
+      - POSTGRES_USER
+    user: ${PUID}:${PGID}
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/localtime:/etc/localtime:ro
+
+  adminer:
+    image: adminer:4.7
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "${PORT_ADMINER}:8080"
