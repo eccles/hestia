@@ -1,1 +1,11 @@
 .env
+glances/
+nextcloud/
+plexms/
+portainer/
+shared/
+homeassistant/
+organizr/
+Plex_tmp/
+postgres/
+tautulli/
