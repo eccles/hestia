@@ -1,0 +1,8 @@
+#
+# determine os type and versiob
+#
+# this file is sourced - do not execute directly
+#
+OS_TYPE=$( grep '^ID=' /etc/os-release | cut -d'=' -f2  | tr -d '"' )
+OS_VERSION=$( grep '^VERSION=' /etc/os-release | cut -d'=' -f2  | tr -d '"' )
+OS_VERSION_ID=$( grep '^VERSION_ID=' /etc/os-release | cut -d'=' -f2  | tr -d '"' )
