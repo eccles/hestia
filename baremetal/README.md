@@ -17,8 +17,14 @@ On each node:
    2.3 Update all packages and reboot
    2.4 Enable security updates - optionally enable all updates and trigger reboot when upgrade happens
    2.5 Enable pcp in cockpit so that storage is monitored.
-   2.6 On your router, set bthe DHCP service to allocate the same IP to the same host.
+   2.6 On your router, set the DHCP service to allocate the same IP to the same host.
    2.7 Make a note of the hostname and IP address
    2.8 Reboot anod check all functions correctly.
-   2.9 Install ssh key from your laptop such that passwordless login to the adminstrative user is enabled.
+   2.9 Install ssh key from your laptop such that passwordless login to the administrative user is enabled.
+
+3. Install k8s etc
+   3.1 sudo dnf install kubernetes
+   3.2 sudo dnf install kubernetes-ansible
+   3.3 sudo dnf install cockpit-podman
+
 
