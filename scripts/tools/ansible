@@ -12,7 +12,8 @@ ansible_check() {
 	then
     		log_warn "Please install ansible"
 	else
-    		log_info "ansible available at $ANSIBLE"
+		VERSION=$(ansible_version)
+    		log_info "ansible $VERSION available at $ANSIBLE"
 	fi
 }
 
@@ -24,8 +25,6 @@ ansible_install() {
 		"ubuntu"| "pop")
 			log_info "Installing ansible on $OS_TYPE"
 			sudo apt update
-			sudo apt install software-properties-common
-			sudo apt-add-repository --yes --update ppa:ansible/ansible
 			sudo apt install ansible
 			;;
 		"fedora")
@@ -38,6 +37,11 @@ ansible_install() {
 
 		esac
 	else
-		log_info "ansible is already installed at $ANSIBLE"
+		VERSION=$(ansible_version)
+		log_info "ansible $VERSION is already installed at $ANSIBLE"
 	fi
+}
+
+ansible_version() {
+	ansible --version | grep ^ansible | cut -d' ' -f2
 }
