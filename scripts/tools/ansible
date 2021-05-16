@@ -1,0 +1,43 @@
+#
+# Installs ansible
+#
+# This file is sourced
+#
+. ./scripts/log
+. ./scripts/os
+
+ansible_check() {
+	ANSIBLE=$(which ansible)
+	if [ $? -ne 0 ]
+	then
+    		log_warn "Please install ansible"
+	else
+    		log_info "ansible available at $ANSIBLE"
+	fi
+}
+
+ansible_install() {
+	ANSIBLE=$(which ansible)
+	if [ $? -ne 0 ]
+	then
+		case $OS_TYPE in
+		"ubuntu"| "pop")
+			log_info "Installing ansible on $OS_TYPE"
+			sudo apt update
+			sudo apt install software-properties-common
+			sudo apt-add-repository --yes --update ppa:ansible/ansible
+			sudo apt install ansible
+			;;
+		"fedora")
+			log_info "Installing ansible on $OS_TYPE"
+			sudo dnf install ansible
+			;;
+                *)
+			log_error "Unknown OS $OS_TYPE"
+			;;
+
+		esac
+	else
+		log_info "ansible is already installed at $ANSIBLE"
+	fi
+}

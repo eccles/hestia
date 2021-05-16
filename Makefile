@@ -4,8 +4,8 @@ help: ## Show this help
 
 .PHONY: tools-check
 tools-check: ## Check that all tools are available
-	./scripts/tools-check.sh
+	@./scripts/tools/check.sh
 
 .PHONY: tools-install
-tools-install: ## Install missing tools
-	./scripts/tools-install.sh
+tools-install: ## Ensure that all tools are available
+	@./scripts/tools/install.sh
