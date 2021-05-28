@@ -26,5 +26,4 @@ make help
 
 to see which commands are available.
 
-change for trial push
 
