@@ -9,3 +9,7 @@ tools-check: ## Check that all tools are available
 .PHONY: tools-install
 tools-install: ## Ensure that all tools are available
 	@./scripts/tools/install.sh
+
+.PHONY: builder
+builder: ## Create builder image
+	@./scripts/builder-create.sh
