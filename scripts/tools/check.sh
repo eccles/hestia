@@ -1,6 +1,8 @@
 #!/bin/bash
 #
 # Checks that all tools are available
-. ./scripts/tools/ansible
+. scripts/source/log
+. scripts/source/environment
+. scripts/tools/source/golang
 
-ansible_check
+golang_check

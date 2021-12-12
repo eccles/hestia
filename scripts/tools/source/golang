@@ -1,0 +1,67 @@
+#
+# Installs go
+#
+# This file is sourced
+#
+
+GOLANG_VERSION=go1.17.5
+
+golang_check() {
+	GOLANG=$(which go)
+	if [ $? -ne 0 ]
+	then
+    		log_warn "Please install go"
+	else
+		VERSION=$(golang_version)
+    		log_info "$VERSION available at $GOLANG"
+		if [ "${VERSION}" != "${GOLANG_VERSION}" ]
+		then
+			log_warn "Please install go ${GOLANG_VERSION}"
+		fi
+	fi
+}
+
+# TODO : install for different architectures - fixed at amd64 at the moment
+golang_install() {
+	GOLANG=$(which go)
+	if [ $? -eq 0 ]
+	then
+		VERSION=$(golang_version)
+		if [ "${VERSION}" = "${GOLANG_VERSION}" ]
+		then
+			log_info "${GOLANG_VERSION} already installed"
+			return	
+		fi
+		log_info "Upgrading go from ${VERSION} to ${GOLANG_VERSION}"
+	else
+		log_info "Installing ${GOLANG_VERSION}"
+	fi
+	TEMPDIR=$( mktemp -d /tmp/.golang.XXXXXXXX )
+
+	function finalise {
+    		CODE=$?
+	 	log_info "Delete ${TEMPDIR}"
+    		rm -rf "${TEMPDIR}"
+    		exit "$CODE"
+	}
+	trap finalise EXIT INT TERM
+	(cd "${TEMPDIR}" \
+	 && log_info "Downloading ${GOLANG_VERSION}.linux-amd64.tar.gz" \
+	 && curl -fOsSL "https://go.dev/dl/${GOLANG_VERSION}.linux-amd64.tar.gz" \
+	 && LOCAL=$(dirname "${GOROOT}") \
+	 && log_info "Delete ${GOROOT}" \
+	 && rm -rf "${GOROOT}" \
+	 && log_info "Install ${GOLANG_VERSION} in ${LOCAL}" \
+	 && tar -C "${LOCAL}" -xzf "${GOLANG_VERSION}.linux-amd64.tar.gz" \
+	)
+	log_info "${GOLANG_VERSION} installed"
+}
+
+golang_version() {
+	GOLANG=$(which go)
+	if [ $? -ne 0 ]
+	then
+    		log_warn "Please install go"
+	fi
+	go version | cut -d' ' -f3
+}

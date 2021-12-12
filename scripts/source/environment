@@ -1,0 +1,14 @@
+#
+# set environment variables
+#
+# this file is sourced - do not execute directly
+#
+# usually these values are set in $HOME/.profile
+#
+export GOROOT=$HOME/.local/go
+if [ ! -s ${GOROOT} ]
+then
+	mkdir -p ${GOROOT}
+fi
+export PATH=${GOROOT}/bin:${PATH}
+export GOBIN=$(pwd)/bin

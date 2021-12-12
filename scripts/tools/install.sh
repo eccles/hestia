@@ -2,6 +2,8 @@
 #
 # Installs necessary tools
 #
-. ./scripts/tools/ansible
+. ./scripts/source/log
+. ./scripts/source/environment
+. ./scripts/tools/source/golang
 
-ansible_install
+golang_install
