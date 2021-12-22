@@ -1,0 +1,65 @@
+#
+# Installs go linter
+#
+# This file is sourced
+#
+
+CMD=golangci-lint
+
+GOLANG_LINT_VERSION=1.42.1
+
+golang_lint_check() {
+	GOLANG_LINT=$(which "${CMD}")
+	if [ $? -ne 0 ]
+	then
+    		log_warn "Please install ${CMD}"
+	else
+		VERSION=$(golang_lint_version)
+    		log_info "${CMD} $VERSION available at ${GOLANG_LINT}"
+		if [ "${VERSION}" != "${GOLANG_LINT_VERSION}" ]
+		then
+			log_warn "Please install ${CMD} ${GOLANG_LINT_VERSION}"
+		fi
+	fi
+}
+
+golang_lint_install() {
+	GOLANG_LINT=$(which "${CMD}")
+	if [ $? -eq 0 ]
+	then
+		VERSION=$(golang_lint_version)
+		if [ "${VERSION}" = "${GOLANG_LINT_VERSION}" ]
+		then
+			log_info "${CMD} ${GOLANG_LINT_VERSION} already installed"
+			return	
+		fi
+		log_info "Upgrading ${CMD} from ${VERSION} to ${GOLANG_LINT_VERSION}"
+	else
+		log_info "Installing ${GOLANG_LINT_VERSION}"
+	fi
+	TEMPDIR=$( mktemp -d /tmp/.golang.XXXXXXXX )
+
+	function finalise {
+    		CODE=$?
+	 	log_info "Delete ${TEMPDIR}"
+    		rm -rf "${TEMPDIR}"
+    		exit "$CODE"
+	}
+	trap finalise EXIT INT TERM
+	(cd "${TEMPDIR}" \
+	 && log_info "Downloading installation script" \
+         && curl -fsSOL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh \
+	 && log_info "Install ${CMD} ${GOLANG_LINT_VERSION} in ${GOROOT}/bin" \
+         && sh ./install.sh -b "${GOROOT}/bin" "v${GOLANG_LINT_VERSION}" \
+	)
+	log_info "${CMD} ${GOLANG_LINT_VERSION} installed"
+}
+
+golang_lint_version() {
+	GOLANG_LINT=$(which "${CMD}")
+	if [ $? -ne 0 ]
+	then
+    		log_warn "Please install ${CMD}"
+	fi
+	${CMD} --version | cut -d' ' -f4
+}

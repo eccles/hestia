@@ -1,5 +1,7 @@
 
 PWD := $(shell pwd )
+export GOROOT := ${HOME}/.local/go
+export GOBIN := $(PWD)/bin
 
 .PHONY: help
 help: ## Show this help
@@ -13,10 +15,17 @@ tools-check: ## Check that all tools are available
 tools-install: ## Ensure that all tools are available
 	@./scripts/tools/install.sh
 
+.PHONY: qa
+qa: ## quality check all source code
+	gofmt -l -s -w .
+	golangci-lint run
+	go mod tidy
+	go mod verify
+
 .PHONY: unittests
 unittests: ## unittest all source code
-	@./scripts/unittests.sh
+	go test -v ./...
 
 .PHONY: build
 build: ## Compile all source code
-	@./scripts/build.sh
+	go install -v ./...
