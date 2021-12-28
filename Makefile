@@ -17,7 +17,8 @@ tools-install: ## Ensure that all tools are available
 
 .PHONY: qa
 qa: ## quality check all source code
-	gofmt -l -s -w .
+	go mod vendor
+	gofmt -l -s -w $(shell find . -type f -name '*.go'| grep -v "/vendor/\|/.git/")
 	golangci-lint run
 	go mod tidy
 	go mod verify
