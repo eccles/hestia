@@ -12,3 +12,4 @@ then
 fi
 export PATH=${GOROOT}/bin:${PATH}
 export GOBIN=$(pwd)/bin
+export PROTOC_INCLUDE=${HOME}/.local/include
