@@ -1,0 +1,95 @@
+syntax = "proto3";
+package widget;
+option go_package="github.com/eccles/hestia/pkg/services/widget";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/field_mask.proto";
+
+message Widget {
+    // generated uuid
+    string uuid = 1;
+
+    // user friendly name
+    string name = 2;
+
+}
+
+message CreateRequest {
+    // user friendly name
+    string name = 1;
+}
+
+message FindRequest {
+    string uuid = 1;
+}
+
+message ListRequest {
+    // Supported sort orders
+    enum OrderBy {
+        DEFAULT = 0;
+        NAME = 1;
+    }
+    // Specify the sort order for the results.
+    OrderBy order_by = 1;
+
+    // Maximum entries per page
+    int32 page_size = 2;
+
+    // The next_page_token returned from a previous list request if any.
+    string page_token = 3;
+
+    // Further fields are bound to query parameters and act to filter the result
+    string name = 4;
+}
+
+
+message ListResponse {
+
+    repeated Widget widgets = 1;
+
+    // Token to retrieve the next page of results or empty if there are none.
+    string next_page_token = 2;
+
+}
+
+message UpdateRequest {
+    // Unique identity of widget.
+    string uuid = 1;
+    Widget widget = 2;
+
+    // The mask says exactly which fields are to be updated. This
+    // removes the ambiguity caused by 'zero' valued fields.
+    google.protobuf.FieldMask mask = 3;
+}
+
+message DeleteRequest {
+    string uuid = 1;
+}
+
+service Widgets {
+    /*
+     * create a widget
+     */
+    rpc Create(CreateRequest) returns (Widget) {}
+
+    /*
+     * returns specific widget
+     */
+    rpc FindByID(FindRequest) returns (Widget) {}
+
+    /*
+     * returns list of all widgets
+     */
+    rpc List(ListRequest) returns (ListResponse) {}
+
+    /*
+     * update a widget
+     */
+    rpc Update(UpdateRequest) returns (Widget) {}
+
+    /*
+     * delete a widget
+     */
+    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {}
+}
+

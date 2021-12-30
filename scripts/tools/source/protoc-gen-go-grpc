@@ -1,0 +1,64 @@
+#
+# Installs protoc_gen_go
+#
+# This file is sourced
+#
+
+PROTOC_GEN_GO_GRPC_VERSION=1.2
+PROTOC_GEN_GO_GRPC_CMD=protoc-gen-go-grpc
+
+protoc_gen_go_grpc_check() {
+	PROTOC_GEN_GO_GRPC=$(which "${PROTOC_GEN_GO_GRPC_CMD}")
+	if [ $? -ne 0 ]
+	then
+    		log_warn "Please install ${PROTOC_GEN_GO_GRPC_CMD}"
+	else
+		VERSION=$(protoc_gen_go_grpc_version)
+    		log_info "${PROTOC_GEN_GO_GRPC_CMD} $VERSION available at ${PROTOC_GEN_GO_GRPC}"
+		if [ "${VERSION}" != "${PROTOC_GEN_GO_GRPC_VERSION}" ]
+		then
+			log_warn "Please install ${PROTOC_GEN_GO_GRPC_CMD} ${PROTOC_GEN_GO_GRPC_VERSION}"
+		fi
+	fi
+}
+
+protoc_gen_go_grpc_install() {
+	PROTOC_GEN_GO_GRPC=$(which "${PROTOC_GEN_GO_GRPC_CMD}")
+	if [ $? -eq 0 ]
+	then
+		VERSION=$(protoc_gen_go_grpc_version)
+		if [ "${VERSION}" = "${PROTOC_GEN_GO_GRPC_VERSION}" ]
+		then
+			log_info "${PROTOC_GEN_GO_GRPC_CMD} ${PROTOC_GEN_GO_GRPC_VERSION} already installed"
+			return	
+		fi
+		log_info "Upgrading ${PROTOC_GEN_GO_GRPC_CMD} from ${VERSION} to ${PROTOC_GEN_GO_GRPC_VERSION}"
+	else
+		log_info "Installing ${PROTOC_GEN_GO_GRPC_CMD} ${PROTOC_GEN_GO_GRPC_VERSION}"
+	fi
+	TEMPDIR=$( mktemp -d /tmp/.golang.XXXXXXXX )
+
+	function finalise {
+    		CODE=$?
+	 	log_info "Delete ${TEMPDIR}"
+    		rm -rf "${TEMPDIR}"
+    		exit "$CODE"
+	}
+	trap finalise EXIT INT TERM
+	(cd "${TEMPDIR}" && set -ex \
+	 && log_info "Installing ${PROTOC_GEN_GO_GRPC_CMD} ${PROTOC_GEN_GO_GRPC_VERSION}" \
+	 && go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v${PROTOC_GEN_GO_GRPC_VERSION}
+	)
+	log_info "${PROTOC_GEN_GO_GRPC_CMD} ${PROTOC_GEN_GO_GRPC_VERSION} installed"
+}
+
+protoc_gen_go_grpc_version() {
+	PROTOC_GEN_GO_GRPC=$(which "${PROTOC_GEN_GO_GRPC_CMD}")
+	if [ $? -ne 0 ]
+	then
+    		log_warn "Please install ${PROTOC_GEN_GO_GRPC_CMD}"
+	fi
+	# reports 1.2.0 but using 1.2.0 to go install does not work...
+	# so strip the trailing .0 from reported version and use 1.2 when installing
+	${PROTOC_GEN_GO_GRPC_CMD} --version | cut -d' ' -f2 | cut -d'.' -f1-2
+}

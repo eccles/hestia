@@ -1,0 +1,63 @@
+#
+# Installs protoc_gen_go
+#
+# This file is sourced
+#
+
+PROTOC_GEN_GO_VERSION=1.27.1
+PROTOC_GEN_GO_CMD=protoc-gen-go
+
+protoc_gen_go_check() {
+	PROTOC_GEN_GO=$(which "${PROTOC_GEN_GO_CMD}")
+	if [ $? -ne 0 ]
+	then
+    		log_warn "Please install ${PROTOC_GEN_GO_CMD}"
+	else
+		VERSION=$(protoc_gen_go_version)
+    		log_info "${PROTOC_GEN_GO_CMD} $VERSION available at ${PROTOC_GEN_GO}"
+		if [ "${VERSION}" != "${PROTOC_GEN_GO_VERSION}" ]
+		then
+			log_warn "Please install ${PROTOC_GEN_GO_CMD} ${PROTOC_GEN_GO_VERSION}"
+		fi
+	fi
+}
+
+protoc_gen_go_install() {
+	PROTOC_GEN_GO=$(which "${PROTOC_GEN_GO_CMD}")
+	if [ $? -eq 0 ]
+	then
+		VERSION=$(protoc_gen_go_version)
+		if [ "${VERSION}" = "${PROTOC_GEN_GO_VERSION}" ]
+		then
+			log_info "${PROTOC_GEN_GO_CMD} ${PROTOC_GEN_GO_VERSION} already installed"
+			return	
+		fi
+		log_info "Upgrading ${PROTOC_GEN_GO_CMD} from ${VERSION} to ${PROTOC_GEN_GO_VERSION}"
+	else
+		log_info "Installing ${PROTOC_GEN_GO_CMD} ${PROTOC_GEN_GO_VERSION}"
+	fi
+	TEMPDIR=$( mktemp -d /tmp/.golang.XXXXXXXX )
+
+	function finalise {
+    		CODE=$?
+	 	log_info "Delete ${TEMPDIR}"
+    		rm -rf "${TEMPDIR}"
+    		exit "$CODE"
+	}
+	trap finalise EXIT INT TERM
+	(cd "${TEMPDIR}" && set -ex \
+	 && log_info "Installing ${PROTOC_GEN_GO_CMD} ${PROTOC_GEN_GO_VERSION}" \
+	 && go install google.golang.org/protobuf/cmd/protoc-gen-go@v${PROTOC_GEN_GO_VERSION}
+	)
+	log_info "${PROTOC_GEN_GO_CMD} ${PROTOC_GEN_GO_VERSION} installed"
+}
+
+protoc_gen_go_version() {
+	PROTOC_GEN_GO=$(which "${PROTOC_GEN_GO_CMD}")
+	if [ $? -ne 0 ]
+	then
+    		log_warn "Please install ${PROTOC_GEN_GO_CMD}"
+	fi
+	# reports version with 'v' prefix so strip it..
+	${PROTOC_GEN_GO_CMD} --version | cut -d' ' -f2 | cut -c2-
+}
