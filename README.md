@@ -20,25 +20,16 @@ make help
 
 to see which commands are available.
 
-### Installing tools
+## Shell setup
 
-First check for the presence of Go and other tools.
-
-```bash
-make tools-check
-```
-
-Note: installation of Go is done locally in ~/.local/go as opposed to the normal
-location of /usr/local/go. This is so sudo is not required. Uninstall Go in /usr/local/go
-before attempting to install any tools.
-
-Install tools like so:
+Create all local bin directories:
 
 ```bash
-make tools-install
+mkdir -p ~/bin
+mkdir -p ~/go/bin
+mkdir -p ~/.local/bin
+mkdir -p ~/.local/go/bin
 ```
-
-### Shell setup
 
 The file ~/.profile should contain the following lines to setup PATH correctly:
 
@@ -63,4 +54,26 @@ fi
 if [ -d "$HOME/go/bin" ] ; then
     PATH="$HOME/go/bin:$PATH"
 fi
+```
+
+## Reset environment
+
+In order to make these settings permanent, logout or reboot your PC.
+
+## Installing tools
+
+First check for the presence of Go and other tools.
+
+```bash
+make tools-check
+```
+
+Note: installation of Go is done locally in ~/.local/go as opposed to the normal
+location of /usr/local/go. This is so sudo is not required. Uninstall Go in /usr/local/go
+before attempting to install any tools.
+
+Install tools like so:
+
+```bash
+make tools-install
 ```
