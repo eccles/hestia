@@ -803,6 +803,7 @@ linters:
     - paralleltest
     - scopelint
     - testpackage
+    - wsl
   fast: false
 
 

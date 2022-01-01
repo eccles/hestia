@@ -77,3 +77,37 @@ Install tools like so:
 ```bash
 make tools-install
 ```
+
+# Development workflow
+
+## On a rebase
+
+Initialise generated code and modules
+
+```bash
+make generate
+make qa
+```
+## Changing code
+
+Edit or add code or other development activity.
+
+If any source files for generated code has changed:
+
+```bash
+make generate
+```
+
+Quality check code:
+
+```bash
+make qa
+```
+
+And build any new executables:
+
+```bash
+make build
+```
+
+
