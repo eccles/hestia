@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/eccles/hestia/pkg/services/widget"
+	"github.com/eccles/hestia/pkg/services/widgets"
 )
 
 func main() {
-	widget.Run()
+	widgets.Run()
 }
