@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.19.1
-// source: pkg/services/widget/widget.proto
+// source: pkg/services/widgets/widgets.proto
 
-package widget
+package widgets
 
 import (
 	context "context"
@@ -50,7 +50,7 @@ func NewWidgetsClient(cc grpc.ClientConnInterface) WidgetsClient {
 
 func (c *widgetsClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*Widget, error) {
 	out := new(Widget)
-	err := c.cc.Invoke(ctx, "/widget.Widgets/Create", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/widgets.Widgets/Create", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -59,7 +59,7 @@ func (c *widgetsClient) Create(ctx context.Context, in *CreateRequest, opts ...g
 
 func (c *widgetsClient) FindByID(ctx context.Context, in *FindRequest, opts ...grpc.CallOption) (*Widget, error) {
 	out := new(Widget)
-	err := c.cc.Invoke(ctx, "/widget.Widgets/FindByID", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/widgets.Widgets/FindByID", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ func (c *widgetsClient) FindByID(ctx context.Context, in *FindRequest, opts ...g
 
 func (c *widgetsClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
 	out := new(ListResponse)
-	err := c.cc.Invoke(ctx, "/widget.Widgets/List", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/widgets.Widgets/List", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +77,7 @@ func (c *widgetsClient) List(ctx context.Context, in *ListRequest, opts ...grpc.
 
 func (c *widgetsClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*Widget, error) {
 	out := new(Widget)
-	err := c.cc.Invoke(ctx, "/widget.Widgets/Update", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/widgets.Widgets/Update", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -86,7 +86,7 @@ func (c *widgetsClient) Update(ctx context.Context, in *UpdateRequest, opts ...g
 
 func (c *widgetsClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/widget.Widgets/Delete", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/widgets.Widgets/Delete", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -157,7 +157,7 @@ func _Widgets_Create_Handler(srv interface{}, ctx context.Context, dec func(inte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/widget.Widgets/Create",
+		FullMethod: "/widgets.Widgets/Create",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WidgetsServer).Create(ctx, req.(*CreateRequest))
@@ -175,7 +175,7 @@ func _Widgets_FindByID_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/widget.Widgets/FindByID",
+		FullMethod: "/widgets.Widgets/FindByID",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WidgetsServer).FindByID(ctx, req.(*FindRequest))
@@ -193,7 +193,7 @@ func _Widgets_List_Handler(srv interface{}, ctx context.Context, dec func(interf
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/widget.Widgets/List",
+		FullMethod: "/widgets.Widgets/List",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WidgetsServer).List(ctx, req.(*ListRequest))
@@ -211,7 +211,7 @@ func _Widgets_Update_Handler(srv interface{}, ctx context.Context, dec func(inte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/widget.Widgets/Update",
+		FullMethod: "/widgets.Widgets/Update",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WidgetsServer).Update(ctx, req.(*UpdateRequest))
@@ -229,7 +229,7 @@ func _Widgets_Delete_Handler(srv interface{}, ctx context.Context, dec func(inte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/widget.Widgets/Delete",
+		FullMethod: "/widgets.Widgets/Delete",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WidgetsServer).Delete(ctx, req.(*DeleteRequest))
@@ -241,7 +241,7 @@ func _Widgets_Delete_Handler(srv interface{}, ctx context.Context, dec func(inte
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Widgets_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "widget.Widgets",
+	ServiceName: "widgets.Widgets",
 	HandlerType: (*WidgetsServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -266,5 +266,5 @@ var Widgets_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "pkg/services/widget/widget.proto",
+	Metadata: "pkg/services/widgets/widgets.proto",
 }
