@@ -7,8 +7,11 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/eccles/hestia/pkg/logger"
 	"github.com/eccles/hestia/pkg/service"
 )
+
+type loggerContextKey string
 
 type Service struct {
 	UnimplementedWidgetsServer
@@ -16,13 +19,21 @@ type Service struct {
 }
 
 func (s *Service) Run() error {
+
+	logger := logger.New(
+		os.Getenv("LOGLEVEL"),
+	)
+	defer logger.OnExit()
+
 	if s.cfg.GRPCServerPort != "" {
-		grpcServer, err := s.StartGRPCServer()
+		grpcServer, err := s.StartGRPCServer(&logger)
 		if err != nil {
 			return fmt.Errorf("start failure: %w", err)
 		}
 		defer grpcServer.GracefulStop()
 	}
+
+	logger.Info("Wait for termination signal")
 
 	// wait here for termination signal
 	sCh := make(chan os.Signal, 1)

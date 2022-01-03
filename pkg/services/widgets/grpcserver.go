@@ -7,9 +7,13 @@ import (
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+
+	"github.com/eccles/hestia/pkg/logger"
 )
 
-func (s *Service) StartGRPCServer() (*grpc.Server, error) {
+func (s *Service) StartGRPCServer(logger *logger.Logger) (*grpc.Server, error) {
+
+	logger.Info("Start GRPCServer")
 	grpcServer := grpc.NewServer()
 
 	RegisterWidgetsServer(grpcServer, s)
