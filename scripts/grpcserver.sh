@@ -41,8 +41,11 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/eccles/hestia/pkg/logger"
 	"github.com/eccles/hestia/pkg/service"
 )
+
+type loggerContextKey string
 
 type Service struct {
 	${UNIMPLEMENTED}
@@ -50,13 +53,21 @@ type Service struct {
 }
 
 func (s *Service) Run() error {
+	
+	logger := logger.New(
+		os.Getenv("LOGLEVEL"),
+        )
+	defer logger.OnExit()
+
 	if s.cfg.GRPCServerPort != "" {
-		grpcServer, err := s.StartGRPCServer()
+		grpcServer, err := s.StartGRPCServer(&logger)
 		if err != nil {
 			return fmt.Errorf("start failure: %w", err)
 		}
 		defer grpcServer.GracefulStop()
 	}
+
+	logger.Info("Wait for termination signal")
 
 	// wait here for termination signal
 	sCh := make(chan os.Signal, 1)
@@ -84,9 +95,13 @@ import (
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+
+	"github.com/eccles/hestia/pkg/logger"
 )
 
-func (s *Service) StartGRPCServer() (*grpc.Server, error) {
+func (s *Service) StartGRPCServer(logger *logger.Logger) (*grpc.Server, error) {
+
+	logger.Info("Start GRPCServer")
 	grpcServer := grpc.NewServer()
 
 	Register${CAPITAL}Server(grpcServer, s)
@@ -117,11 +132,13 @@ import (
         "errors"
 
         "google.golang.org/grpc"
+
+	"github.com/eccles/hestia/pkg/logger"
 )
 
 var ErrGRPCDisabled = errors.New("GRPCServer is disabled")
 
-func (s *Service) StartGRPCServer() (*grpc.Server, error) {
+func (s *Service) StartGRPCServer(logger *logger.Logger) (*grpc.Server, error) {
         return nil, ErrGRPCDisabled
 }
 EOF
