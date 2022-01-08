@@ -13,7 +13,7 @@ import (
 
 func (s *Service) StartGRPCServer() (*grpc.Server, error) {
 
-	s.logger.Info("Start GRPCServer")
+	s.logger.Info().Msg("Start GRPCServer")
 	grpcServer := grpc.NewServer()
 
 	widgetsAPI.RegisterWidgetsServer(grpcServer, s)

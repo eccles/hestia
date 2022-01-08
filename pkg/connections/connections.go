@@ -10,8 +10,8 @@ import (
 
 type Connections struct{}
 
-func (c Connections) Run(logger logger.Logger) error {
-	logger.Info("Wait for termination signal")
+func (c *Connections) Connect(logger *logger.Logger) error {
+	logger.Info().Msg("Wait for termination signal")
 
 	// wait here for termination signal
 	sCh := make(chan os.Signal, 1)

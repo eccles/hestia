@@ -39,11 +39,9 @@ package ${LOWER}
 
 import (
 	"fmt"
-	"os"
-	"os/signal"
-	"syscall"
 
 	"github.com/eccles/hestia/pkg/apis/widgets"
+	"github.com/eccles/hestia/pkg/connections"
 	"github.com/eccles/hestia/pkg/logger"
 )
 
@@ -56,12 +54,13 @@ type Service struct {
 	logger   logger.Logger
 
 	GRPCServerPort string
+
+	connections.Connections
 }
 
 func (s *Service) Run() error {
 
 	s.logger = logger.New(s.LogLevel)
-	defer s.logger.OnExit()
 
 	if s.GRPCServerPort != "" {
 		grpcServer, err := s.StartGRPCServer()
@@ -71,17 +70,7 @@ func (s *Service) Run() error {
 		defer grpcServer.GracefulStop()
 	}
 
-	s.logger.Info("Wait for termination signal")
-
-	// wait here for termination signal
-	sCh := make(chan os.Signal, 1)
-	signal.Notify(sCh, syscall.SIGINT, syscall.SIGTERM)
-	<-sCh
-
-	// k8s is in charge now so undo handling of signals
-	signal.Reset(syscall.SIGINT, syscall.SIGTERM)
-
-	return nil
+	return s.Connect(&s.logger)
 }
 EOF
 
@@ -105,7 +94,7 @@ import (
 
 func (s *Service) StartGRPCServer() (*grpc.Server, error) {
 
-	s.logger.Info("Start GRPCServer")
+	s.logger.Info().Msg("Start GRPCServer")
 	grpcServer := grpc.NewServer()
 
 	${REGISTER}(grpcServer, s)
@@ -136,13 +125,11 @@ import (
         "errors"
 
         "google.golang.org/grpc"
-
-	"github.com/eccles/hestia/pkg/logger"
 )
 
 var ErrGRPCDisabled = errors.New("GRPCServer is disabled")
 
-func (s *Service) StartGRPCServer(logger *logger.Logger) (*grpc.Server, error) {
+func (s *Service) StartGRPCServer() (*grpc.Server, error) {
         return nil, ErrGRPCDisabled
 }
 EOF
