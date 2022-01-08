@@ -2,17 +2,20 @@ package widgets
 
 import (
 	"os"
-
-	"github.com/eccles/hestia/pkg/service"
 )
-
-//
-// Generate Go code from protobuf definition file.
-//go:generate ../../../scripts/protoc.sh pkg/services/widgets/widgets.proto
 
 // Generate boilerplate for grpcserver.go and service.go
 // First argument value=1 enables GRPC
 //go:generate ../../../scripts/grpcserver.sh 1 pkg/services/widgets
+
+func logLevel() string {
+	val, ok := os.LookupEnv("LOGLEVEL")
+	if !ok {
+		val = "INFO"
+	}
+
+	return val
+}
 
 func port() string {
 	val, ok := os.LookupEnv("GRPC_SERVICE_PORT")
@@ -27,9 +30,8 @@ func Run() {
 	var err error
 
 	s := Service{
-		cfg: service.Config{
-			GRPCServerPort: port(),
-		},
+		LogLevel:       logLevel(),
+		GRPCServerPort: port(),
 	}
 
 	err = s.Run()

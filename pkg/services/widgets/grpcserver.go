@@ -5,23 +5,23 @@ import (
 	"fmt"
 	"net"
 
+	"github.com/eccles/hestia/pkg/apis/widgets"
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
-
-	"github.com/eccles/hestia/pkg/logger"
 )
 
-func (s *Service) StartGRPCServer(logger *logger.Logger) (*grpc.Server, error) {
+func (s *Service) StartGRPCServer() (*grpc.Server, error) {
 
-	logger.Info("Start GRPCServer")
+	s.logger.Info("Start GRPCServer")
 	grpcServer := grpc.NewServer()
 
-	RegisterWidgetsServer(grpcServer, s)
+	widgetsAPI.RegisterWidgetsServer(grpcServer, s)
 	reflection.Register(grpcServer)
 
-	listen, err := net.Listen("tcp", ":"+s.cfg.GRPCServerPort)
+	listen, err := net.Listen("tcp", ":"+s.GRPCServerPort)
 	if err != nil {
-		return nil, fmt.Errorf("listen ':%s' failure: %w", s.cfg.GRPCServerPort, err)
+		return nil, fmt.Errorf("listen ':%s' failure: %w", s.GRPCServerPort, err)
 	}
 
 	go func() {
