@@ -2,6 +2,12 @@ package widgets
 
 import (
 	"os"
+
+	"github.com/eccles/hestia/pkg/logger"
+)
+
+const (
+	serviceName = "widgets"
 )
 
 // Generate boilerplate for grpcserver.go and service.go
@@ -26,11 +32,17 @@ func port() string {
 	return val
 }
 
+// Run initializes the Service struct and executes its Run method.
+// The Service strucyt specifies the grpc server code and any other interfaces
+// to external services.
 func Run() {
 	var err error
 
 	s := Service{
-		LogLevel:       logLevel(),
+		Logger: &logger.Logger{
+			Level:       logLevel(),
+			ServiceName: serviceName,
+		},
 		GRPCServerPort: port(),
 	}
 

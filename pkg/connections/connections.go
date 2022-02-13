@@ -10,7 +10,13 @@ import (
 
 type Connections struct{}
 
-func (c *Connections) Connect(logger *logger.Logger) error {
+func (c *Connections) Connect(logger logger.LoggerInterface) error {
+	// put open statements of all other connections to external services
+	// here.
+	// ....
+
+	// this is where the service stops and pauses for any tern=mination from
+	// k8s or other orchestration tools.
 	logger.Info().Msg("Wait for termination signal")
 
 	// wait here for termination signal
