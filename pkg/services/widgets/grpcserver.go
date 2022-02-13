@@ -7,6 +7,8 @@ import (
 
 	"github.com/eccles/hestia/pkg/apis/widgets"
 
+	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	grpc_validator "github.com/grpc-ecosystem/go-grpc-middleware/validator"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -14,7 +16,12 @@ import (
 func (s *Service) StartGRPCServer() (*grpc.Server, error) {
 
 	s.Logger.Info().Msg("Start GRPCServer")
-	grpcServer := grpc.NewServer()
+	grpcServer := grpc.NewServer(
+		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
+			grpc_validator.UnaryServerInterceptor(),
+		)),
+	)
+
 
 	widgetsAPI.RegisterWidgetsServer(grpcServer, s)
 	reflection.Register(grpcServer)

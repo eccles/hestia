@@ -231,7 +231,6 @@ linters-settings:
     enabled-checks:
       - nestingReduce
       - unnamedresult
-      - ruleguard
       - truncateCmp
 
     # Which checks should be disabled; can't be combined with 'enabled-checks'; default is empty
@@ -271,7 +270,7 @@ linters-settings:
         sizeThreshold: 32
         # whether to check test functions (default true)
         skipTestFuncs: true
-      ruleguard:
+      #ruleguard:
         # Enable debug to identify which 'Where' condition was rejected.
         # The value of the parameter is the name of a function in a ruleguard file.
         #
@@ -283,10 +282,10 @@ linters-settings:
         #   ruleguard prints the specific Where() condition that was rejected.
         #
         # The flag is passed to the ruleguard 'debug-group' argument.
-        debug: 'emptyDecl'
+        #debug: 'emptyDecl'
         # Deprecated, use 'failOn' param.
         # If set to true, identical to failOn='all', otherwise failOn=''
-        failOnError: false
+        #failOnError: false
         # Determines the behavior when an error occurs while parsing ruleguard files.
         # If flag is not set, log error and skip rule files that contain an error.
         # If flag is set, the value must be a comma-separated list of error conditions.
@@ -298,7 +297,7 @@ linters-settings:
         # If a path is relative, it is relative to the directory where the golangci-lint command is executed.
         # The special '${configDir}' variable is substituted with the absolute directory containing the golangci config file.
         # Glob patterns such as 'rules-*.go' may be specified.
-        rules: '${configDir}/ruleguard/rules-*.go,${configDir}/myrule1.go'
+        #rules: '${configDir}/ruleguard/rules-*.go,${configDir}/myrule1.go'
         #tooManyResultsChecker:
         # maximum number of results (default 5)
         #maxResults: 10
@@ -533,8 +532,8 @@ linters-settings:
     - (or|er)$
 
     # Reject patterns
-    reject:
-    - github.com\/user\/package\/v4\.Type
+    #reject:
+    #- github.com\/user\/package\/v4\.Type
 
   lll:
     # max line length, lines longer will be reported. Default is 120.
@@ -716,7 +715,7 @@ linters-settings:
   varnamelen:
     # The longest distance, in source lines, that is being considered a "small scope." (defaults to 5)
     # Variables used in at most this many lines will be ignored.
-    max-distance: 5
+    max-distance: 10
     # The minimum length of a variable's name that is considered "long." (defaults to 3)
     # Variable names that are at least this long will be ignored.
     min-name-length: 3
@@ -803,6 +802,7 @@ linters:
     - paralleltest
     - scopelint
     - testpackage
+    - varnamelen
     - wsl
   fast: false
 

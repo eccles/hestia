@@ -3,6 +3,7 @@ module github.com/eccles/hestia
 go 1.17
 
 require (
+	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
 	github.com/rs/zerolog v1.26.1
 	github.com/stretchr/testify v1.7.0
 	google.golang.org/grpc v1.43.0

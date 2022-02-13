@@ -45,7 +45,7 @@ protoc_gen_go_grpc_install() {
     		exit "$CODE"
 	}
 	trap finalise EXIT INT TERM
-	(cd "${TEMPDIR}" && set -ex \
+	(cd "${TEMPDIR}" && set -e \
 	 && log_info "Installing ${PROTOC_GEN_GO_GRPC_CMD} ${PROTOC_GEN_GO_GRPC_VERSION}" \
 	 && go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v${PROTOC_GEN_GO_GRPC_VERSION}
 	)
@@ -57,6 +57,7 @@ protoc_gen_go_grpc_version() {
 	if [ $? -ne 0 ]
 	then
     		log_warn "Please install ${PROTOC_GEN_GO_GRPC_CMD}"
+		return
 	fi
 	# reports 1.2.0 but using 1.2.0 to go install does not work...
 	# so strip the trailing .0 from reported version and use 1.2 when installing

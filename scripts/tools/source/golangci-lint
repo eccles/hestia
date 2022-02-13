@@ -5,7 +5,7 @@
 #
 
 GOLANG_LINT_CMD=golangci-lint
-GOLANG_LINT_VERSION=1.42.1
+GOLANG_LINT_VERSION=1.44.0
 
 golang_lint_check() {
 	GOLANG_LINT=$(which "${GOLANG_LINT_CMD}")
@@ -59,6 +59,7 @@ golang_lint_version() {
 	if [ $? -ne 0 ]
 	then
     		log_warn "Please install ${GOLANG_LINT_CMD}"
+		return
 	fi
 	${GOLANG_LINT_CMD} --version | cut -d' ' -f4
 }

@@ -13,3 +13,4 @@ fi
 export PATH=${GOROOT}/bin:${PATH}
 export GOBIN=$(pwd)/bin
 export PROTOC_INCLUDE=${HOME}/.local/include
+export PROTOC_VALIDATE_INCLUDE=${HOME}/go/pkg/mod/github.com/envoyproxy/protoc-gen-validate@v0.6.3
