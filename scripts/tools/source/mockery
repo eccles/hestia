@@ -1,0 +1,67 @@
+#
+# Installs mockery
+#
+# This file is sourced
+#
+
+MOCKERY_VERSION=2.10.0
+MOCKERY_CMD=mockery
+
+mockery_check() {
+	MOCKERY=$(which "${MOCKERY_CMD}")
+	if [ $? -ne 0 ]
+	then
+    		log_warn "Please install ${MOCKERY_CMD}"
+	else
+		VERSION=$(mockery_version)
+    		log_info "$MOCKERY $VERSION available at $MOCKERY"
+		if [ "${VERSION}" != "${MOCKERY_VERSION}" ]
+		then
+			log_warn "Please install ${MOCKERY_CMD} ${MOCKERY_VERSION}"
+		fi
+	fi
+}
+
+# TODO : install for different architectures - fixed at amd64 at the moment
+mockery_install() {
+	MOCKERY=$(which "${MOCKERY_CMD}")
+	if [ $? -eq 0 ]
+	then
+		VERSION=$(mockery_version)
+		if [ "${VERSION}" = "${MOCKERY_VERSION}" ]
+		then
+			log_info "${MOCKERY_CMD} ${MOCKERY_VERSION} already installed"
+			return	
+		fi
+		log_info "Upgrading ${MOCKERY_CMD} from ${VERSION} to ${MOCKERY_VERSION}"
+	else
+		log_info "Installing ${MOCKERY_CMD} ${MOCKERY_VERSION}"
+	fi
+	TEMPDIR=$( mktemp -d /tmp/.mockery.XXXXXXXX )
+
+	function finalise {
+    		CODE=$?
+	 	log_info "Delete ${TEMPDIR}"
+    		rm -rf "${TEMPDIR}"
+    		exit "$CODE"
+	}
+	trap finalise EXIT INT TERM
+	(cd "${TEMPDIR}" \
+	 && log_info "Downloading ${MOCKERY_CMD} ${MOCKERY_VERSION}.tar.gz" \
+	 && curl -fOsSL "https://github.com/vektra/mockery/releases/download/v${MOCKERY_VERSION}/mockery_${MOCKERY_VERSION}_Linux_x86_64.tar.gz" \
+	 && log_info "Install ${MOCKERY_CMD} ${MOCKERY_VERSION} in ${GOBIN}" \
+	 && tar -xzf "mockery_${MOCKERY_VERSION}_Linux_x86_64.tar.gz" \
+	 && mv mockery "${GOBIN}" \
+	)
+	log_info "${MOCKERY_CMD} ${MOCKERY_VERSION} installed"
+}
+
+mockery_version() {
+	MOCKERY=$(which "${MOCKERY_CMD}")
+	if [ $? -ne 0 ]
+	then
+    		log_warn "Please install ${MOCKERY_CMD}"
+		return
+	fi
+	${MOCKERY_CMD} --version 2>/dev/null | cut -c2-
+}
