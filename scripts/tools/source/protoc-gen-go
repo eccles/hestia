@@ -45,7 +45,7 @@ protoc_gen_go_install() {
     		exit "$CODE"
 	}
 	trap finalise EXIT INT TERM
-	(cd "${TEMPDIR}" && set -ex \
+	(cd "${TEMPDIR}" && set -e \
 	 && log_info "Installing ${PROTOC_GEN_GO_CMD} ${PROTOC_GEN_GO_VERSION}" \
 	 && go install google.golang.org/protobuf/cmd/protoc-gen-go@v${PROTOC_GEN_GO_VERSION}
 	)
@@ -57,6 +57,7 @@ protoc_gen_go_version() {
 	if [ $? -ne 0 ]
 	then
     		log_warn "Please install ${PROTOC_GEN_GO_CMD}"
+		return
 	fi
 	# reports version with 'v' prefix so strip it..
 	${PROTOC_GEN_GO_CMD} --version | cut -d' ' -f2 | cut -c2-

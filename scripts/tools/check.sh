@@ -8,9 +8,11 @@
 . scripts/tools/source/protoc
 . scripts/tools/source/protoc-gen-go
 . scripts/tools/source/protoc-gen-go-grpc
+. scripts/tools/source/protoc-gen-validate
 
 golang_check
 golang_lint_check
 protoc_check
 protoc_gen_go_check
 protoc_gen_go_grpc_check
+protoc_gen_validate_check

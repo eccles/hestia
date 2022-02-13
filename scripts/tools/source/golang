@@ -4,7 +4,7 @@
 # This file is sourced
 #
 
-GOLANG_VERSION=go1.17.5
+GOLANG_VERSION=go1.17.7
 GOLANG_CMD=go
 
 golang_check() {
@@ -63,6 +63,7 @@ golang_version() {
 	if [ $? -ne 0 ]
 	then
     		log_warn "Please install ${GOLANG_CMD}"
+		return
 	fi
 	${GOLANG_CMD} version | cut -d' ' -f3
 }

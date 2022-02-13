@@ -1,0 +1,60 @@
+#
+# Installs protoc_gen_validate
+#
+# This file is sourced
+#
+
+PROTOC_GEN_VALIDATE_VERSION=0.6.3
+PROTOC_GEN_VALIDATE_CMD=protoc-gen-validate
+
+protoc_gen_validate_check() {
+	PROTOC_GEN_VALIDATE=$(which "${PROTOC_GEN_VALIDATE_CMD}")
+	if [ $? -ne 0 ]
+	then
+    		log_warn "Please install ${PROTOC_GEN_VALIDATE_CMD}"
+	else
+		VERSION=$(protoc_gen_validate_version)
+    		log_info "${PROTOC_GEN_VALIDATE_CMD} $VERSION (${PROTOC_GEN_VALIDATE_VERSION})available at ${PROTOC_GEN_VALIDATE}"
+	fi
+}
+
+protoc_gen_validate_install() {
+	PROTOC_GEN_VALIDATE=$(which "${PROTOC_GEN_VALIDATE_CMD}")
+	if [ $? -eq 0 ]
+	then
+		VERSION=$(protoc_gen_validate_version)
+		if [ "${VERSION}" = "${PROTOC_GEN_VALIDATE_VERSION}" ]
+		then
+			log_info "${PROTOC_GEN_VALIDATE_CMD} ${PROTOC_GEN_VALIDATE_VERSION} already installed"
+			return	
+		fi
+		log_info "Upgrading ${PROTOC_GEN_VALIDATE_CMD} from ${VERSION} to ${PROTOC_GEN_VALIDATE_VERSION}"
+	else
+		log_info "Installing ${PROTOC_GEN_VALIDATE_CMD} ${PROTOC_GEN_VALIDATE_VERSION}"
+	fi
+	TEMPDIR=$( mktemp -d /tmp/.golang.XXXXXXXX )
+
+	function finalise {
+    		CODE=$?
+	 	log_info "Delete ${TEMPDIR}"
+    		rm -rf "${TEMPDIR}"
+    		exit "$CODE"
+	}
+	trap finalise EXIT INT TERM
+	(cd "${TEMPDIR}" && set -e \
+	 && log_info "Installing ${PROTOC_GEN_VALIDATE_CMD} ${PROTOC_GEN_VALIDATE_VERSION}" \
+	 && go install github.com/envoyproxy/protoc-gen-validate@v${PROTOC_GEN_VALIDATE_VERSION}
+	)
+	log_info "${PROTOC_GEN_VALIDATE_CMD} ${PROTOC_GEN_VALIDATE_VERSION} installed"
+}
+
+protoc_gen_validate_version() {
+	PROTOC_GEN_VALIDATE=$(which "${PROTOC_GEN_VALIDATE_CMD}")
+	if [ $? -ne 0 ]
+	then
+    		log_warn "Please install ${PROTOC_GEN_VALIDATE_CMD}"
+		return
+	fi
+	# no way of knowing the version..
+	echo "unknown"
+}

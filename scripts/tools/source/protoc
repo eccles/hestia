@@ -4,7 +4,7 @@
 # This file is sourced
 #
 
-PROTOC_VERSION=3.19.1
+PROTOC_VERSION=3.19.4
 PROTOC_CMD=protoc
 
 protoc_check() {
@@ -62,6 +62,7 @@ protoc_version() {
 	if [ $? -ne 0 ]
 	then
     		log_warn "Please install ${PROTOC_CMD}"
+		return
 	fi
 	${PROTOC_CMD} --version | cut -d' ' -f2
 }

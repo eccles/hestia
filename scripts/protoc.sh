@@ -8,7 +8,8 @@ cd $( dirname $( dirname $0))
 . scripts/source/environment
 
 log_info "Generate $1"
-protoc -I . -I ${PROTOC_INCLUDE} \
+protoc -I . -I ${PROTOC_INCLUDE} -I ${PROTOC_VALIDATE_INCLUDE} \
     --go_out=paths=source_relative:. \
     --go-grpc_out=paths=source_relative:. \
+    --validate_out=lang=go,paths=source_relative:. \
     $1
