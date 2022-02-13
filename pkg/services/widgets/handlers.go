@@ -3,9 +3,8 @@ package widgets
 import (
 	"context"
 
-	empty "google.golang.org/protobuf/types/known/emptypb"
-
 	widgetsAPI "github.com/eccles/hestia/pkg/apis/widgets"
+	empty "google.golang.org/protobuf/types/known/emptypb"
 )
 
 func (s *Service) Create(

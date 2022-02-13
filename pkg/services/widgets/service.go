@@ -14,8 +14,7 @@ type loggerContextKey string
 type Service struct {
 	widgetsAPI.UnimplementedWidgetsServer
 
-	LogLevel string
-	logger   logger.Logger
+	Logger logger.LoggerInterface
 
 	GRPCServerPort string
 
@@ -24,15 +23,20 @@ type Service struct {
 
 func (s *Service) Run() error {
 
-	s.logger = logger.New(s.LogLevel)
+	var err error
+	err = s.Logger.Open()
+	if err != nil {
+		return fmt.Errorf("logger start failure: %w", err)
+	}
+	defer s.Logger.Close()
 
 	if s.GRPCServerPort != "" {
 		grpcServer, err := s.StartGRPCServer()
 		if err != nil {
-			return fmt.Errorf("start failure: %w", err)
+			return fmt.Errorf("grpcserver start failure: %w", err)
 		}
 		defer grpcServer.GracefulStop()
 	}
 
-	return s.Connect(&s.logger)
+	return s.Connect(s.Logger)
 }
