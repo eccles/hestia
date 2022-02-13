@@ -11,6 +11,8 @@ const (
 	defaultSampling = 10
 )
 
+//go:generate mockery --all --dry-run=false
+
 // LoggerInterface corresponds to most interfaces that have
 // an Open/Close interfaces.
 type LoggerInterface interface {

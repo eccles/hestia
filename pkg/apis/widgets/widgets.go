@@ -4,6 +4,8 @@ package widgetsAPI
 // Generate Go code from protobuf definition file.
 //go:generate ../../../scripts/protoc.sh pkg/apis/widgets/widgets.proto
 
+//go:generate mockery --all --dry-run=false
+
 // External version of Widget struct without the proto overhead.
 type WidgetExternal struct {
 	Uuid string `json:"uuid,omitempty"`
