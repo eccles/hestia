@@ -3,63 +3,27 @@
 #
 # This file is sourced
 #
+. ./scripts/source/log
+. ./scripts/source/environment
+. ./scripts/tools/source/common
 
 GOLANG_LINT_CMD=golangci-lint
 GOLANG_LINT_VERSION=1.44.0
 
-golang_lint_check() {
-	GOLANG_LINT=$(which "${GOLANG_LINT_CMD}")
-	if [ $? -ne 0 ]
-	then
-    		log_warn "Please install ${GOLANG_LINT_CMD}"
-	else
-		VERSION=$(golang_lint_version)
-    		log_info "${GOLANG_LINT_CMD} $VERSION available at ${GOLANG_LINT}"
-		if [ "${VERSION}" != "${GOLANG_LINT_VERSION}" ]
-		then
-			log_warn "Please install ${GOLANG_LINT_CMD} ${GOLANG_LINT_VERSION}"
-		fi
-	fi
+golangci-lint_installer() {
+	local cmd=$1
+	local new_version=$2
+	cd "${TEMPDIR}"
+	local="${GOROOT}/bin"
+	log_info "Downloading installation script"
+        curl -fsSOL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh 
+	log_info "Install ${cmd} ${new_version} in ${local}"
+        sh ./install.sh -b "${local}" "v${new_version}"
+}
+golangci-lint_install() {
+	common_install "${GOLANG_LINT_CMD}" "${GOLANG_LINT_VERSION}"
 }
 
-golang_lint_install() {
-	GOLANG_LINT=$(which "${GOLANG_LINT_CMD}")
-	if [ $? -eq 0 ]
-	then
-		VERSION=$(golang_lint_version)
-		if [ "${VERSION}" = "${GOLANG_LINT_VERSION}" ]
-		then
-			log_info "${GOLANG_LINT_CMD} ${GOLANG_LINT_VERSION} already installed"
-			return	
-		fi
-		log_info "Upgrading ${GOLANG_LINT_CMD} from ${VERSION} to ${GOLANG_LINT_VERSION}"
-	else
-		log_info "Installing ${GOLANG_LINT_VERSION}"
-	fi
-	TEMPDIR=$( mktemp -d /tmp/.golang.XXXXXXXX )
-
-	function finalise {
-    		CODE=$?
-	 	log_info "Delete ${TEMPDIR}"
-    		rm -rf "${TEMPDIR}"
-    		exit "$CODE"
-	}
-	trap finalise EXIT INT TERM
-	(cd "${TEMPDIR}" \
-	 && log_info "Downloading installation script" \
-         && curl -fsSOL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh \
-	 && log_info "Install ${GOLANG_LINT_CMD} ${GOLANG_LINT_VERSION} in ${GOROOT}/bin" \
-         && sh ./install.sh -b "${GOROOT}/bin" "v${GOLANG_LINT_VERSION}" \
-	)
-	log_info "${GOLANG_LINT_CMD} ${GOLANG_LINT_VERSION} installed"
-}
-
-golang_lint_version() {
-	GOLANG_LINT=$(which "${GOLANG_LINT_CMD}")
-	if [ $? -ne 0 ]
-	then
-    		log_warn "Please install ${GOLANG_LINT_CMD}"
-		return
-	fi
-	${GOLANG_LINT_CMD} --version | cut -d' ' -f4
+golangci-lint_version() {
+	${cmd} --version | cut -d' ' -f4
 }

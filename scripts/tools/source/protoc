@@ -3,66 +3,30 @@
 #
 # This file is sourced
 #
+. ./scripts/source/log
+. ./scripts/source/environment
+. ./scripts/tools/source/common
 
 PROTOC_VERSION=3.19.4
 PROTOC_CMD=protoc
 
-protoc_check() {
-	PROTOC=$(which "${PROTOC_CMD}")
-	if [ $? -ne 0 ]
-	then
-    		log_warn "Please install ${PROTOC_CMD}"
-	else
-		VERSION=$(protoc_version)
-    		log_info "${PROTOC_CMD} $VERSION available at ${PROTOC}"
-		if [ "${VERSION}" != "${PROTOC_VERSION}" ]
-		then
-			log_warn "Please install ${PROTOC_CMD} ${PROTOC_VERSION}"
-		fi
-	fi
+protoc_installer() {
+	local cmd=$1
+	local new_version=$2
+	cd "${TEMPDIR}"
+	log_info "Downloading ${cmd} ${new_version}" 
+        curl -fsSOL https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-linux-x86_64.zip
+	local=${HOME}/.local
+	log_info "Install ${cmd} ${new_version} in ${local}/bin"
+        unzip -q -o protoc-${new_version}-linux-x86_64.zip -d ${local} bin/protoc
+	# ensure that PROTOC_INCLUDE in environment is set to ${local}/include
+	log_info "Install proto files ${new_version} in ${local}/include"
+        unzip -q -o protoc-${new_version}-linux-x86_64.zip -d ${local} include/*
+        chmod -R +rx ${local}/include
 }
-
 protoc_install() {
-	PROTOC=$(which "${PROTOC_CMD}")
-	if [ $? -eq 0 ]
-	then
-		VERSION=$(protoc_version)
-		if [ "${VERSION}" = "${PROTOC_VERSION}" ]
-		then
-			log_info "${PROTOC_CMD} ${PROTOC_VERSION} already installed"
-			return	
-		fi
-		log_info "Upgrading ${PROTOC_CMD} from ${VERSION} to ${PROTOC_VERSION}"
-	else
-		log_info "Installing ${PROTOC_VERSION}"
-	fi
-	TEMPDIR=$( mktemp -d /tmp/.golang.XXXXXXXX )
-
-	function finalise {
-    		CODE=$?
-	 	log_info "Delete ${TEMPDIR}"
-    		rm -rf "${TEMPDIR}"
-    		exit "$CODE"
-	}
-	trap finalise EXIT INT TERM
-	(cd "${TEMPDIR}" \
-	 && log_info "Downloading ${PROTOC_CMD} ${PROTOC_VERSION}" \
-         && curl -fsSOL https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-linux-x86_64.zip \
-	 && log_info "Install ${PROTOC_CMD} ${PROTOC_VERSION} in ${HOME}/.local/bin" \
-         && unzip -q -o protoc-${PROTOC_VERSION}-linux-x86_64.zip -d ${HOME}/.local bin/protoc \
-	 && log_info "Install ${PROTOC_CMD} ${PROTOC_VERSION} in ${HOME}/.local/include" \
-         && unzip -q -o protoc-${PROTOC_VERSION}-linux-x86_64.zip -d ${HOME}/.local include/* \
-         && chmod -R +rx ${HOME}/.local/include
-	)
-	log_info "${PROTOC_CMD} ${PROTOC_VERSION} installed"
+	common_install "${PROTOC_CMD}" "${PROTOC_VERSION}"
 }
-
 protoc_version() {
-	PROTOC=$(which "${PROTOC_CMD}")
-	if [ $? -ne 0 ]
-	then
-    		log_warn "Please install ${PROTOC_CMD}"
-		return
-	fi
-	${PROTOC_CMD} --version | cut -d' ' -f2
+	${cmd} --version | cut -d' ' -f2
 }

@@ -1,0 +1,31 @@
+#
+# Installs go
+#
+# This file is sourced
+#
+. ./scripts/source/log
+. ./scripts/source/environment
+. ./scripts/tools/source/common
+
+GOLANG_VERSION=1.17.7
+GOLANG_CMD=go
+
+go_installer() {
+	local cmd=$1
+	local new_version=$2
+	cd "${TEMPDIR}"
+	log_info "Downloading go${new_version}.linux-amd64.tar.gz"
+	curl -fOsSL "https://go.dev/dl/go${new_version}.linux-amd64.tar.gz"
+	local=$(dirname "${GOROOT}")
+	log_info "Delete ${GOROOT}"
+	rm -rf "${GOROOT}"
+	log_info "Install ${cmd} ${new_version} in ${local}"
+	tar -C "${local}" -xzf "go${new_version}.linux-amd64.tar.gz"
+}
+go_install() {
+	common_install "${GOLANG_CMD}" "${GOLANG_VERSION}"
+}
+go_version() {
+	# version is prefixed with 'go' in 3rd field
+	${cmd} version | cut -d' ' -f3 | cut -c3-
+}
