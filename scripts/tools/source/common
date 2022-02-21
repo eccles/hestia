@@ -1,0 +1,53 @@
+#
+# Installation functions
+#
+# This file is sourced
+#
+. ./scripts/source/log
+. ./scripts/source/environment
+
+# TODO : install for different architectures - fixed at amd64 at the moment
+common_install() {
+	local cmd=$1
+	local new_version=$2
+	current_location=$(which "${cmd}")
+	if [ $? -eq 0 ]
+	then
+		current_version=$(common_version "${cmd}")
+		if [ "${current_version}" = "${new_version}" ]
+		then
+			log_info "${cmd} ${current_version} already installed at ${current_location}"
+			return	
+		fi
+		log_info "Upgrading ${cmd} from ${current_version} to ${new_version}"
+	else
+		log_info "Installing ${cmd} ${new_version}"
+	fi
+	TEMPDIR=$( mktemp -d /tmp/.${cmd}.XXXXXXXX )
+
+	function finalise {
+    		CODE=$?
+	 	log_info "Delete ${TEMPDIR}"
+    		rm -rf "${TEMPDIR}"
+    		exit "$CODE"
+	}
+	trap finalise EXIT INT TERM
+	(cd "${TEMPDIR}" && ${cmd}_installer "${cmd}" "${new_version}")
+	new_location=$(which "${cmd}")
+	if [ -n "${current_location}" -a "${new_location}" != "${current_location}" ]
+	then
+		log_warn "Upgraded ${cmd} in different location"
+	fi
+	log_info "${cmd} ${new_version} installed at ${new_location}"
+}
+
+common_version() {
+	local cmd=$1
+	current_location=$(which "${cmd}")
+	if [ $? -ne 0 ]
+	then
+    		log_warn "Please install ${cmd}"
+		return
+	fi
+	${cmd}_version
+}
