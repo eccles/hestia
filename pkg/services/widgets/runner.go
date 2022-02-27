@@ -1,5 +1,14 @@
 package widgets
 
+// widgets - a GRPC Service that implements the widgetsAPI.WidgetsServer interface.
+// This file (runer.go must be defined manually) .
+//
+// Caveats - the packagename and the directory must have the same name - in this
+//           case 'widgets'.
+//
+// Additional files to be created manually are handlers.go and connetions.go.
+// All other fioes are generated using 'go generate' commands
+
 import (
 	"os"
 
@@ -12,7 +21,7 @@ const (
 
 // Generate boilerplate for grpcserver.go and service.go
 // First argument value=1 enables GRPC
-//go:generate ../../../scripts/grpcserver.sh 1 pkg/services/widgets
+//go:generate ../../../scripts/grpcserver.sh 1
 
 func logLevel() string {
 	val, ok := os.LookupEnv("LOGLEVEL")
@@ -33,8 +42,8 @@ func port() string {
 }
 
 // Run initializes the Service struct and executes its Run method.
-// The Service strucyt specifies the grpc server code and any other interfaces
-// to external services.
+// The Service struct specifies the grpc server code and any other interfaces
+// to external services defined in connections.go.
 func Run() {
 	var err error
 
@@ -43,7 +52,9 @@ func Run() {
 			Level:       logLevel(),
 			ServiceName: serviceName,
 		},
-		GRPCServerPort: port(),
+		GRPC: GRPCService{
+			Port: port(),
+		},
 	}
 
 	err = s.Run()
