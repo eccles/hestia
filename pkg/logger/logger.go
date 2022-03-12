@@ -11,18 +11,6 @@ const (
 	defaultSampling = 10
 )
 
-//go:generate mockery --all --dry-run=false
-
-// LoggerInterface corresponds to most interfaces that have
-// an Open/Close interfaces.
-type LoggerInterface interface {
-	Open() error
-	Close()
-	Debug() *zerolog.Event
-	Fatal() *zerolog.Event
-	Info() *zerolog.Event
-}
-
 // Logger represents an interface to a typical logger including logging
 // levels, format control and others to be elucidated in future commits.
 type Logger struct {

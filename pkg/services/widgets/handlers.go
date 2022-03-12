@@ -1,10 +1,11 @@
-package widgets
+package widgetsService
 
 import (
 	"context"
 
-	widgetsAPI "github.com/eccles/hestia/pkg/apis/widgets"
 	empty "google.golang.org/protobuf/types/known/emptypb"
+
+	widgetsAPI "github.com/eccles/hestia/pkg/apis/widgets"
 )
 
 func (s *Service) Create(

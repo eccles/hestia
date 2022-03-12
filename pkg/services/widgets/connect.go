@@ -1,4 +1,4 @@
-package widgets
+package widgetsService
 
 import (
 	"github.com/eccles/hestia/pkg/terminate"
