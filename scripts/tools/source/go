@@ -5,27 +5,32 @@
 #
 . ./scripts/source/log
 . ./scripts/source/environment
-. ./scripts/tools/source/common
 
-GOLANG_VERSION=1.17.7
+GOLANG_VERSION=1.17.8
 GOLANG_CMD=go
 
-go_installer() {
-	local cmd=$1
-	local new_version=$2
-	cd "${TEMPDIR}"
-	log_info "Downloading go${new_version}.linux-amd64.tar.gz"
-	curl -fOsSL "https://go.dev/dl/go${new_version}.linux-amd64.tar.gz"
-	local=$(dirname "${GOROOT}")
-	log_info "Delete ${GOROOT}"
-	rm -rf "${GOROOT}"
-	log_info "Install ${cmd} ${new_version} in ${local}"
-	tar -C "${local}" -xzf "go${new_version}.linux-amd64.tar.gz"
-}
 go_install() {
-	common_install "${GOLANG_CMD}" "${GOLANG_VERSION}"
+        TEMPDIR=$( mktemp -d /tmp/.${GOLANG_CMD}.XXXXXXXX )
+        function finalise {
+                CODE=$?
+                log_info "Delete ${TEMPDIR}"
+                rm -rf "${TEMPDIR}"
+                exit "$CODE"
+        }
+        trap finalise EXIT INT TERM
+	(cd "${TEMPDIR}" \
+	&& log_info "Downloading go${GOLANG_VERSION}.linux-amd64.tar.gz" \
+	&& curl -fOsSL "https://go.dev/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" \
+	&& local=$(dirname "${GOROOT}") \
+	&& log_info "Delete ${GOROOT}" \
+	&& rm -rf "${GOROOT}" \
+	&& log_info "Install ${GOLANG_CMD} ${GOLANG_VERSION} in ${local}" \
+	&& tar -C "${local}" -xzf "go${GOLANG_VERSION}.linux-amd64.tar.gz")
 }
 go_version() {
 	# version is prefixed with 'go' in 3rd field
-	${cmd} version | cut -d' ' -f3 | cut -c3-
+	${GOLANG_CMD} version | cut -d' ' -f3 | cut -c3-
+}
+go_which() {
+	echo "$(which ${GOLANG_CMD}) $(go_version)"
 }

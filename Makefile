@@ -13,6 +13,10 @@ help: ## Show this help
 tools-install: ## Ensure that all tools are available
 	@./scripts/tools/install.sh
 
+.PHONY: tools-which
+tools-which: ## Lists available tools
+	@./scripts/tools/which.sh
+
 # actual code handling
 .PHONY: generate
 generate: ## generate code such as proto stuff

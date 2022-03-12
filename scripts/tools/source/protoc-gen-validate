@@ -5,23 +5,42 @@
 #
 . ./scripts/source/log
 . ./scripts/source/environment
-. ./scripts/tools/source/common
 
-# if you want to upgrade then chenge this value AND delete $(which protoc-gen-validate)
-# and remove the entry for protoc-gen-validate from go.mod
+# if you want to upgrade:
+#
+#     change this value
+#     delete $(which protoc-gen-validate)
+#     remove the entry for protoc-gen-validate from go.mod
+#     execute the install functiion
 PROTOC_GEN_VALIDATE_VERSION=0.6.3
 PROTOC_GEN_VALIDATE_CMD=protoc-gen-validate
+#
+# these directories are used to install the proto files in the same place as
+# the proto files from protoc
 URL=github.com/envoyproxy/protoc-gen-validate
 INDIR="${HOME}/go/pkg/mod/${URL}@v${PROTOC_GEN_VALIDATE_VERSION}/validate/"
-OUTDIR="${HOME}/.local/include/${URL}/"
+OUTDIR="${PROTOC_INCLUDE}/${URL}/"
 
 # protoc-gen-validate is old-fashioned and changes the go.mod file - which
 # it should not do when the version is specified on te go install command
 protoc-gen-validate_install() {
-	log_info "Installing ${PROTOC_GEN_VALIDATE_CMD} ${PROTOC_GEN_VALIDATE_VERSION}"
-	go install -v github.com/envoyproxy/${PROTOC_GEN_VALIDATE_CMD}@v${PROTOC_GEN_VALIDATE_VERSION}
-	# make proto files accessible to protoc
-	mkdir -p "${OUTDIR}"
-	cp -r "${INDIR}" "${OUTDIR}"
-	chmod -R +rwx "${OUTDIR}"
+	TEMPDIR=$( mktemp -d /tmp/.${PROTOC_GEN_VALIDATE_CMD}.XXXXXXXX )
+        function finalise {
+                CODE=$?
+                log_info "Delete ${TEMPDIR}"
+                rm -rf "${TEMPDIR}"
+                exit "$CODE"
+        }
+        trap finalise EXIT INT TERM
+	( cd "${TEMPDIR}" \
+	&& log_info "Installing ${PROTOC_GEN_VALIDATE_CMD} ${PROTOC_GEN_VALIDATE_VERSION}" \
+	&& go install -v github.com/envoyproxy/${PROTOC_GEN_VALIDATE_CMD}@v${PROTOC_GEN_VALIDATE_VERSION} \
+	&& mkdir -p "${OUTDIR}" \
+	&& cp -r "${INDIR}" "${OUTDIR}")
+}
+protoc-gen-validate_version() {
+	echo ${PROTOC_GEN_VALIDATE_VERSION}
+}
+protoc-gen-validate_which() {
+	echo "$(which ${PROTOC_GEN_VALIDATE_CMD}) $(protoc-gen-validate_version)"
 }
