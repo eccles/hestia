@@ -1,8 +1,6 @@
 
 # environment vars
 PWD := $(shell pwd )
-export GOROOT := ${HOME}/.local/go
-export GOBIN := $(PWD)/bin
 
 # show available options
 .PHONY: help
@@ -36,4 +34,4 @@ unittests: ## unittest all source code
 
 .PHONY: build
 build: ## Compile all source code
-	@go install -v ./...
+	@GOBIN=$(PWD)/bin go install -v ./...
