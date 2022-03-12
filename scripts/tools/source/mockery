@@ -5,24 +5,29 @@
 #
 . ./scripts/source/log
 . ./scripts/source/environment
-. ./scripts/tools/source/common
 
 MOCKERY_VERSION=2.10.0
 MOCKERY_CMD=mockery
 
-mockery_installer() {
-	local cmd=$1
-	local new_version=$2
-	cd "${TEMPDIR}"
-	log_info "Downloading ${new_version}.tar.gz"
-	curl -fOsSL "https://github.com/vektra/mockery/releases/download/v${new_version}/mockery_${new_version}_Linux_x86_64.tar.gz"
-	local="${GOROOT}/bin"
-	log_info "Install ${cmd} ${new_version} in ${local}"
-	tar -C "${local}" -xzf "mockery_${new_version}_Linux_x86_64.tar.gz"
-}
 mockery_install() {
-	common_install "${MOCKERY_CMD}" "${MOCKERY_VERSION}"
+        TEMPDIR=$( mktemp -d /tmp/.${MOCKERY_CMD}.XXXXXXXX )
+        function finalise {
+                CODE=$?
+                log_info "Delete ${TEMPDIR}"
+                rm -rf "${TEMPDIR}"
+                exit "$CODE"
+        }
+        trap finalise EXIT INT TERM
+	(cd "${TEMPDIR}" \
+	&& log_info "Downloading ${MOCKERY_VERSION}.tar.gz" \
+	&& curl -fOsSL "https://github.com/vektra/mockery/releases/download/v${MOCKERY_VERSION}/mockery_${MOCKERY_VERSION}_Linux_x86_64.tar.gz" \
+	&& local="${GOROOT}/bin" \
+	&& log_info "Install ${MOCKERY_CMD} ${MOCKERY_VERSION} in ${local}" \
+	&& tar -C "${local}" -xzf "mockery_${MOCKERY_VERSION}_Linux_x86_64.tar.gz")
 }
 mockery_version() {
-	${cmd} --version 2>/dev/null | cut -c2-
+	${MOCKERY_CMD} --version 2>/dev/null | cut -c2-
+}
+mockery_which() {
+	echo "$(which ${MOCKERY_CMD}) $(mockery_version)"
 }

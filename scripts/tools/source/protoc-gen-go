@@ -5,22 +5,27 @@
 #
 . ./scripts/source/log
 . ./scripts/source/environment
-. ./scripts/tools/source/common
 
 PROTOC_GEN_GO_VERSION=1.27.1
 PROTOC_GEN_GO_CMD=protoc-gen-go
 
-protoc-gen-go_installer() {
-	local cmd=$1
-	local new_version=$2
-	cd "${TEMPDIR}"
-	log_info "Installing ${cmd} ${new_version}"
-	go install google.golang.org/protobuf/cmd/${cmd}@v${new_version}
-}
 protoc-gen-go_install() {
-	common_install "${PROTOC_GEN_GO_CMD}" "${PROTOC_GEN_GO_VERSION}"
+	TEMPDIR=$( mktemp -d /tmp/.${PROTOC_GEN_GO_CMD}.XXXXXXXX )
+        function finalise {
+                CODE=$?
+                log_info "Delete ${TEMPDIR}"
+                rm -rf "${TEMPDIR}"
+                exit "$CODE"
+        }
+        trap finalise EXIT INT TERM
+	(cd "${TEMPDIR}" \
+	 && log_info "Installing ${PROTOC_GEN_GO_CMD} ${PROTOC_GEN_GO_VERSION}" \
+	 && go install google.golang.org/protobuf/cmd/${PROTOC_GEN_GO_CMD}@v${PROTOC_GEN_GO_VERSION})
 }
 protoc-gen-go_version() {
 	# reports version with 'v' prefix so strip it..
-	${cmd} --version | cut -d' ' -f2 | cut -c2-
+	${PROTOC_GEN_GO_CMD} --version | cut -d' ' -f2 | cut -c2-
+}
+protoc-gen-go_which() {
+	echo "$(which ${PROTOC_GEN_GO_CMD}) $(protoc-gen-go_version)"
 }

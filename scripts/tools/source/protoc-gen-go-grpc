@@ -5,24 +5,29 @@
 #
 . ./scripts/source/log
 . ./scripts/source/environment
-. ./scripts/tools/source/common
 
 PROTOC_GEN_GO_GRPC_VERSION=1.2
 PROTOC_GEN_GO_GRPC_CMD=protoc-gen-go-grpc
 
-protoc-gen-go-grpc_installer() {
-	local cmd=$1
-	local new_version=$2
-	cd "${TEMPDIR}"
-	set -e
-	log_info "Installing ${cmd} ${new_version}"
-	go install google.golang.org/grpc/cmd/${cmd}@v${new_version}
-}
 protoc-gen-go-grpc_install() {
-	common_install "${PROTOC_GEN_GO_GRPC_CMD}" "${PROTOC_GEN_GO_GRPC_VERSION}"
+	TEMPDIR=$( mktemp -d /tmp/.${PROTOC_GEN_GO_GRPC_CMD}.XXXXXXXX )
+        function finalise {
+                CODE=$?
+                log_info "Delete ${TEMPDIR}"
+                rm -rf "${TEMPDIR}"
+                exit "$CODE"
+        }
+        trap finalise EXIT INT TERM
+	(cd "${TEMPDIR}" \
+	&& set -e \
+	&& log_info "Installing ${PROTOC_GEN_GO_GRPC_CMD} ${PROTOC_GEN_GO_GRPC_VERSION}" \
+	&& go install google.golang.org/grpc/cmd/${PROTOC_GEN_GO_GRPC_CMD}@v${PROTOC_GEN_GO_GRPC_VERSION})
 }
 protoc-gen-go-grpc_version() {
 	# reports 1.2.0 but using 1.2.0 to go install does not work...
 	# so strip the trailing .0 from reported version and use 1.2 when installing
-	${cmd} --version | cut -d' ' -f2 | cut -d'.' -f1-2
+	${PROTOC_GEN_GO_GRPC_CMD} --version | cut -d' ' -f2 | cut -d'.' -f1-2
+}
+protoc-gen-go-grpc_which() {
+	echo "$(which ${PROTOC_GEN_GO_GRPC_CMD}) $(protoc-gen-go-grpc_version)"
 }

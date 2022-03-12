@@ -5,28 +5,32 @@
 #
 . ./scripts/source/log
 . ./scripts/source/environment
-. ./scripts/tools/source/common
 
 PROTOC_VERSION=3.19.4
 PROTOC_CMD=protoc
 
-protoc_installer() {
-	local cmd=$1
-	local new_version=$2
-	cd "${TEMPDIR}"
-	log_info "Downloading ${cmd} ${new_version}" 
-        curl -fsSOL https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-linux-x86_64.zip
-	local=${HOME}/.local
-	log_info "Install ${cmd} ${new_version} in ${local}/bin"
-        unzip -q -o protoc-${new_version}-linux-x86_64.zip -d ${local} bin/protoc
-	# ensure that PROTOC_INCLUDE in environment is set to ${local}/include
-	log_info "Install proto files ${new_version} in ${local}/include"
-        unzip -q -o protoc-${new_version}-linux-x86_64.zip -d ${local} include/*
-        chmod -R +rx ${local}/include
-}
 protoc_install() {
-	common_install "${PROTOC_CMD}" "${PROTOC_VERSION}"
+	TEMPDIR=$( mktemp -d /tmp/.${PROTOC_CMD}.XXXXXXXX )
+        function finalise {
+                CODE=$?
+                log_info "Delete ${TEMPDIR}"
+                rm -rf "${TEMPDIR}"
+                exit "$CODE"
+        }
+        trap finalise EXIT INT TERM
+	(cd "${TEMPDIR}" \
+	&& log_info "Downloading ${PROTOC_CMD} ${PROTOC_VERSION}"  \
+        && curl -fsSOL https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-linux-x86_64.zip \
+	&& local=$(dirname ${PROTOC_INCLUDE}) \
+	&& log_info "Install ${PROTOC_CMD} ${PROTOC_VERSION} in ${local}/bin" \
+        && unzip -q -o protoc-${PROTOC_VERSION}-linux-x86_64.zip -d ${local} bin/protoc \
+	&& log_info "Install proto files ${PROTOC_VERSION} in ${local}/include" \
+        && unzip -q -o protoc-${PROTOC_VERSION}-linux-x86_64.zip -d ${local} include/* \
+        && chmod -R +rx ${local}/include)
 }
 protoc_version() {
-	${cmd} --version | cut -d' ' -f2
+	${PROTOC_CMD} --version | cut -d' ' -f2
+}
+protoc_which() {
+	echo "$(which ${PROTOC_CMD}) $(protoc_version)"
 }
