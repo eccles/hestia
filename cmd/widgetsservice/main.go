@@ -1,7 +1,7 @@
 package main
 
 import (
-	widgetsService "github.com/eccles/hestia/pkg/services/widgets"
+	widgetsService "github.com/eccles/hestia/pkg/widgets/service"
 )
 
 func main() {
