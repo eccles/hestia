@@ -24,15 +24,16 @@ COLOUR_UNDERLINE="\033[4m"
 COLOUR_BLINK="\033[5m"
 
 log_info() {
-	echo -e "`date`: ${COLOUR_GREEN}$* ...${COLOUR_RESET}"
+	echo -e "`date '+%F %T'` INF ${COLOUR_GREEN}$* ...${COLOUR_RESET}"
 }
 log_warn() {
-	echo -e "`date`: ${COLOUR_UNDERLINE}${COLOUR_YELLOW}$* ...${COLOUR_RESET}"
+	echo -e "`date '+%F %T'` WRN ${COLOUR_UNDERLINE}${COLOUR_YELLOW}$* ...${COLOUR_RESET}"
 }
 log_error() {
-	echo -e "`date`: ${COLOUR_BLINK}${COLOUR_RED}$* ...${COLOUR_RESET}"
+	echo -e "`date '+%F %T'` ERR ${COLOUR_BLINK}${COLOUR_RED}$* ...${COLOUR_RESET}"
 }
 log_fatal() {
-	echo -e "`date`: ${COLOUR_BLINK}${COLOUR_RED}$* ...${COLOUR_RESET}"
+	echo -e "`date '+%F %T'` FTL ${COLOUR_BLINK}${COLOUR_RED}$* ...${COLOUR_RESET}"
 	exit 100
 }
+
