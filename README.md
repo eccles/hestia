@@ -65,7 +65,7 @@ In order to make these settings permanent, logout or reboot your PC.
 First check for the presence of Go and other tools.
 
 ```bash
-make tools-check
+make tools-which
 ```
 
 Note: installation of Go is done locally in ~/.local/go as opposed to the normal
