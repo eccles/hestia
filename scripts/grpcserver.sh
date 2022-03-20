@@ -53,6 +53,9 @@ type loggerContextKey string
 type Service struct {
 	${UNIMPLEMENTED}
 
+	// Version of application
+	Version string
+
 	// An interface as we may want to mock it out in tests.
 	Logger LoggerInterface
 
@@ -113,7 +116,7 @@ func (g *GRPCService) Stop() {
 // package and starts the GRPC service.
 func (s *Service) StartGRPCService() error {
 
-	s.Logger.Info().Msg("Start GRPCService")
+	s.Logger.Info().Msgf("Start GRPCService %s", s.Version)
 	grpcServer := grpc.NewServer(
 		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
 			grpc_validator.UnaryServerInterceptor(),

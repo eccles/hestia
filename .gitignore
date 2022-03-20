@@ -1,3 +1,4 @@
 .env
 .bash_history
 vendor/
+version.txt

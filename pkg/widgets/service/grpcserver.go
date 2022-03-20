@@ -29,7 +29,7 @@ func (g *GRPCService) Stop() {
 // package and starts the GRPC service.
 func (s *Service) StartGRPCService() error {
 
-	s.Logger.Info().Msg("Start GRPCService")
+	s.Logger.Info().Msgf("Start GRPCService %s", s.Version)
 	grpcServer := grpc.NewServer(
 		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
 			grpc_validator.UnaryServerInterceptor(),

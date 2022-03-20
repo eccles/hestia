@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	widgetsService.Run()
+	widgetsService.Run(version)
 }

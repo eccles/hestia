@@ -13,6 +13,9 @@ type loggerContextKey string
 type Service struct {
 	widgetsAPI.UnimplementedWidgetsServer
 
+	// Version of application
+	Version string
+
 	// An interface as we may want to mock it out in tests.
 	Logger LoggerInterface
 
