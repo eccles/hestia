@@ -199,7 +199,8 @@ linters-settings:
     # put imports beginning with prefix after 3rd-party packages;
     # only support one prefix
     # if not set, use goimports.local-prefixes
-    local-prefixes: github.com/org/project
+    # local-prefixes: github.com/eccles/hestia
+    sections: prefix(github.com/eccles/hestia)
 
   gocognit:
     # minimal code complexity to report, 30 by default (but we recommend 10-20)
@@ -796,6 +797,7 @@ linters-settings:
 linters:
   enable-all: true
   disable:
+    - gci
     - golint
     - interfacer
     - maligned

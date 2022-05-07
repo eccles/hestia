@@ -24,7 +24,7 @@ generate: ## generate code such as proto stuff
 qa: ## quality check all source code
 	@go mod vendor
 	@gofmt -l -s -w $(shell find . -type f -name '*.go'| grep -v "/vendor/\|/.git/")
-	@golangci-lint run
+	@golangci-lint run -v
 	@go mod tidy
 	@go mod verify
 
