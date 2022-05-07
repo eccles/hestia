@@ -5,6 +5,7 @@ import (
 )
 
 func (s *Service) Connect() error {
+	s.Logger.Info().Msg("Start")
 	// put open statements of all other connections to external services
 	// here.
 	// ....

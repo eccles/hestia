@@ -22,11 +22,11 @@ generate: ## generate code such as proto stuff
 
 .PHONY: qa
 qa: ## quality check all source code
+	@go mod tidy -compat=1.17
+	@go mod verify
 	@go mod vendor
 	@gofmt -l -s -w $(shell find . -type f -name '*.go'| grep -v "/vendor/\|/.git/")
-	@golangci-lint run -v
-	@go mod tidy
-	@go mod verify
+	@golangci-lint run
 
 .PHONY: unittests
 unittests: ## unittest all source code

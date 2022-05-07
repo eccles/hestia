@@ -109,7 +109,7 @@ linters-settings:
 
   dupl:
     # tokens count to trigger issue, 150 by default
-    threshold: 100
+    threshold: 150
 
   errcheck:
     # report about not checking of errors in type assertions: `a := b.(MyStruct)`;
@@ -805,6 +805,7 @@ linters:
     - scopelint
     - testpackage
     - varnamelen
+    - wrapcheck
     - wsl
   fast: false
 
