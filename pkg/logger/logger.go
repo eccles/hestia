@@ -14,7 +14,6 @@ const (
 // Logger represents an interface to a typical logger including logging
 // levels, format control and others to be elucidated in future commits.
 type Logger struct {
-
 	// Service - the logger has this field add as "service"
 	ServiceName string
 

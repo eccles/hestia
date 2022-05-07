@@ -7,7 +7,7 @@
 . ./scripts/source/environment
 
 GOLANG_LINT_CMD=golangci-lint
-GOLANG_LINT_VERSION=1.44.0
+GOLANG_LINT_VERSION=1.45.2
 
 golangci-lint_install() {
         TEMPDIR=$( mktemp -d /tmp/.${GOLANG_LINT_CMD}.XXXXXXXX )
