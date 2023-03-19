@@ -79,7 +79,7 @@ func initConfig() {
 	if cfgFile != "" {
 		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
-	}// else {
+	} // else {
 	//	viper.SetConfigName("." + rootCmd.Use)
 	//	viper.AddConfigPath("/etc/" + rootCmd.Use)
 	//	viper.AddConfigPath("/$HOME/" + rootCmd.Use)
