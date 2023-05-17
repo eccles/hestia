@@ -11,8 +11,8 @@
 #     change this value
 #     delete $(which protoc-gen-validate)
 #     remove the entry for protoc-gen-validate from go.mod
-#     execute the install functiion
-PROTOC_GEN_VALIDATE_VERSION=0.6.3
+#     execute the install function
+PROTOC_GEN_VALIDATE_VERSION=1.0.1
 PROTOC_GEN_VALIDATE_CMD=protoc-gen-validate
 #
 # these directories are used to install the proto files in the same place as
@@ -22,7 +22,7 @@ INDIR="${HOME}/go/pkg/mod/${URL}@v${PROTOC_GEN_VALIDATE_VERSION}/validate/"
 OUTDIR="${PROTOC_INCLUDE}/${URL}/"
 
 # protoc-gen-validate is old-fashioned and changes the go.mod file - which
-# it should not do when the version is specified on te go install command
+# it should not do when the version is specified on the go install command
 protoc-gen-validate_install() {
 	TEMPDIR=$( mktemp -d /tmp/.${PROTOC_GEN_VALIDATE_CMD}.XXXXXXXX )
         function finalise {

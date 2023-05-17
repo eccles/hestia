@@ -6,7 +6,7 @@
 . ./scripts/source/log
 . ./scripts/source/environment
 
-MOCKERY_VERSION=2.12.2
+MOCKERY_VERSION=2.27.1
 MOCKERY_CMD=mockery
 
 mockery_install() {

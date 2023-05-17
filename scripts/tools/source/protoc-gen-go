@@ -6,7 +6,7 @@
 . ./scripts/source/log
 . ./scripts/source/environment
 
-PROTOC_GEN_GO_VERSION=1.27.1
+PROTOC_GEN_GO_VERSION=1.30.0
 PROTOC_GEN_GO_CMD=protoc-gen-go
 
 protoc-gen-go_install() {
