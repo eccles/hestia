@@ -5,17 +5,19 @@ articles on the internet.
 
 # Preparation
 
-## Install make
+## just
+
+https://github.com/casey/just
+
+which can be installed by executing:
 
 ```bash
-sudo apt install make    # ubuntu
-sudo dnf install make    # fedora
+export BIN="~/bin"
+curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to ${BIN}
 ```
 
-then type
-
 ```bash
-make help
+just
 ```
 
 to see which commands are available.
@@ -54,6 +56,11 @@ fi
 if [ -d "$HOME/go/bin" ] ; then
     PATH="$HOME/go/bin:$PATH"
 fi
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+[ -s "$HOME/.cargo/env" ] && \. "$HOME/.cargo/env"
 ```
 
 ## Reset environment
@@ -65,7 +72,7 @@ In order to make these settings permanent, logout or reboot your PC.
 First check for the presence of Go and other tools.
 
 ```bash
-make tools-which
+just tools which
 ```
 
 Note: installation of Go is done locally in ~/.local/go as opposed to the normal
@@ -75,7 +82,7 @@ before attempting to install any tools.
 Install tools like so:
 
 ```bash
-make tools-install
+just tools install
 ```
 
 # Development workflow
@@ -85,8 +92,8 @@ make tools-install
 Initialise generated code and modules
 
 ```bash
-make generate
-make qa
+just generate
+just qa
 ```
 ## Changing code
 
@@ -95,19 +102,19 @@ Edit or add code or other development activity.
 If any source files for generated code has changed:
 
 ```bash
-make generate
+just generate
 ```
 
 Quality check code:
 
 ```bash
-make qa
+just qa
 ```
 
 And build any new executables:
 
 ```bash
-make build
+just build
 ```
 
 
