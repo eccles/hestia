@@ -5,6 +5,7 @@
 #
 # usually these values are set in $HOME/.profile
 #
+. ~/.profile
 export GOROOT=$HOME/.local/go
 if [ ! -s ${GOROOT} ]
 then

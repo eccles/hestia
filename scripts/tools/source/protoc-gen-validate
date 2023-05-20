@@ -39,7 +39,7 @@ protoc-gen-validate_install() {
 	&& cp -r "${INDIR}" "${OUTDIR}")
 }
 protoc-gen-validate_version() {
-	echo ${PROTOC_GEN_VALIDATE_VERSION}
+	echo "protoc-gen-validate ${PROTOC_GEN_VALIDATE_VERSION}"
 }
 protoc-gen-validate_which() {
 	echo "$(which ${PROTOC_GEN_VALIDATE_CMD}) $(protoc-gen-validate_version)"
