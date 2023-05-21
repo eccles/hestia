@@ -1,0 +1,46 @@
+#
+# Installs ltex-language-server
+#
+# This file is sourced
+#
+# Big thank you to Aral Balkin...
+# https://ar.al/2022/11/14/installing-helix-editor-language-servers/
+#
+. ./scripts/source/log
+. ./scripts/source/environment
+
+LTEX_LANGUAGE_SERVER_VERSION=15.2.0
+LTEX_LANGUAGE_SERVER_CMD="ltex-ls"
+
+ltex-language-server_install() {
+        TEMPDIR=$( mktemp -d /tmp/.${LTEX_LANGUAGE_SERVER_CMD}.XXXXXXXX )
+        function finalise {
+                CODE=$?
+                log_info "Delete ${TEMPDIR}"
+                rm -rf "${TEMPDIR}"
+                exit "$CODE"
+        }
+        trap finalise EXIT INT TERM
+	(cd "${TEMPDIR}"; \
+	log_info "Install ${LTEX_LANGUAGE_SERVER_CMD}"; \
+	BINARY_HOME="${HOME}/.local/bin"; \
+	DATA_HOME="$HOME/.local/share}"; \
+	ltexLsVersion="${LTEX_LANGUAGE_SERVER_VERSION}"; \
+	ltexLsBinaryPath="${BINARY_HOME}/ltex-ls"; \
+	ltexLsBaseFileName="ltex-ls-${ltexLsVersion}"; \
+	ltexLsFileNameWithPlatform="${ltexLsBaseFileName}-linux-x64"; \
+	ltexLsAppDirectory="${DATA_HOME}/${ltexLsBaseFileName}"; \
+	rm -f "${ltexLsBinaryPath}"; \
+	rm -rf "${ltexLsAppDirectory}"; \
+	wget "https://github.com/valentjn/ltex-ls/releases/download/${ltexLsVersion}/${ltexLsFileNameWithPlatform}.tar.gz"; \
+	gunzip "${ltexLsFileNameWithPlatform}.tar.gz"; \
+	tar xf "${ltexLsFileNameWithPlatform}.tar"; \
+	mv "${ltexLsBaseFileName}" "${DATA_HOME}"; \
+	ln -s "${ltexLsAppDirectory}/bin/ltex-ls" "${ltexLsBinaryPath}";)
+}
+ltex-language-server_version() {
+	${LTEX_LANGUAGE_SERVER_CMD} --version | grep ${LTEX_LANGUAGE_SERVER_CMD} | cut -d'"' -f4
+}
+ltex-language-server_which() {
+	echo "$(which ${LTEX_LANGUAGE_SERVER_CMD}) $(ltex-language-server_version)"
+}
