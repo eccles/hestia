@@ -1,0 +1,29 @@
+#
+# Installs typescript
+#
+# This file is sourced
+#
+. ./scripts/source/log
+. ./scripts/source/environment
+
+TYPESCRIPT_CMD="typescript"
+
+typescript_install() {
+        TEMPDIR=$( mktemp -d /tmp/.${TYPESCRIPT_CMD}.XXXXXXXX )
+        function finalise {
+                CODE=$?
+                log_info "Delete ${TEMPDIR}"
+                rm -rf "${TEMPDIR}"
+                exit "$CODE"
+        }
+        trap finalise EXIT INT TERM
+	(cd "${TEMPDIR}" \
+	&& log_info "Install ${TYPESCRIPT_CMD} in ${NVM_DIR}" \
+	&& npm install -g typescript)
+}
+typescript_version() {
+	npm list -g --depth=0 ${TYPESCRIPT_CMD} | grep ${TYPESCRIPT_CMD} | cut -d'@' -f2
+}
+typescript_which() {
+	echo "${NVM_DIR} ${TYPESCRIPT_CMD} $(typescript_version)"
+}

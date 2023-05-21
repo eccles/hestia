@@ -1,0 +1,29 @@
+#
+# Installs vscode-langservers-extracted
+#
+# This file is sourced
+#
+. ./scripts/source/log
+. ./scripts/source/environment
+
+VSCODE_LANGSERVERS_CMD="vscode-langservers-extracted"
+
+vscode-langservers_install() {
+        TEMPDIR=$( mktemp -d /tmp/.${VSCODE_LANGSERVERS_CMD}.XXXXXXXX )
+        function finalise {
+                CODE=$?
+                log_info "Delete ${TEMPDIR}"
+                rm -rf "${TEMPDIR}"
+                exit "$CODE"
+        }
+        trap finalise EXIT INT TERM
+	(cd "${TEMPDIR}" \
+	&& log_info "Install ${VSCODE_LANGSERVERS_CMD} in ${NVM_DIR}" \
+	&& npm install -g vscode-langservers-extracted)
+}
+vscode-langservers_version() {
+	npm list -g --depth=0 ${VSCODE_LANGSERVERS_CMD} | grep ${VSCODE_LANGSERVERS_CMD} | cut -d'@' -f2
+}
+vscode-langservers_which() {
+	echo "${NVM_DIR} ${VSCODE_LANGSERVERS_CMD} $(vscode-langservers_version)"
+}
