@@ -10,9 +10,9 @@ default:
 # Install or which current tools
 tools SUB:
 	#!/usr/bin/env bash
-	for f in ansible go golangci-lint protoc mockery protoc-gen-go protoc-gen-go-grpc protoc-gen-validate nvm
+	for f in $(ls scripts/tools/source | sort | cut -c3-)
 	do
-		(. ./scripts/tools/source/${f} && ${f}_{{SUB}})
+		(. ./scripts/tools/source/*${f} && ${f}_{{SUB}})
 	done
 
 # Install a one or more tools
@@ -20,7 +20,7 @@ install +TOOLS:
 	#!/usr/bin/env bash
 	for f in {{TOOLS}}
 	do
-		(. ./scripts/tools/source/${f} && ${f}_install)
+		(. ./scripts/tools/source/*${f} && ${f}_install)
 	done
 
 # Find a one or more tools
@@ -28,7 +28,7 @@ which +TOOLS:
 	#!/usr/bin/env bash
 	for f in {{TOOLS}}
 	do
-		(. ./scripts/tools/source/${f} && ${f}_which)
+		(. ./scripts/tools/source/*${f} && ${f}_which)
 	done
 
 # generate all code

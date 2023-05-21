@@ -25,5 +25,5 @@ bash-language-server_version() {
 	npm list -g --depth=0 ${BASH_LANGUAGE_SERVER_CMD} | grep ${BASH_LANGUAGE_SERVER_CMD} | cut -d'@' -f2
 }
 bash-language-server_which() {
-	echo "${NVM_DIR} $(bash-language-server_version)"
+	echo "${NVM_DIR} ${BASH_LANGUAGE_SERVER_CMD} $(bash-language-server_version)"
 }
