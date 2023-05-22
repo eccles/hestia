@@ -1,0 +1,31 @@
+#
+# Installs gopls
+#
+# This file is sourced
+#
+. ./scripts/source/log
+. ./scripts/source/environment
+
+GOPLS_VERSION=0.11.0
+GOPLS_CMD=gopls
+
+gopls_install() {
+	TEMPDIR=$( mktemp -d /tmp/.${GOPLS_CMD}.XXXXXXXX )
+        function finalise {
+                CODE=$?
+                log_info "Delete ${TEMPDIR}"
+                rm -rf "${TEMPDIR}"
+                exit "$CODE"
+        }
+        trap finalise EXIT INT TERM
+	(cd "${TEMPDIR}" \
+	 && log_info "Installing ${GOPLS_CMD} ${GOPLS_VERSION}" \
+	 && go install golang.org/x/tools/${GOPLS_CMD}@v${GOPLS_VERSION})
+}
+gopls_version() {
+	# reports version with 'v' prefix so strip it..
+	${GOPLS_CMD} version | head -1 | cut -d' ' -f2 | cut -c2-
+}
+gopls_which() {
+	echo "$(which ${GOPLS_CMD}) $(gopls_version)"
+}

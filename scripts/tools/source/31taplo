@@ -1,0 +1,29 @@
+#
+# Installs taplo language server
+#
+# This file is sourced
+#
+. ./scripts/source/log
+. ./scripts/source/environment
+
+TAPLO_CMD=taplo
+
+taplo_install() {
+        TEMPDIR=$( mktemp -d /tmp/.${TAPLO_CMD}.XXXXXXXX )
+        function finalise {
+                CODE=$?
+                log_info "Delete ${TEMPDIR}"
+                rm -rf "${TEMPDIR}"
+                exit "$CODE"
+        }
+        trap finalise EXIT INT TERM
+	(cd "${TEMPDIR}" \
+	&& log_info "Installing taplo" \
+	&& cargo install taplo-cli --locked --features lsp )
+}
+taplo_version() {
+	${TAPLO_CMD} -V | cut -d' ' -f2
+}
+taplo_which() {
+	echo "$(which ${TAPLO_CMD}) $(taplo_version)"
+}

@@ -1,0 +1,32 @@
+#
+# Installs helix language server
+#
+# This file is sourced
+#
+. ./scripts/source/log
+. ./scripts/source/environment
+
+HELIX_CMD=hx
+HELIX_VERSION=23.05
+
+helix_install() {
+        TEMPDIR=$( mktemp -d /tmp/.${HELIX_CMD}.XXXXXXXX )
+        function finalise {
+                CODE=$?
+                log_info "Delete ${TEMPDIR}"
+                rm -rf "${TEMPDIR}"
+                exit "$CODE"
+        }
+        trap finalise EXIT INT TERM
+	(cd "${TEMPDIR}" \
+	&& log_info "Installing helix" \
+	&& curl -fOsSL https://github.com/helix-editor/helix/releases/download/${HELIX_VERSION}/helix-${HELIX_VERSION}-x86_64-linux.tar.xz \
+	&& tar -xf helix-${HELIX_VERSION}-x86_64-linux.tar.xz \
+	&& cd helix-${HELIX_VERSION}-x86_64-linux )
+}
+helix_version() {
+	${HELIX_CMD} -V | cut -d' ' -f2
+}
+helix_which() {
+	echo "$(which ${HELIX_CMD}) $(helix_version)"
+}

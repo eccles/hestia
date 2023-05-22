@@ -1,0 +1,30 @@
+#
+# Installs rust
+#
+# This file is sourced
+#
+. ./scripts/source/log
+. ./scripts/source/environment
+
+RUST_CMD=rustc
+
+rust_install() {
+        TEMPDIR=$( mktemp -d /tmp/.${RUST_CMD}.XXXXXXXX )
+        function finalise {
+                CODE=$?
+                log_info "Delete ${TEMPDIR}"
+                rm -rf "${TEMPDIR}"
+                exit "$CODE"
+        }
+        trap finalise EXIT INT TERM
+	(cd "${TEMPDIR}" \
+	&& log_info "Installing rust" \
+	&& curl -o install.sh --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
+	&& sh install.sh )
+}
+rust_version() {
+	${RUST_CMD} -V | cut -d' ' -f2
+}
+rust_which() {
+	echo "$(which ${RUST_CMD}) $(rust_version)"
+}
