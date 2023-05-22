@@ -18,11 +18,19 @@ helix_install() {
                 exit "$CODE"
         }
         trap finalise EXIT INT TERM
-	(cd "${TEMPDIR}" \
+	(ROOTDIR=$(pwd) \
+	&& cd "${TEMPDIR}" \
 	&& log_info "Installing helix" \
 	&& curl -fOsSL https://github.com/helix-editor/helix/releases/download/${HELIX_VERSION}/helix-${HELIX_VERSION}-x86_64-linux.tar.xz \
 	&& tar -xf helix-${HELIX_VERSION}-x86_64-linux.tar.xz \
-	&& cd helix-${HELIX_VERSION}-x86_64-linux )
+	&& cd helix-${HELIX_VERSION}-x86_64-linux \
+	&& ls -l \
+	&& mv hx ~/bin \
+        && chmod +x ~/bin/hx \
+	&& mkdir -p ~/.config/helix \
+	&& cp -r runtime contrib ~/.config/helix \
+	&& cd ${ROOTDIR} \
+	&& cp .config/helix/*.toml ~/.config/helix )
 }
 helix_version() {
 	${HELIX_CMD} -V | cut -d' ' -f2

@@ -1,0 +1,25 @@
+theme = "monokai_pro_spectrum"
+
+[editor]
+rulers = [88, 120]
+mouse = true
+line-number = "relative"
+true-color = true
+cursorline = true
+gutters = ["diagnostics", "spacer", "line-numbers", "spacer"]
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.statusline]
+left = [ "spinner"]
+center = ["file-name"]
+right = ["diagnostics", "selections", "position", "file-encoding", "file-line-ending", "file-type"]
+separator = "│"
+
+[keys.normal]
+# Use system clipboard
+y = "yank_main_selection_to_clipboard"
+p = "paste_clipboard_before"

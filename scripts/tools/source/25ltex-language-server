@@ -24,7 +24,7 @@ ltex-language-server_install() {
 	(cd "${TEMPDIR}"; \
 	log_info "Install ${LTEX_LANGUAGE_SERVER_CMD}"; \
 	BINARY_HOME="${HOME}/.local/bin"; \
-	DATA_HOME="$HOME/.local/share}"; \
+	DATA_HOME="$HOME/.local/share"; \
 	ltexLsVersion="${LTEX_LANGUAGE_SERVER_VERSION}"; \
 	ltexLsBinaryPath="${BINARY_HOME}/ltex-ls"; \
 	ltexLsBaseFileName="ltex-ls-${ltexLsVersion}"; \

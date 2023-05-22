@@ -1,0 +1,13 @@
+
+[[language]]
+name = "python"
+roots = ["pyproject.toml"]
+formatter = { command = "black", args = ["--quiet", "-"] }
+language-server = { command = "pyright-langserver", args = ["--stdio"] }
+config = {} 
+auto-format = true
+
+[[language]] 
+name = "go"
+auto-format = true
+
