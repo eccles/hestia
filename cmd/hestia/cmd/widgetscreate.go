@@ -21,16 +21,14 @@ var (
 			parseWidgetsCreateCmd()
 			defer deferWidgetsCreateCmd()
 
-			rootLogger.Info().Msgf("Create Widgets: %s", cfgFile)
+			rootLogger.Info("Create Widgets", "ConfigFile", cfgFile)
 			ctx := context.Background()
 			resp, err := widgetsClient.Create(ctx, &widgetsAPI.CreateRequest{})
 			if err != nil {
-				rootLogger.Info().Msgf("Create Widget Error: %v", err)
-
+				rootLogger.Info("Create Widget", "Error", err)
 				return err
 			}
-			rootLogger.Info().Msgf("Create Widget: %v", resp)
-
+			rootLogger.Info("Create Widget", "Response", resp)
 			return nil
 		},
 	}

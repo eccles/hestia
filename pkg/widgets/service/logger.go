@@ -1,15 +1,8 @@
 package widgetsService
 
-import (
-	"github.com/rs/zerolog"
-)
-
-// LoggerInterface corresponds to most interfaces that have
-// an Open/Close interfaces.
+// LoggerInterface corresponds to most logger interfaces.
 type LoggerInterface interface {
 	Open() error
-	Close()
-	Debug() *zerolog.Event
-	Fatal() *zerolog.Event
-	Info() *zerolog.Event
+	Debug(string, ...any)
+	Info(string, ...any)
 }

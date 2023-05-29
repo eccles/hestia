@@ -68,7 +68,7 @@ func (s StringSet) SymmetricDifferenceMap(values map[string]string) StringSet {
 	return s.SymmetricDifference(NewStringSetFromMap(values))
 }
 
-// Difference returns string set that consists of items that are in set and and not in second set.
+// Difference returns string set that consists of items that are in set and not in second set.
 func (s StringSet) Difference(other StringSet) StringSet {
 	result := NewStringSet()
 
@@ -81,12 +81,12 @@ func (s StringSet) Difference(other StringSet) StringSet {
 	return result
 }
 
-// DifferenceList returns string set that consists of items that are in set and and not in list.
+// DifferenceList returns string set that consists of items that are in set and not in list.
 func (s StringSet) DifferenceList(values ...string) StringSet {
 	return s.Difference(NewStringSet(values...))
 }
 
-// DifferenceMap returns string set that consists of items that are in set and and not in map.
+// DifferenceMap returns string set that consists of items that are in set and not in map.
 func (s StringSet) DifferenceMap(values map[string]string) StringSet {
 	return s.Difference(NewStringSetFromMap(values))
 }

@@ -2,13 +2,8 @@ package logger
 
 import (
 	"os"
-	"time"
 
-	"github.com/rs/zerolog"
-)
-
-const (
-	defaultSampling = 10
+	"golang.org/x/exp/slog"
 )
 
 // Logger represents an interface to a typical logger including logging
@@ -30,40 +25,33 @@ type Logger struct {
 	// bursts of output typically when an error of some kind occurs.
 	Sampling uint32
 
-	zerolog.Logger
+	*slog.Logger
 }
 
 // Open creates logger as to the desired loglevel.
 func (l *Logger) Open() error {
-	var zlogger zerolog.Logger
-	if l.Console {
-		output := zerolog.ConsoleWriter{Out: os.Stdout, TimeFormat: time.RFC3339}
-
-		zlogger = zerolog.New(output).
-			With().
-			Timestamp().
-			Logger()
+	var slogger *slog.Logger
+	var options slog.HandlerOptions
+	if l.Level == "DEBUG" {
+		options.AddSource = true
+		options.Level = slog.LevelDebug
 	} else {
-		if l.Sampling == 0 {
-			l.Sampling = defaultSampling
-		}
-		zlogger = zerolog.New(os.Stderr).
-			With().
-			Timestamp().
-			Logger()
-		zlogger = zlogger.Sample(&zerolog.BasicSampler{N: l.Sampling})
+		options.Level = slog.LevelInfo
+	}
+	if l.Console {
+		slogger = slog.New(slog.NewTextHandler(os.Stderr, &options))
+	} else {
+		// if l.Sampling == 0 {
+		//	l.Sampling = defaultSampling
+		//}
+		slogger = slog.New(slog.NewJSONHandler(os.Stdout, &options))
 	}
 
 	if l.ServiceName != "" {
-		zlogger = zlogger.With().Str("service", l.ServiceName).Logger()
-	}
-	if l.Level == "DEBUG" {
-		zlogger.Level(zerolog.DebugLevel)
-	} else {
-		zlogger.Level(zerolog.InfoLevel)
+		slogger = slogger.With("service", l.ServiceName)
 	}
 
-	l.Logger = zlogger
+	l.Logger = slogger
 
 	return nil
 }

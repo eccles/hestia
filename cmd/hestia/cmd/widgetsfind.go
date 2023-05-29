@@ -21,15 +21,15 @@ var (
 			parseWidgetsFindCmd()
 			defer deferWidgetsFindCmd()
 
-			rootLogger.Info().Msgf("Find Widgets: %s", cfgFile)
+			rootLogger.Info("Find Widgets", "configFile", cfgFile)
 			ctx := context.Background()
 			resp, err := widgetsClient.FindByID(ctx, &widgetsAPI.FindRequest{})
 			if err != nil {
-				rootLogger.Info().Msgf("Find Widget Error: %v", err)
+				rootLogger.Info("Find Widget", "Error", err)
 
 				return err
 			}
-			rootLogger.Info().Msgf("Find Widget: %v", resp)
+			rootLogger.Info("Find Widget", "Response", resp)
 
 			return nil
 		},

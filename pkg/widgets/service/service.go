@@ -31,7 +31,6 @@ func (s *Service) Run() error {
 	if err != nil {
 		return fmt.Errorf("logger start failure: %w", err)
 	}
-	defer s.Logger.Close()
 
 	err = s.StartGRPCService()
 	if err != nil {

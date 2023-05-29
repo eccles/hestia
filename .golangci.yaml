@@ -797,18 +797,25 @@ linters-settings:
 linters:
   enable-all: true
   disable:
+    - deadcode
+    - exhaustivestruct
+    - exhaustruct
     - gci
     - golint
+    - ifshort
     - interfacer
     - maligned
+    - nlreturn
+    - nosnakecase
     - paralleltest
     - scopelint
+    - structcheck
     - testpackage
+    - varcheck
     - varnamelen
     - wrapcheck
     - wsl
   fast: false
-
 
 issues:
   # List of regexps of issue texts to exclude, empty list by default.

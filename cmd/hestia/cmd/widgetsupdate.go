@@ -21,15 +21,15 @@ var (
 			parseWidgetsUpdateCmd()
 			defer deferWidgetsUpdateCmd()
 
-			rootLogger.Info().Msgf("Update Widgets: %s", cfgFile)
+			rootLogger.Info("Update Widgets", "ConfigFile", cfgFile)
 			ctx := context.Background()
 			resp, err := widgetsClient.Update(ctx, &widgetsAPI.UpdateRequest{})
 			if err != nil {
-				rootLogger.Info().Msgf("Update Widget Error: %v", err)
+				rootLogger.Info("Update Widget", "Error", err)
 
 				return err
 			}
-			rootLogger.Info().Msgf("Update Widget: %v", resp)
+			rootLogger.Info("Update Widget", "Response", resp)
 
 			return nil
 		},

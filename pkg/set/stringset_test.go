@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// nolint: gochecknoglobals // these are constants in a test package
+//nolint: gochecknoglobals // these are constants in a test package
 var (
 	inputSet            = NewStringSet([]string{"a1", "a2", "a2"}...)
 	inputMap1           = map[string]string{"a1": "", "a2": ""}

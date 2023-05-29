@@ -28,7 +28,7 @@ var (
 			parseWidgetsCmd()
 			defer deferWidgetsCmd()
 
-			rootLogger.Info().Msgf("Widgets: %s", cfgFile)
+			rootLogger.Info("Widgets", "configFile", cfgFile)
 
 			return nil
 		},
@@ -42,14 +42,13 @@ func parseWidgetsCmd() {
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
-		rootLogger.Panic().Msgf("Error creating Widgets connection: %v", err)
+		rootLogger.Info("creating Widgets connection", "err", err)
 	}
 
 	widgetsClient = widgetsAPI.NewWidgetsClient(conn)
 }
 
 func deferWidgetsCmd() {
-	rootLogger.Close()
 	widgetsClient = nil
 }
 

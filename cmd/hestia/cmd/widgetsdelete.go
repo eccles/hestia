@@ -21,15 +21,15 @@ var (
 			parseWidgetsDeleteCmd()
 			defer deferWidgetsDeleteCmd()
 
-			rootLogger.Info().Msgf("Delete Widgets: %s", cfgFile)
+			rootLogger.Info("Delete Widgets", "configFile", cfgFile)
 			ctx := context.Background()
 			resp, err := widgetsClient.Delete(ctx, &widgetsAPI.DeleteRequest{})
 			if err != nil {
-				rootLogger.Info().Msgf("Delete Widget Error: %v", err)
+				rootLogger.Info("Delete Widget", "error", err)
 
 				return err
 			}
-			rootLogger.Info().Msgf("Delete Widget: %v", resp)
+			rootLogger.Info("Delete Widget", "response", resp)
 
 			return nil
 		},

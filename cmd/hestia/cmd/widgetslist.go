@@ -21,16 +21,14 @@ var (
 			parseWidgetsListCmd()
 			defer deferWidgetsListCmd()
 
-			rootLogger.Info().Msgf("List Widgets: %s", cfgFile)
+			rootLogger.Info("List Widgets", "configFile", cfgFile)
 			ctx := context.Background()
 			resp, err := widgetsClient.List(ctx, &widgetsAPI.ListRequest{})
 			if err != nil {
-				rootLogger.Info().Msgf("List Widget Error: %v", err)
-
+				rootLogger.Info("List Widget", "error: %v", err)
 				return err
 			}
-			rootLogger.Info().Msgf("List Widget: %v", resp)
-
+			rootLogger.Info("List Widget", "response", resp)
 			return nil
 		},
 	}

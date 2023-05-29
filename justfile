@@ -41,8 +41,8 @@ qa:
 	go mod tidy
 	go mod verify
 	go mod vendor
-	gofmt -l -s -w $(shell find . -type f -name '*.go'| grep -v "/vendor/\|/.git/")
-#	golangci-lint run
+	gofmt -l -s -w $(find . -type f -name '*.go'| grep -v "/vendor/\|/.git/")
+	golangci-lint run
 
 # unittest all code
 unittests:

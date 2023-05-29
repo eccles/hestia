@@ -9,6 +9,7 @@ import (
 
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_validator "github.com/grpc-ecosystem/go-grpc-middleware/validator"
+	"golang.org/x/sync/errgroup"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -29,7 +30,7 @@ func (g *GRPCService) Stop() {
 // package and starts the GRPC service.
 func (s *Service) StartGRPCService() error {
 
-	s.Logger.Info().Msgf("Start GRPCService %s", s.Version)
+	s.Logger.Info("Start GRPCService %s", s.Version)
 	grpcServer := grpc.NewServer(
 		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
 			grpc_validator.UnaryServerInterceptor(),
@@ -45,12 +46,15 @@ func (s *Service) StartGRPCService() error {
 	}
 
 	s.GRPC.Server = grpcServer
-	go func() {
+	g := new(errgroup.Group)
+	g.Go(func() error {
 		err = s.GRPC.Server.Serve(listen)
 		if err != nil {
-			s.Logger.Fatal().Err(err).Msg("Failed to start")
+			s.Logger.Info("Failed to start")
+			return err
 		}
-	}()
+		return nil
+	})
 
-	return nil
+	return g.Wait()
 }
