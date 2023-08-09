@@ -7,7 +7,7 @@ all := "go golangci-lint protoc mockery protoc-gen-go protoc-gen-go-grpc protoc-
 default:
 	@just --list
 
-# Install or which current tools
+# Install or which current tools e.g. just tools install|which
 tools SUB:
 	#!/usr/bin/env bash
 	for f in $(ls scripts/tools/source | sort | cut -c3-)
@@ -15,7 +15,7 @@ tools SUB:
 		(. ./scripts/tools/source/*${f} && ${f}_{{SUB}})
 	done
 
-# Install a one or more tools
+# Install one or more tools
 install +TOOLS:
 	#!/usr/bin/env bash
 	for f in {{TOOLS}}
@@ -23,7 +23,7 @@ install +TOOLS:
 		(. ./scripts/tools/source/*${f} && ${f}_install)
 	done
 
-# Find a one or more tools
+# Find one or more tools
 which +TOOLS:
 	#!/usr/bin/env bash
 	for f in {{TOOLS}}

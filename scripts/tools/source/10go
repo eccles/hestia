@@ -6,7 +6,7 @@
 . ./scripts/source/log
 . ./scripts/source/environment
 
-GOLANG_VERSION=1.20.4
+GOLANG_VERSION=1.21.0
 GOLANG_CMD=go
 
 go_install() {
