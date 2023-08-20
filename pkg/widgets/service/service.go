@@ -10,9 +10,6 @@ import (
 type Service struct {
 	widgetsapi.UnimplementedWidgetsServer
 
-	// Version of application
-	Version string
-
 	// An interface as we may want to mock it out in tests.
 	Log Logger
 
