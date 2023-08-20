@@ -6,7 +6,7 @@
 . ./scripts/source/log
 . ./scripts/source/environment
 
-PROTOC_VERSION=23.0
+PROTOC_VERSION=24.1
 PROTOC_CMD=protoc
 
 protoc_install() {

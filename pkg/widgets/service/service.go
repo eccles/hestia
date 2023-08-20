@@ -6,9 +6,7 @@ import (
 	widgetsAPI "github.com/eccles/hestia/pkg/apis/widgets"
 )
 
-type loggerContextKey string
-
-// implments the widgetsAPI.WidgetsServer interfacw
+// implments the widgetsAPI.WidgetsServer interfacw.
 type Service struct {
 	widgetsAPI.UnimplementedWidgetsServer
 
@@ -23,7 +21,6 @@ type Service struct {
 }
 
 func (s *Service) Run() error {
-
 	var err error
 
 	err = s.Logger.Open()

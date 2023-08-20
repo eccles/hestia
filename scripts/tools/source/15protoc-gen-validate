@@ -12,7 +12,7 @@
 #     delete $(which protoc-gen-validate)
 #     remove the entry for protoc-gen-validate from go.mod
 #     execute the install function
-PROTOC_GEN_VALIDATE_VERSION=1.0.1
+PROTOC_GEN_VALIDATE_VERSION=1.0.2
 PROTOC_GEN_VALIDATE_CMD=protoc-gen-validate
 #
 # these directories are used to install the proto files in the same place as
