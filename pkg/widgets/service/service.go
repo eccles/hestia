@@ -14,21 +14,14 @@ type Service struct {
 	Version string
 
 	// An interface as we may want to mock it out in tests.
-	Logger LoggerInterface
+	Log Logger
 
 	// A concrete implementation of a GRPC service.
 	GRPC GRPCService
 }
 
 func (s *Service) Run() error {
-	var err error
-
-	err = s.Logger.Open()
-	if err != nil {
-		return fmt.Errorf("logger start failure: %w", err)
-	}
-
-	err = s.StartGRPCService()
+	var err = s.StartGRPCService()
 	if err != nil {
 		return fmt.Errorf("grpcservice start failure: %w", err)
 	}

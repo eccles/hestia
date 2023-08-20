@@ -33,12 +33,8 @@ var (
 
 func parseRootCmd() {
 	logLevel = viper.GetString(logLevelLabel)
-	rootLogger = logger.Logger{
-		Console:     true,
-		Level:       logLevel,
-		ServiceName: cmd,
-	}
-	_ = rootLogger.Open()
+	logger.NewLogger(logLevel)
+	rootLogger = logger.RootLogger
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.

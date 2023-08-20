@@ -16,15 +16,6 @@ const (
 	serviceName = "widgets"
 )
 
-func logLevel() string {
-	val, ok := os.LookupEnv("LOGLEVEL")
-	if !ok {
-		val = "INFO"
-	}
-
-	return val
-}
-
 func port() string {
 	val, ok := os.LookupEnv("GRPC_SERVICE_PORT")
 	if !ok {
@@ -41,10 +32,7 @@ func Run() {
 	var err error
 
 	s := Service{
-		Logger: &logger.Logger{
-			Level:       logLevel(),
-			ServiceName: serviceName,
-		},
+		Log: logger.WithServiceName(serviceName),
 		GRPC: GRPCService{
 			Port: port(),
 		},

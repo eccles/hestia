@@ -28,7 +28,7 @@ func (g *GRPCService) Stop() {
 // StartGRPCService initializes the GRPC service structs generated in thee qpis
 // package and starts the GRPC service.
 func (s *Service) StartGRPCService() error {
-	s.Logger.Info("Start GRPCService %s", s.Version)
+	s.Log.Info("Start GRPCService %s", s.Version)
 	grpcServer := grpc.NewServer(
 		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
 			grpc_validator.UnaryServerInterceptor(),
@@ -48,7 +48,7 @@ func (s *Service) StartGRPCService() error {
 	g.Go(func() error {
 		err = s.GRPC.Server.Serve(listen)
 		if err != nil {
-			s.Logger.Info("Failed to start")
+			s.Log.Info("Failed to start")
 			return err
 		}
 		return nil
