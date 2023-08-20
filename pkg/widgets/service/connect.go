@@ -1,4 +1,4 @@
-package widgetsService
+package widgetsservice
 
 import (
 	"github.com/eccles/hestia/pkg/startup"

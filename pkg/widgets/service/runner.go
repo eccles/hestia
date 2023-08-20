@@ -1,6 +1,6 @@
-package widgetsService
+package widgetsservice
 
-// widgets - a GRPC Service that implements the widgetsAPI.WidgetsServer interface.
+// widgets - a GRPC Service that implements the widgetsapi.WidgetsServer interface.
 // This file (runner.go must be defined manually) .
 //
 // Additional files to be created manually are handlers.go and connetions.go.

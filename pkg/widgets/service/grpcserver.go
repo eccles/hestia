@@ -1,10 +1,10 @@
-package widgetsService
+package widgetsservice
 
 import (
 	"fmt"
 	"net"
 
-	widgetsAPI "github.com/eccles/hestia/pkg/apis/widgets"
+	widgetsapi "github.com/eccles/hestia/pkg/apis/widgets"
 
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_validator "github.com/grpc-ecosystem/go-grpc-middleware/validator"
@@ -35,7 +35,7 @@ func (s *Service) StartGRPCService() error {
 		)),
 	)
 
-	widgetsAPI.RegisterWidgetsServer(grpcServer, s) // s is of type widgetsAPI.WidgetsServer
+	widgetsapi.RegisterWidgetsServer(grpcServer, s) // s is of type widgetsapi.WidgetsServer
 	reflection.Register(grpcServer)
 
 	listen, err := net.Listen("tcp", ":"+s.GRPC.Port)

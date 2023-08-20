@@ -1,4 +1,4 @@
-package widgetsAPI
+package widgetsapi
 
 // External version of Widget struct without the proto overhead.
 // This struct must be kept in synchronization with the proto

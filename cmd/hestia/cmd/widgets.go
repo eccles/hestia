@@ -8,7 +8,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	widgetsAPI "github.com/eccles/hestia/pkg/apis/widgets"
+	widgetsapi "github.com/eccles/hestia/pkg/apis/widgets"
 )
 
 const (
@@ -18,7 +18,7 @@ const (
 //nolint:gochecknoglobals  // this is just the way cobra/viper works
 var (
 	widgetsAddress string
-	widgetsClient  widgetsAPI.WidgetsClient
+	widgetsClient  widgetsapi.WidgetsClient
 	widgetsCmd     = &cobra.Command{
 		Use:   "widgets",
 		Short: "Widgets client",
@@ -45,7 +45,7 @@ func parseWidgetsCmd() {
 		rootLogger.Info("creating Widgets connection", "err", err)
 	}
 
-	widgetsClient = widgetsAPI.NewWidgetsClient(conn)
+	widgetsClient = widgetsapi.NewWidgetsClient(conn)
 }
 
 func deferWidgetsCmd() {

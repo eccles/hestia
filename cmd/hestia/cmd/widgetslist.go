@@ -7,7 +7,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	widgetsAPI "github.com/eccles/hestia/pkg/apis/widgets"
+	widgetsapi "github.com/eccles/hestia/pkg/apis/widgets"
 )
 
 //nolint:gochecknoglobals  // this is just the way cobra/viper works
@@ -23,7 +23,7 @@ var (
 
 			rootLogger.Info("List Widgets", "configFile", cfgFile)
 			ctx := context.Background()
-			resp, err := widgetsClient.List(ctx, &widgetsAPI.ListRequest{})
+			resp, err := widgetsClient.List(ctx, &widgetsapi.ListRequest{})
 			if err != nil {
 				rootLogger.Info("List Widget", "error: %v", err)
 				return err

@@ -1,6 +1,6 @@
 syntax = "proto3";
-package widgetsAPI;
-option go_package="github.com/eccles/hestia/pkg/services/widgetsAPI";
+package widgetsapi;
+option go_package="github.com/eccles/hestia/pkg/api/widgets;widgetsapi";
 
 import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
 import "google/protobuf/empty.proto";

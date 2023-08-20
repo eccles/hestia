@@ -4,7 +4,7 @@
 // - protoc             v4.24.1
 // source: pkg/apis/widgets/widgets.proto
 
-package widgetsAPI
+package widgetsapi
 
 import (
 	context "context"
@@ -20,11 +20,11 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Widgets_Create_FullMethodName   = "/widgetsAPI.Widgets/Create"
-	Widgets_FindByID_FullMethodName = "/widgetsAPI.Widgets/FindByID"
-	Widgets_List_FullMethodName     = "/widgetsAPI.Widgets/List"
-	Widgets_Update_FullMethodName   = "/widgetsAPI.Widgets/Update"
-	Widgets_Delete_FullMethodName   = "/widgetsAPI.Widgets/Delete"
+	Widgets_Create_FullMethodName   = "/widgetsapi.Widgets/Create"
+	Widgets_FindByID_FullMethodName = "/widgetsapi.Widgets/FindByID"
+	Widgets_List_FullMethodName     = "/widgetsapi.Widgets/List"
+	Widgets_Update_FullMethodName   = "/widgetsapi.Widgets/Update"
+	Widgets_Delete_FullMethodName   = "/widgetsapi.Widgets/Delete"
 )
 
 // WidgetsClient is the client API for Widgets service.
@@ -239,7 +239,7 @@ func _Widgets_Delete_Handler(srv interface{}, ctx context.Context, dec func(inte
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Widgets_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "widgetsAPI.Widgets",
+	ServiceName: "widgetsapi.Widgets",
 	HandlerType: (*WidgetsServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

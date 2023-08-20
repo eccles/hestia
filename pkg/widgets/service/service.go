@@ -1,14 +1,14 @@
-package widgetsService
+package widgetsservice
 
 import (
 	"fmt"
 
-	widgetsAPI "github.com/eccles/hestia/pkg/apis/widgets"
+	widgetsapi "github.com/eccles/hestia/pkg/apis/widgets"
 )
 
-// implments the widgetsAPI.WidgetsServer interfacw.
+// implments the widgetsapi.WidgetsServer interfacw.
 type Service struct {
-	widgetsAPI.UnimplementedWidgetsServer
+	widgetsapi.UnimplementedWidgetsServer
 
 	// Version of application
 	Version string
