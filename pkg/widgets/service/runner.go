@@ -7,13 +7,8 @@ package widgetsService
 // All other fioes are generated using 'go generate' commands
 
 import (
+	"fmt"
 	"os"
-
-	"github.com/eccles/hestia/pkg/logger"
-)
-
-const (
-	serviceName = "widgets"
 )
 
 func port() string {
@@ -28,11 +23,11 @@ func port() string {
 // Run initializes the Service struct and executes its Run method.
 // The Service struct specifies the grpc server code and any other interfaces
 // to external services defined in connections.go.
-func Run() {
+func Run(serviceName string, log Logger) error {
 	var err error
 
 	s := Service{
-		Log: logger.WithServiceName(serviceName),
+		Log: log,
 		GRPC: GRPCService{
 			Port: port(),
 		},
@@ -40,8 +35,8 @@ func Run() {
 
 	err = s.Run()
 	if err != nil {
-		os.Exit(1)
+		return fmt.Errorf("%v", err)
 	}
 
-	os.Exit(0)
+	return nil
 }

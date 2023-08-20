@@ -13,7 +13,7 @@ const (
 
 var RootLogger *slog.Logger //nolint:gochecknoglobals // all loggers derive from this
 
-func NewLogger(level string) {
+func New(level string) {
 	var options slog.HandlerOptions
 	if level == "DEBUG" {
 		options.AddSource = true
@@ -23,6 +23,10 @@ func NewLogger(level string) {
 		options.Level = slog.LevelInfo
 		RootLogger = slog.New(slog.NewJSONHandler(os.Stdout, &options))
 	}
+}
+
+// close is a dummy function at the moment - it should be deferred.
+func Close() {
 }
 
 func WithServiceName(serviceName string) Logger {

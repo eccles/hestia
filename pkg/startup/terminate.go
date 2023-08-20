@@ -1,4 +1,4 @@
-package terminate
+package startup
 
 import (
 	"os"

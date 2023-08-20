@@ -1,7 +1,7 @@
 package widgetsService
 
 import (
-	"github.com/eccles/hestia/pkg/terminate"
+	"github.com/eccles/hestia/pkg/startup"
 )
 
 func (s *Service) Connect() error {
@@ -13,7 +13,7 @@ func (s *Service) Connect() error {
 	// this is where the service stops and pauses for any termination from
 	// k8s or other orchestration tools.
 	s.Log.Info("Wait for termination signal")
-	terminate.WaitForTermination()
+	startup.WaitForTermination()
 
 	return nil
 }

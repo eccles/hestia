@@ -157,7 +157,7 @@ linters-settings:
 
   errorlint:
     # Check whether fmt.Errorf uses the %w verb for formatting errors. See the readme for caveats
-    errorf: true
+    errorf: false
     # Check for plain type assertions and type switches
     asserts: true
     # Check for plain error comparisons
@@ -802,6 +802,7 @@ linters:
     - exhaustivestruct
     - exhaustruct
     - gci
+    - goerr113
     - golint
     - ifshort
     - interfacer

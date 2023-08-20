@@ -33,7 +33,7 @@ var (
 
 func parseRootCmd() {
 	logLevel = viper.GetString(logLevelLabel)
-	logger.NewLogger(logLevel)
+	logger.New(logLevel)
 	rootLogger = logger.RootLogger
 }
 
