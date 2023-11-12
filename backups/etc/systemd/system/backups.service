@@ -1,0 +1,10 @@
+[Unit]
+Description=Makes backup of /data
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/root/bin/databackups.sh
+
+[Install]
+WantedBy=multi-user.target

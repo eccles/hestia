@@ -1,0 +1,3 @@
+# this is for 2 external usb disks that are regulary rotated (every Saturday)
+<decrypted-volume1> UUID=<block-device1-uuid> /etc/luks-keys/<password-file1> 
+<decrypted-volume2> UUID=<block-device2-uuid> /etc/luks-keys/<password-file2> 
