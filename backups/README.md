@@ -10,7 +10,7 @@ The label is 'Backup'.
 The drive is mounted and unmounted on the /Backup mount point which must be created
 manually when setting this up.
 
-Thes notes are rudimentary - you must have previous expertise and take care..
+These notes are rudimentary - you must have previous expertise and take care..
 
 ## Prepare the external disk
 
@@ -28,8 +28,6 @@ As sudo execute:
     - mkfs.xfs -L Backup /dev/mapper/backup
     - cryptsetup luksClose /dev/mapper/backup
 
-OR use gnome-disk-utility
-
 # System configuration
 
 ## Mount and unmount external drive.
@@ -37,7 +35,6 @@ OR use gnome-disk-utility
 ```
 UUID=$(blkid $DEV | cut -d' ' -f2 | cut -d'"' -f2)
 ```
-
 gives (for example).
 
 b0aced4a-0bd6-4560-bc06-3323fdca529d.
@@ -56,7 +53,6 @@ Reload systemd:
 ```bash
 systemctl daemon-reload
 ```
-
 Check all files touched do not have duplicate entries.
 
 Test that mounting works without requiring passphrase and create rsync directory..
@@ -68,10 +64,10 @@ sudo umount /Backup
 ## Get the backup script working.
 
 sudo mkdir -p /root/bin
-sudo cp databackups.sh /root/bin/databackups.sh
-sudo chmod +x  /root/bin/databackups.sh
+sudo cp backups.sh /root/bin/backups.sh
+sudo chmod +x  /root/bin/backups.sh
 
-Edit databackups.sh script and change SOURCE_DIRS if necessary
+Edit backups.sh script and change SOURCE_DIRS if necessary
 
 Enter super user mode
 
@@ -88,7 +84,7 @@ umount /Backup
 Execute:
 
 ```bash
-bash -x ./bin/databackups.sh
+backups.sh
 ```
 
 This might take a while as this will do a full backup.
@@ -98,7 +94,7 @@ Check that the external drive is mounted and unmounted successfully.
 Repeat
 
 ```bash
-bash -x ./bin/databackups.sh
+backups.sh
 ```
 
 This second attempt should be musch quicker.
@@ -108,8 +104,7 @@ Check that /Backup is unmounted after execution finishes.
 Check that the expected directories are created:
 
 ```bash
-mount /Backup
-ls -l /Backup/rsync
+backups.sh list
 ```
 should emit something similar to this:
 
