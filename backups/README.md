@@ -1,10 +1,10 @@
 # Backups
 
 This directory contains the necessary files to configure external
-backup disks that regularly backups the main storage filesytem on
-to external USB disk.
+backup disks that regularly backup the main storage filesytem on
+to an external USB disk.
 
-The external backup disk has an encrypted partition that has a LABELLED filesyatem.
+The external backup disk has an encrypted partition that has a LABELLED filesystem.
 The label is 'Backup'.
 
 The drive is mounted and unmounted on the /Backup mount point which must be created
@@ -17,6 +17,7 @@ These notes are rudimentary - you must have previous expertise and take care..
     - create one partition on the external disk using fdisk utility. 
     - note that it is possible to use the block device directly without
       creating a partition.
+    - alternatively use GNOME disks utility to encrypt and partition disk.
 
 ### Using cryptsetup
 
@@ -37,8 +38,9 @@ UUID=$(blkid $DEV | cut -d' ' -f2 | cut -d'"' -f2)
 ```
 gives (for example).
 
+```
 b0aced4a-0bd6-4560-bc06-3323fdca529d.
-
+```
 Create the necessary files:
 
 ```bash
@@ -53,19 +55,24 @@ Reload systemd:
 ```bash
 systemctl daemon-reload
 ```
+
 Check all files touched do not have duplicate entries.
 
 Test that mounting works without requiring passphrase and create rsync directory..
 
+```bash
 sudo mount /Backup
 sudo mkdir /Backup/rsync
 sudo umount /Backup
+```
 
 ## Get the backup script working.
 
+```bash
 sudo mkdir -p /root/bin
 sudo cp backups.sh /root/bin/backups.sh
 sudo chmod +x  /root/bin/backups.sh
+```
 
 Edit backups.sh script and change SOURCE_DIRS if necessary
 
@@ -106,9 +113,10 @@ Check that the expected directories are created:
 ```bash
 backups.sh list
 ```
+
 should emit something similar to this:
 
-
+```
 total 0
 drwxr-xr-x 3 root root 18 Nov  5 12:24 2023-11-05T12:24:15
 drwxr-xr-x 3 root root 18 Nov  5 12:24 2023-11-05T13:24:15
@@ -143,4 +151,3 @@ ausearch -c '(ckups.sh)' --raw | audit2allow -M my-ckupssh
 semodule -X 300 -i my-ckupssh.pp
 ``` 
 
-and this makes no sense whatsoever

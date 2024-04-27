@@ -10,7 +10,7 @@ This is a work in progress and git commits will reveal each stage of implementat
 
 # Preparation
 
-Install docker, docker-compose in Ubuntu server 18.04.
+Install docker, docker-compose in Ubuntu server 24.04.
 
 ## Edit env.sh
 

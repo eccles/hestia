@@ -8,7 +8,7 @@ Sets are useful when implementing filtering. This is usually done
 by the intersection of a selection set and a target object. The intersection 
 only returns the attributes of the target object specified in the selection set.
 
-Using the sets clas from python3 as an example:
+Using the sets class from python3 as an example:
 
 ```python
 # Filter a list
