@@ -111,7 +111,7 @@ snapper --command 'make' --description 'make everything'
 
 Use pam_snapper package.
 
-Edit the file /etc/pam.d/common-session and add anoy optioons desired.
+Edit the file /etc/pam.d/common-session and add any options desired.
 
 Logout and login and check snapshots:
 
