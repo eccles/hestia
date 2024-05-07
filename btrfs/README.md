@@ -17,7 +17,7 @@ Reference: http://snapper.io/tutorial.html
 # Install snapper
 
 ```bash
-sudo apt install snapper snapper-gui libpam_snapper
+sudo apt install snapper snapper-gui libpam-snapper
 ```
 
 and check that the initial root configuration was setup:
