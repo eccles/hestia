@@ -1,10 +1,8 @@
 [Unit]
 Description=Makes backup of /data
+RequiresMountsFor=/data
+ConditionACPower=true
 
 [Service]
 Type=oneshot
-RemainAfterExit=true
 ExecStart=/root/bin/backups.sh
-
-[Install]
-WantedBy=multi-user.target
