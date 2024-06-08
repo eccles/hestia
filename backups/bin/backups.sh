@@ -29,6 +29,7 @@ readonly BACKUP_MOUNT="/Backup"
 readonly BACKUP_DIR="${BACKUP_MOUNT}/rsync"
 readonly DATETIME="$(date '+%Y-%m-%dT%H:%M:%S')"
 readonly BACKUP_PATH="${BACKUP_DIR}/${DATETIME}"
+readonly LATEST="${BACKUP_DIR}/latest"
 readonly DEFAULTCMD="backup"
 readonly CD=$(pwd)
 if [ $# -gt 0 ]
@@ -65,7 +66,7 @@ function finalise {
         fi
         exit "$CODE"
 }
-trap finalise EXIT INT TERM
+trap finalise EXIT
 
 # Find newest backup
 cd ${BACKUP_DIR}
@@ -78,6 +79,7 @@ cd ${CD}
 
 case $CMD in
         $DEFAULTCMD)
+                rm -rf "${LATEST}"
                 time rsync -aRH --delete \
                         --exclude=".cache" \
                         --exclude=".local" \
@@ -85,7 +87,8 @@ case $CMD in
                         --link-dest="${BACKUP_DIR}/${YOUNGEST}" \
                         --out-format="[%t]:%o:%f:Last Modified %M" \
                         "${SOURCE_DIRS}/" \
-                        "${BACKUP_PATH}"
+                        "${LATEST}"
+                mv "${LATEST}" "${BACKUP_PATH}"
                 ;;
         list)
                 cd ${BACKUP_DIR}
