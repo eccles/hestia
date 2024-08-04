@@ -1,7 +1,7 @@
 # Backups
 
 This directory contains the necessary files to configure external
-backup disks that regularly backup the main storage filesytem on
+backup disks that regularly backup the main storage filesytem
 to an external USB disk.
 
 The external backup disk has an encrypted partition that has a LABELLED filesystem.
@@ -24,10 +24,10 @@ These notes are rudimentary - you must have previous expertise and take care..
 $DEV will typically be /dev/sdc or /dev/sdc1 
 As sudo execute:
 
-    - cryptsetup -v --verify-passphrase luksFormat $DEV   # Answer YES in CAPITAL
-    - cryptsetup luksOpen $DEV backup
-    - mkfs.xfs -L Backup /dev/mapper/backup
-    - cryptsetup luksClose /dev/mapper/backup
+    - sudo cryptsetup -v --verify-passphrase luksFormat $DEV   # Answer YES in CAPITAL
+    - sudo cryptsetup luksOpen $DEV backup
+    - sudo mkfs.xfs -L Backup /dev/mapper/backup
+    - sudo cryptsetup luksClose /dev/mapper/backup
 
 # System configuration
 
@@ -45,7 +45,7 @@ Create the necessary files:
 
 ```bash
 echo "luks-$UUID UUID=$UUID /etc/luks-keys/$UUID" >> /etc/crypttab
-echo "$PASSWORD" > /etc/luks-keys/luks-$UUID
+echo "$PASSWORD" > /etc/luks-keys/$UUID
 echo "LABEL=Backup /Backup auto noauto,x-cockpit-never-auto 0 0" >> /etc/fstab
 mkdir /Backup
 ```
