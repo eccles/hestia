@@ -1,0 +1,15 @@
+bats 1.11.1
+buf 1.51.0
+golang 1.24.2
+golangci-lint 2.0.2
+just 1.40.0
+helm 3.17.2
+kubectl 1.32.3
+mockery 2.53.3
+nodejs 23.11.0
+protoc 30.2
+shellcheck 0.10.0
+shfmt 3.11.0
+skaffold 2.15.0
+task 3.42.1
+

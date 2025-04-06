@@ -2,7 +2,6 @@ syntax = "proto3";
 package widgetsapi;
 option go_package="github.com/eccles/hestia/pkg/api/widgets;widgetsapi";
 
-import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/field_mask.proto";
 
@@ -17,15 +16,11 @@ message Widget {
 
 message CreateRequest {
     // user friendly name
-    string name = 1 [
-        (validate.rules).string.min_len = 3 
-    ];
+    string name = 1;
 }
 
 message FindRequest {
-    string uuid = 1 [
-        (validate.rules).string.uuid = true
-    ];
+    string uuid = 1;
 }
 
 message ListRequest {
@@ -38,17 +33,13 @@ message ListRequest {
     OrderBy order_by = 1;
 
     // Maximum entries per page
-    int32 page_size = 2 [
-        (validate.rules).int32 = { gt: 1, lt: 1000 }
-    ];
+    int32 page_size = 2;
 
     // The next_page_token returned from a previous list request if any.
     string page_token = 3;
 
     // Further fields are bound to query parameters and act to filter the result
-    string name = 4 [
-        (validate.rules).string.min_len = 3 
-    ];
+    string name = 4 ;
 }
 
 

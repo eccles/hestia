@@ -67,7 +67,7 @@ func rootNew() {
 
 	_ = viper.BindPFlag(logLevelLabel, rootCmd.PersistentFlags().Lookup(logLevelLabel))
 
-	rand.Seed(time.Now().UnixNano())
+	rand.New(rand.NewSource(time.Now().UnixNano()))
 }
 
 // initConfig reads in config file and ENV variables if set.

@@ -12,8 +12,9 @@ cd $( dirname $( dirname $0))
 . scripts/source/environment
 
 log_info "Generate protobuf for ${1}"
-protoc -I . -I ${PROTOC_INCLUDE} \
+GOPATH=$(go env GOPATH)
+export PATH=$GOPATH/bin:$PATH
+protoc -I . \
     --go_out=paths=source_relative:. \
     --go-grpc_out=paths=source_relative:. \
-    --validate_out=lang=go,paths=source_relative:. \
     ${1}/*.proto

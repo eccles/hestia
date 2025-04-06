@@ -37,7 +37,7 @@ var (
 
 func parseWidgetsCmd() {
 	parseRootCmd()
-	conn, err := grpc.Dial(
+	conn, err := grpc.NewClient(
 		widgetsAddress,
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
