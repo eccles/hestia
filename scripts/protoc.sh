@@ -8,12 +8,9 @@
 #      figure this out from the $(pwd) command.
 #
 cd $( dirname $( dirname $0))
-. scripts/source/log
 . scripts/source/environment
 
 log_info "Generate protobuf for ${1}"
-GOPATH=$(go env GOPATH)
-export PATH=$GOPATH/bin:$PATH
 protoc -I . \
     --go_out=paths=source_relative:. \
     --go-grpc_out=paths=source_relative:. \

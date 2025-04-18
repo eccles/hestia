@@ -3,3 +3,10 @@
 #
 # this file is sourced - do not execute directly
 #
+pathadd() {
+    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+        PATH="$1${PATH:+"$PATH:"}"
+    fi
+}
+pathadd $(go env GOPATH)
+source ./scripts/source/log
