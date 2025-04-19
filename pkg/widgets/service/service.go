@@ -6,7 +6,7 @@ import (
 	widgetsapi "github.com/eccles/hestia/pkg/apis/widgets"
 )
 
-// implments the widgetsapi.WidgetsServer interfacw.
+// implements the widgetsapi.WidgetsServer interfacw.
 type Service struct {
 	widgetsapi.UnimplementedWidgetsServer
 

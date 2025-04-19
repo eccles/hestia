@@ -1,4 +1,4 @@
-#!/usr/bin/env just --justfile
+!/usr/bin/env just --justfile
 #
 name := "hestie"
 
@@ -32,6 +32,7 @@ qa:
 	go mod verify
 	gofmt -l -s -w $(find . -type f -name '*.go'| grep -v "/vendor/\|/.git/")
 	golangci-lint run --no-config
+	go run golang.org/x/vuln/cmd/govulncheck@latest --show verbose ./...
 
 # unittest all code
 unittests:
