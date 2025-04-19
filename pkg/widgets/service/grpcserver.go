@@ -4,13 +4,14 @@ import (
 	"fmt"
 	"net"
 
-	widgetsapi "github.com/eccles/hestia/pkg/apis/widgets"
-
-	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
-	grpc_validator "github.com/grpc-ecosystem/go-grpc-middleware/validator"
 	"golang.org/x/sync/errgroup"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+
+	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	grpc_validator "github.com/grpc-ecosystem/go-grpc-middleware/validator"
+
+	widgetsapi "github.com/eccles/hestia/pkg/apis/widgets"
 )
 
 // GRPCService represents an incoming connection i.e a server that handles GRPC messages

@@ -1,9 +1,9 @@
-!/usr/bin/env just --justfile
+# !/usr/bin/env just --justfile
 #
 name := "hestie"
 
 @default:
-	@just --list --unsorted --justfile {{justfile()}}
+	@just --list --unsorted --justfile {{justfile()}} | grep -v default
 
 # Install grpc plugins and other go tools
 tools:
@@ -20,6 +20,7 @@ generate:
 	#!/usr/bin/env bash
 	set -euo pipefail
 	source ./scripts/source/environment
+	log_info "Generate code"
 	go generate ./...
 
 # QA all code
@@ -30,8 +31,11 @@ qa:
 	log_info "Check go.mod and lint code"
 	go mod tidy
 	go mod verify
+	log_info "Format code"
 	gofmt -l -s -w $(find . -type f -name '*.go'| grep -v "/vendor/\|/.git/")
-	golangci-lint run --no-config
+	log_info "Linting"
+	golangci-lint run -v
+	log_info "Vulnerability checking"
 	go run golang.org/x/vuln/cmd/govulncheck@latest --show verbose ./...
 
 # unittest all code
