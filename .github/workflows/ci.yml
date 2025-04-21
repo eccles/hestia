@@ -8,19 +8,31 @@ on:
       - main
 
 permissions:
-  contents: read # to fetch code (actions/checkout)
+  contents: write # to fetch code (actions/checkout)
 
 jobs:
   vulncheck:
     name: Analysis
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v4
-      - name: Set up Go
-        uses: actions/setup-go@v5
+      - uses: actions/checkout@v4
+      - name: Setup ASDF VM
+        # TODO: use @v4 when released https://github.com/asdf-vm/actions/issues/594
+        uses: asdf-vm/actions/install@9cd779f40fe38688dd19505ccbc4eaaf018b44e7
         with:
-          go-version: 1.24.2
-      - name: Run govulncheck
-        run: go run golang.org/x/vuln/cmd/govulncheck@latest --show verbose ./...
+          asdf_version: 0.16.7
+      - name: tools 
+        run: just tools
+        shell: bash
+      - name: generate 
+        run: just generate
+        shell: bash
+      - name: qa
+        run: just qa
+        shell: bash
+      - name: unittests
+        run: just unittests
+        shell: bash
+      - name: build
+        run: just build
         shell: bash
