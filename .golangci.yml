@@ -603,7 +603,7 @@ linters:
     gomoddirectives:
       # Allow local `replace` directives.
       # Default: false
-      replace-local: true
+      # replace-local: true
       # List of allowed `replace` directives.
       # Default: []
       replace-allow-list:
@@ -619,10 +619,10 @@ linters:
       toolchain-forbidden: true
       # Defines a pattern to validate `toolchain` directive.
       # Default: '' (no match)
-      toolchain-pattern: 'go1\.23\.\d+$'
+      toolchain-pattern: 'go1\.24\.\d+$'
       # Forbid the use of the `tool` directives.
       # Default: false
-      tool-forbidden: true
+      # tool-forbidden: true
       # Forbid the use of the `godebug` directive.
       # Default: false
       go-debug-forbidden: true
@@ -669,50 +669,6 @@ linters:
       # Available rules: https://github.com/securego/gosec#available-rules
       # Default: [] - means include all rules
       includes:
-        - G101 # Look for hard coded credentials
-        - G102 # Bind to all interfaces
-        - G103 # Audit the use of unsafe block
-        - G104 # Audit errors not checked
-        - G106 # Audit the use of ssh.InsecureIgnoreHostKey
-        - G107 # Url provided to HTTP request as taint input
-        - G108 # Profiling endpoint automatically exposed on /debug/pprof
-        - G109 # Potential Integer overflow made by strconv.Atoi result conversion to int16/32
-        - G110 # Potential DoS vulnerability via decompression bomb
-        - G111 # Potential directory traversal
-        - G112 # Potential slowloris attack
-        - G114 # Use of net/http serve function that has no support for setting timeouts
-        - G115 # Potential integer overflow when converting between integer types
-        - G201 # SQL query construction using format string
-        - G202 # SQL query construction using string concatenation
-        - G203 # Use of unescaped data in HTML templates
-        - G204 # Audit use of command execution
-        - G301 # Poor file permissions used when creating a directory
-        - G302 # Poor file permissions used with chmod
-        - G303 # Creating tempfile using a predictable path
-        - G304 # File path provided as taint input
-        - G305 # File traversal when extracting zip/tar archive
-        - G306 # Poor file permissions used when writing to a new file
-        - G307 # Poor file permissions used when creating a file with os.Create
-        - G401 # Detect the usage of MD5 or SHA1
-        - G402 # Look for bad TLS connection settings
-        - G403 # Ensure minimum RSA key length of 2048 bits
-        - G404 # Insecure random number source (rand)
-        - G405 # Detect the usage of DES or RC4
-        - G406 # Detect the usage of MD4 or RIPEMD160
-        - G501 # Import blocklist: crypto/md5
-        - G502 # Import blocklist: crypto/des
-        - G503 # Import blocklist: crypto/rc4
-        - G504 # Import blocklist: net/http/cgi
-        - G505 # Import blocklist: crypto/sha1
-        - G506 # Import blocklist: golang.org/x/crypto/md4
-        - G507 # Import blocklist: golang.org/x/crypto/ripemd160
-        - G601 # Implicit memory aliasing of items from a range statement
-        - G602 # Slice access out of bounds
-
-      # To specify a set of rules to explicitly exclude.
-      # Available rules: https://github.com/securego/gosec#available-rules
-      # Default: []
-      excludes:
         - G101 # Look for hard coded credentials
         - G102 # Bind to all interfaces
         - G103 # Audit the use of unsafe block
@@ -1137,7 +1093,7 @@ linters:
       logr: false
       # Allow check for the log/slog library.
       # Default: true
-      slog: false
+      #slog: false
       # Allow check for the "sugar logger" from go.uber.org/zap library.
       # Default: true
       zap: false
@@ -1159,7 +1115,7 @@ linters:
       # Show functions with maintainability index lower than N.
       # A high index indicates better maintainability (it's kind of the opposite of complexity).
       # Default: 20
-      under: 100
+      #under: 100
 
     makezero:
       # Allow only slices initialized with a length of zero.
@@ -1170,7 +1126,7 @@ linters:
       # Correct spellings using locale preferences for US or UK.
       # Setting locale to US will correct the British spelling of 'colour' to 'color'.
       # Default is to use a neutral variety of English.
-      locale: US
+      locale: UK
       # Typos to ignore.
       # Should be in lower case.
       # Default: []
@@ -1248,7 +1204,7 @@ linters:
       # To check functions with only two return values (`return nil, nil`).
       # If disabled then returns like `return nil, nil, ..., nil` are supported.
       # Default: true
-      only-two: false
+      # only-two: false
       # In addition, detect opposite situation (simultaneous return of non-nil error and valid value).
       # E.g, `return clone, fh.indexer.Update(clone)` will be considered as invalid.
       # Default: false
@@ -1273,7 +1229,7 @@ linters:
     nolintlint:
       # Disable to ensure that all nolint directives actually have an effect.
       # Default: false
-      allow-unused: true
+      #allow-unused: true
       # Exclude following linters from requiring an explanation.
       # Default: []
       allow-no-explanation: [ ]
@@ -1292,11 +1248,11 @@ linters:
     paralleltest:
       # Ignore missing calls to `t.Parallel()` and only report incorrect uses of it.
       # Default: false
-      ignore-missing: true
+      #ignore-missing: true
       # Ignore missing calls to `t.Parallel()` in subtests. Top-level tests are
       # still required to have `t.Parallel`, but subtests are allowed to skip it.
       # Default: false
-      ignore-missing-subtests: true
+      #ignore-missing-subtests: true
 
     perfsprint:
       # Enable/disable optimization of integer formatting.
@@ -1384,7 +1340,7 @@ linters:
       # Checks only the file's initial comment, which must follow the format: "// Code generated by <generator-name>".
       # Files generated by protoc-gen-go, protoc-gen-go-grpc, and protoc-gen-grpc-gateway are always excluded automatically.
       # Default: []
-      # skip-generated-by: ["protoc-gen-go"]
+      #skip-generated-by: ["protoc-gen-go"]
       # Skip files matching the specified glob pattern from the checking.
       # Default: []
       skip-files:
@@ -2567,12 +2523,12 @@ linters:
       #     FooFoo int8   `json:"foo_foo" validate:"required"`
       # }
       # Default: true.
-      align: false
+      #align: false
       # Whether enable tags sort.
       # If true, the tags will be sorted by name in ascending order.
       # E.g.: `xml:"bar" json:"bar" validate:"required"` -> `json:"bar" validate:"required" xml:"bar"`.
       # Default: true
-      sort: false
+      #sort: false
       # Specify the order of tags, the other tags will be sorted by name.
       # This option will be ignored if `sort` is false.
       # Default: []
@@ -2780,10 +2736,10 @@ linters:
     usestdlibvars:
       # Suggest the use of http.MethodXX.
       # Default: true
-      http-method: false
+      #http-method: false
       # Suggest the use of http.StatusXX.
       # Default: true
-      http-status-code: false
+      #http-status-code: false
       # Suggest the use of time.Weekday.String().
       # Default: true
       time-weekday: true
@@ -3463,7 +3419,7 @@ run:
 
   # Define the Go version limit.
   # Default: use Go version from the go.mod file, fallback on the env var `GOVERSION`, fallback on 1.22.
-  go: '1.24'
+  # go: '1.24'
 
   # Number of operating system threads (`GOMAXPROCS`) that can execute golangci-lint simultaneously.
   # Default: 0 (automatically set to match Linux container CPU quota and
