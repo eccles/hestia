@@ -2,7 +2,7 @@
 #
 name := "hestie"
 
-@default:
+default:
 	@just --list --unsorted --justfile {{justfile()}} | grep -v default
 
 # Install grpc plugins and other go tools
