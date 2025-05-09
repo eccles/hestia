@@ -13,6 +13,8 @@ tools:
 	log_info "Install go tools"
 	go get -tool google.golang.org/protobuf/cmd/protoc-gen-go
 	go get -tool google.golang.org/grpc/cmd/protoc-gen-go-grpc	
+	go get -tool golang.org/x/tools/cmd/goimports
+	go get -tool golang.org/x/tools/cmd/stringer
 	go install tool
 
 # generate all code
@@ -32,6 +34,7 @@ qa:
 	go mod tidy
 	go mod verify
 	log_info "Format code"
+	go tool goimports -w .
 	gofmt -l -s -w $(find . -type f -name '*.go'| grep -v "/vendor/\|/.git/")
 	log_info "Linting"
 	golangci-lint run -v
