@@ -31,7 +31,7 @@ jobs:
         run: just qa
         shell: bash
       - name: unittests
-        run: just unittests
+        run: just unittest
         shell: bash
       - name: build
         run: just build
