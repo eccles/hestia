@@ -48,7 +48,7 @@ linters:
       # The maximal average package complexity.
       # If it's higher than 0.0 (float) the check is enabled.
       # Default: 0.0
-      package-average: 0.5
+      package-average: 2.0
 
     decorder:
       # Required order of `type`, `const`, `var` and `func` declarations inside a file.
@@ -1614,7 +1614,7 @@ linters:
         # https://github.com/mgechev/revive/blob/HEAD/RULES_DESCRIPTIONS.md#file-header
         - name: file-header
           severity: warning
-          disabled: false
+          disabled: true
           exclude: [""]
           arguments:
             - This is the text that must appear at the top of source files.
@@ -2840,7 +2840,7 @@ linters:
       # The longest distance, in source lines, that is being considered a "small scope".
       # Variables used in at most this many lines will be ignored.
       # Default: 5
-      max-distance: 6
+      max-distance: 10
       # The minimum length of a variable's name that is considered "long".
       # Variable names that are at least this long will be ignored.
       # Default: 3

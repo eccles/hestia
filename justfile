@@ -39,7 +39,7 @@ qa:
 	go run golang.org/x/vuln/cmd/govulncheck@latest --show verbose ./...
 
 # unittest all code
-unittests:
+unittest:
 	#!/usr/bin/env bash
 	set -euo pipefail
 	source ./scripts/source/environment
