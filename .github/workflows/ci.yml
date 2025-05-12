@@ -7,15 +7,14 @@ on:
     branches:
       - main
 
-permissions:
-  contents: write # to fetch code (actions/checkout)
-
 jobs:
   vulncheck:
     name: Analysis
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Setup ASDF VM
         # TODO: use @v4 when released https://github.com/asdf-vm/actions/issues/594
         uses: asdf-vm/actions/install@9cd779f40fe38688dd19505ccbc4eaaf018b44e7

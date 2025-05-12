@@ -37,7 +37,7 @@ qa:
 	go tool goimports -w .
 	gofmt -l -s -w $(find . -type f -name '*.go'| grep -v "/vendor/\|/.git/")
 	log_info "Linting"
-	golangci-lint run -v
+	golangci-lint run -v --config .golangci.yml
 	log_info "Vulnerability checking"
 	go run golang.org/x/vuln/cmd/govulncheck@latest --show verbose ./...
 
@@ -47,7 +47,8 @@ unittest:
 	set -euo pipefail
 	source ./scripts/source/environment
 	log_info "Run unittests"
-	go test -v ./...
+	go test -v -coverprofile=coverage.out ./...
+	go tool cover -html=coverage.out -o coverage.html
 
 # build
 build:
