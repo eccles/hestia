@@ -13,13 +13,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package widgetsservice
 
 import (
 	"github.com/eccles/hestia/startup"
-	widgetsservice "github.com/eccles/hestia/widgets/service"
 )
 
-func main() {
-	startup.Run("widgets", widgetsservice.Run)
+func (s *Service) Connect() error {
+	s.Log.Info("Start")
+	// put open statements of all other connections to external services
+	// here.
+	// ....
+
+	// this is where the service stops and pauses for any termination from
+	// k8s or other orchestration tools.
+	s.Log.Info("Wait for termination signal")
+	startup.WaitForTermination()
+
+	return nil
 }

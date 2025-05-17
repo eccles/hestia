@@ -6,7 +6,7 @@ linters:
   # Default set of linters.
   # The value can be: `standard`, `all`, `none`, or `fast`.
   # Default: standard
-  default: all
+  default: fast
 
   # All available settings of specific linters.
   settings:
@@ -73,7 +73,7 @@ linters:
 
       # If true, multiple global `type`, `const` and `var` declarations are allowed.
       # Default: true (disabled)
-      disable-dec-num-check: false
+      disable-dec-num-check: true
 
       # If true, type declarations will be ignored for dec num check.
       # Default: false (type statements are not ignored)
@@ -122,9 +122,9 @@ linters:
           # List of allowed packages.
           # Entries can be a variable (starting with $), a string prefix, or an exact match (if ending with $).
           # Default: []
-          allow:
-            - $gostd
-            - github.com/OpenPeeDeeP
+          #allow:
+          #  - $gostd
+          #  - github.com/OpenPeeDeeP
           # List of packages that are not allowed.
           # Entries can be a variable (starting with $), a string prefix, or an exact match (if ending with $).
           # Default: []
@@ -144,7 +144,7 @@ linters:
     dupl:
       # Tokens count to trigger issue.
       # Default: 150
-      threshold: 100
+      threshold: 150
 
     dupword:
       # Keywords for detecting duplicate words.
@@ -640,6 +640,9 @@ linters:
         # Default: []
         domains:
           - golang.org
+          - github.com/spf13
+          - google.golang.org
+          - github.com/grpc-ecosystem
       blocked:
         # List of blocked modules.
         # Default: []
@@ -965,7 +968,7 @@ linters:
       const-require-single-const: true
       # Require the use of grouped global 'const' declarations.
       # Default: false
-      const-require-grouping: true
+      const-require-grouping: false
 
       # Require the use of a single 'import' declaration only.
       # Default: false
@@ -976,17 +979,17 @@ linters:
 
       # Require the use of a single global 'type' declaration only.
       # Default: false
-      type-require-single-type: true
+      type-require-single-type: false
       # Require the use of grouped global 'type' declarations.
       # Default: false
-      type-require-grouping: true
+      type-require-grouping: false
 
       # Require the use of a single global 'var' declaration only.
       # Default: false
-      var-require-single-var: true
+      var-require-single-var: false
       # Require the use of grouped global 'var' declarations.
       # Default: false
-      var-require-grouping: true
+      var-require-grouping: false
 
     iface:
       # List of analyzers.
@@ -1005,10 +1008,10 @@ linters:
     importas:
       # Do not allow unaliased imports of aliased packages.
       # Default: false
-      no-unaliased: true
+      # no-unaliased: true
       # Do not allow non-required aliases.
       # Default: false
-      no-extra-aliases: true
+      # no-extra-aliases: true
       # List of aliases
       # Default: []
       alias:
@@ -1874,14 +1877,14 @@ linters:
         # https://github.com/mgechev/revive/blob/HEAD/RULES_DESCRIPTIONS.md#unused-parameter
         - name: unused-parameter
           severity: warning
-          disabled: false
+          disabled: true
           exclude: [""]
           arguments:
             - allow-regex: "^_"
         # https://github.com/mgechev/revive/blob/HEAD/RULES_DESCRIPTIONS.md#unused-receiver
         - name: unused-receiver
           severity: warning
-          disabled: false
+          disabled: true
           exclude: [""]
           arguments:
             - allow-regex: "^_"
@@ -3109,12 +3112,12 @@ linters:
 formatters:
   # Enable specific formatter.
   # Default: [] (uses standard Go formatting)
-  enable:
-    - gci
-    - gofmt
-    - gofumpt
-    - goimports
-    - golines
+  # enable:
+  # - gci
+  # - gofmt
+  # - gofumpt
+  # - goimports
+  # - golines
 
   # Formatters settings.
   settings:

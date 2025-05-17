@@ -13,13 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package widgetsapi
 
-import (
-	"github.com/eccles/hestia/startup"
-	widgetsservice "github.com/eccles/hestia/widgets/service"
-)
-
-func main() {
-	startup.Run("widgets", widgetsservice.Run)
-}
+// Generate Go code from protobuf definition file.
+//go:generate ../../scripts/protoc.sh apis/widgets

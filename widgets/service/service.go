@@ -13,13 +13,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package widgetsservice
 
 import (
-	"github.com/eccles/hestia/startup"
-	widgetsservice "github.com/eccles/hestia/widgets/service"
+	"fmt"
+
+	widgetsapi "github.com/eccles/hestia/apis/widgets"
 )
 
-func main() {
-	startup.Run("widgets", widgetsservice.Run)
+// implements the widgetsapi.WidgetsServer interfacw.
+type Service struct {
+	widgetsapi.UnimplementedWidgetsServer
+
+	// An interface as we may want to mock it out in tests.
+	Log Logger
+
+	// A concrete implementation of a GRPC service.
+	GRPC GRPCService
+}
+
+func (s *Service) Run() error {
+	err := s.StartGRPCService()
+
+	if err != nil {
+		return fmt.Errorf("grpcservice start failure: %w", err)
+	}
+
+	defer s.GRPC.Stop()
+
+	return s.Connect()
 }
