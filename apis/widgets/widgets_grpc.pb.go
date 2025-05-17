@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v6.30.2
-// source: pkg/apis/widgets/widgets.proto
+// source: apis/widgets/widgets.proto
 
 package widgetsapi
 
@@ -281,5 +281,5 @@ var Widgets_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "pkg/apis/widgets/widgets.proto",
+	Metadata: "apis/widgets/widgets.proto",
 }

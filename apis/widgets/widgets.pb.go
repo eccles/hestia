@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v6.30.2
-// source: pkg/apis/widgets/widgets.proto
+// source: apis/widgets/widgets.proto
 
 package widgetsapi
 
@@ -55,11 +55,11 @@ func (x ListRequest_OrderBy) String() string {
 }
 
 func (ListRequest_OrderBy) Descriptor() protoreflect.EnumDescriptor {
-	return file_pkg_apis_widgets_widgets_proto_enumTypes[0].Descriptor()
+	return file_apis_widgets_widgets_proto_enumTypes[0].Descriptor()
 }
 
 func (ListRequest_OrderBy) Type() protoreflect.EnumType {
-	return &file_pkg_apis_widgets_widgets_proto_enumTypes[0]
+	return &file_apis_widgets_widgets_proto_enumTypes[0]
 }
 
 func (x ListRequest_OrderBy) Number() protoreflect.EnumNumber {
@@ -68,7 +68,7 @@ func (x ListRequest_OrderBy) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ListRequest_OrderBy.Descriptor instead.
 func (ListRequest_OrderBy) EnumDescriptor() ([]byte, []int) {
-	return file_pkg_apis_widgets_widgets_proto_rawDescGZIP(), []int{3, 0}
+	return file_apis_widgets_widgets_proto_rawDescGZIP(), []int{3, 0}
 }
 
 type Widget struct {
@@ -83,7 +83,7 @@ type Widget struct {
 
 func (x *Widget) Reset() {
 	*x = Widget{}
-	mi := &file_pkg_apis_widgets_widgets_proto_msgTypes[0]
+	mi := &file_apis_widgets_widgets_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -95,7 +95,7 @@ func (x *Widget) String() string {
 func (*Widget) ProtoMessage() {}
 
 func (x *Widget) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_widgets_widgets_proto_msgTypes[0]
+	mi := &file_apis_widgets_widgets_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -108,7 +108,7 @@ func (x *Widget) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Widget.ProtoReflect.Descriptor instead.
 func (*Widget) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_widgets_widgets_proto_rawDescGZIP(), []int{0}
+	return file_apis_widgets_widgets_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *Widget) GetUuid() string {
@@ -135,7 +135,7 @@ type CreateRequest struct {
 
 func (x *CreateRequest) Reset() {
 	*x = CreateRequest{}
-	mi := &file_pkg_apis_widgets_widgets_proto_msgTypes[1]
+	mi := &file_apis_widgets_widgets_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -147,7 +147,7 @@ func (x *CreateRequest) String() string {
 func (*CreateRequest) ProtoMessage() {}
 
 func (x *CreateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_widgets_widgets_proto_msgTypes[1]
+	mi := &file_apis_widgets_widgets_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -160,7 +160,7 @@ func (x *CreateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateRequest.ProtoReflect.Descriptor instead.
 func (*CreateRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_widgets_widgets_proto_rawDescGZIP(), []int{1}
+	return file_apis_widgets_widgets_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *CreateRequest) GetName() string {
@@ -179,7 +179,7 @@ type FindRequest struct {
 
 func (x *FindRequest) Reset() {
 	*x = FindRequest{}
-	mi := &file_pkg_apis_widgets_widgets_proto_msgTypes[2]
+	mi := &file_apis_widgets_widgets_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -191,7 +191,7 @@ func (x *FindRequest) String() string {
 func (*FindRequest) ProtoMessage() {}
 
 func (x *FindRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_widgets_widgets_proto_msgTypes[2]
+	mi := &file_apis_widgets_widgets_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -204,7 +204,7 @@ func (x *FindRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FindRequest.ProtoReflect.Descriptor instead.
 func (*FindRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_widgets_widgets_proto_rawDescGZIP(), []int{2}
+	return file_apis_widgets_widgets_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *FindRequest) GetUuid() string {
@@ -230,7 +230,7 @@ type ListRequest struct {
 
 func (x *ListRequest) Reset() {
 	*x = ListRequest{}
-	mi := &file_pkg_apis_widgets_widgets_proto_msgTypes[3]
+	mi := &file_apis_widgets_widgets_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -242,7 +242,7 @@ func (x *ListRequest) String() string {
 func (*ListRequest) ProtoMessage() {}
 
 func (x *ListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_widgets_widgets_proto_msgTypes[3]
+	mi := &file_apis_widgets_widgets_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -255,7 +255,7 @@ func (x *ListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListRequest.ProtoReflect.Descriptor instead.
 func (*ListRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_widgets_widgets_proto_rawDescGZIP(), []int{3}
+	return file_apis_widgets_widgets_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *ListRequest) GetOrderBy() ListRequest_OrderBy {
@@ -297,7 +297,7 @@ type ListResponse struct {
 
 func (x *ListResponse) Reset() {
 	*x = ListResponse{}
-	mi := &file_pkg_apis_widgets_widgets_proto_msgTypes[4]
+	mi := &file_apis_widgets_widgets_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -309,7 +309,7 @@ func (x *ListResponse) String() string {
 func (*ListResponse) ProtoMessage() {}
 
 func (x *ListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_widgets_widgets_proto_msgTypes[4]
+	mi := &file_apis_widgets_widgets_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -322,7 +322,7 @@ func (x *ListResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListResponse.ProtoReflect.Descriptor instead.
 func (*ListResponse) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_widgets_widgets_proto_rawDescGZIP(), []int{4}
+	return file_apis_widgets_widgets_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *ListResponse) GetWidgets() []*Widget {
@@ -353,7 +353,7 @@ type UpdateRequest struct {
 
 func (x *UpdateRequest) Reset() {
 	*x = UpdateRequest{}
-	mi := &file_pkg_apis_widgets_widgets_proto_msgTypes[5]
+	mi := &file_apis_widgets_widgets_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -365,7 +365,7 @@ func (x *UpdateRequest) String() string {
 func (*UpdateRequest) ProtoMessage() {}
 
 func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_widgets_widgets_proto_msgTypes[5]
+	mi := &file_apis_widgets_widgets_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -378,7 +378,7 @@ func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateRequest.ProtoReflect.Descriptor instead.
 func (*UpdateRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_widgets_widgets_proto_rawDescGZIP(), []int{5}
+	return file_apis_widgets_widgets_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *UpdateRequest) GetUuid() string {
@@ -411,7 +411,7 @@ type DeleteRequest struct {
 
 func (x *DeleteRequest) Reset() {
 	*x = DeleteRequest{}
-	mi := &file_pkg_apis_widgets_widgets_proto_msgTypes[6]
+	mi := &file_apis_widgets_widgets_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -423,7 +423,7 @@ func (x *DeleteRequest) String() string {
 func (*DeleteRequest) ProtoMessage() {}
 
 func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_widgets_widgets_proto_msgTypes[6]
+	mi := &file_apis_widgets_widgets_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -436,7 +436,7 @@ func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteRequest.ProtoReflect.Descriptor instead.
 func (*DeleteRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_widgets_widgets_proto_rawDescGZIP(), []int{6}
+	return file_apis_widgets_widgets_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *DeleteRequest) GetUuid() string {
@@ -446,11 +446,11 @@ func (x *DeleteRequest) GetUuid() string {
 	return ""
 }
 
-var File_pkg_apis_widgets_widgets_proto protoreflect.FileDescriptor
+var File_apis_widgets_widgets_proto protoreflect.FileDescriptor
 
-const file_pkg_apis_widgets_widgets_proto_rawDesc = "" +
+const file_apis_widgets_widgets_proto_rawDesc = "" +
 	"\n" +
-	"\x1epkg/apis/widgets/widgets.proto\x12\n" +
+	"\x1aapis/widgets/widgets.proto\x12\n" +
 	"widgetsapi\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto\"0\n" +
 	"\x06Widget\x12\x12\n" +
 	"\x04uuid\x18\x01 \x01(\tR\x04uuid\x12\x12\n" +
@@ -482,23 +482,23 @@ const file_pkg_apis_widgets_widgets_proto_rawDesc = "" +
 	"\bFindByID\x12\x17.widgetsapi.FindRequest\x1a\x12.widgetsapi.Widget\"\x00\x12;\n" +
 	"\x04List\x12\x17.widgetsapi.ListRequest\x1a\x18.widgetsapi.ListResponse\"\x00\x129\n" +
 	"\x06Update\x12\x19.widgetsapi.UpdateRequest\x1a\x12.widgetsapi.Widget\"\x00\x12=\n" +
-	"\x06Delete\x12\x19.widgetsapi.DeleteRequest\x1a\x16.google.protobuf.Empty\"\x00B5Z3github.com/eccles/hestia/pkg/api/widgets;widgetsapib\x06proto3"
+	"\x06Delete\x12\x19.widgetsapi.DeleteRequest\x1a\x16.google.protobuf.Empty\"\x00B1Z/github.com/eccles/hestia/api/widgets;widgetsapib\x06proto3"
 
 var (
-	file_pkg_apis_widgets_widgets_proto_rawDescOnce sync.Once
-	file_pkg_apis_widgets_widgets_proto_rawDescData []byte
+	file_apis_widgets_widgets_proto_rawDescOnce sync.Once
+	file_apis_widgets_widgets_proto_rawDescData []byte
 )
 
-func file_pkg_apis_widgets_widgets_proto_rawDescGZIP() []byte {
-	file_pkg_apis_widgets_widgets_proto_rawDescOnce.Do(func() {
-		file_pkg_apis_widgets_widgets_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_pkg_apis_widgets_widgets_proto_rawDesc), len(file_pkg_apis_widgets_widgets_proto_rawDesc)))
+func file_apis_widgets_widgets_proto_rawDescGZIP() []byte {
+	file_apis_widgets_widgets_proto_rawDescOnce.Do(func() {
+		file_apis_widgets_widgets_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_apis_widgets_widgets_proto_rawDesc), len(file_apis_widgets_widgets_proto_rawDesc)))
 	})
-	return file_pkg_apis_widgets_widgets_proto_rawDescData
+	return file_apis_widgets_widgets_proto_rawDescData
 }
 
-var file_pkg_apis_widgets_widgets_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_pkg_apis_widgets_widgets_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
-var file_pkg_apis_widgets_widgets_proto_goTypes = []any{
+var file_apis_widgets_widgets_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_apis_widgets_widgets_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_apis_widgets_widgets_proto_goTypes = []any{
 	(ListRequest_OrderBy)(0),      // 0: widgetsapi.ListRequest.OrderBy
 	(*Widget)(nil),                // 1: widgetsapi.Widget
 	(*CreateRequest)(nil),         // 2: widgetsapi.CreateRequest
@@ -510,7 +510,7 @@ var file_pkg_apis_widgets_widgets_proto_goTypes = []any{
 	(*fieldmaskpb.FieldMask)(nil), // 8: google.protobuf.FieldMask
 	(*emptypb.Empty)(nil),         // 9: google.protobuf.Empty
 }
-var file_pkg_apis_widgets_widgets_proto_depIdxs = []int32{
+var file_apis_widgets_widgets_proto_depIdxs = []int32{
 	0, // 0: widgetsapi.ListRequest.order_by:type_name -> widgetsapi.ListRequest.OrderBy
 	1, // 1: widgetsapi.ListResponse.widgets:type_name -> widgetsapi.Widget
 	1, // 2: widgetsapi.UpdateRequest.widget:type_name -> widgetsapi.Widget
@@ -532,27 +532,27 @@ var file_pkg_apis_widgets_widgets_proto_depIdxs = []int32{
 	0, // [0:4] is the sub-list for field type_name
 }
 
-func init() { file_pkg_apis_widgets_widgets_proto_init() }
-func file_pkg_apis_widgets_widgets_proto_init() {
-	if File_pkg_apis_widgets_widgets_proto != nil {
+func init() { file_apis_widgets_widgets_proto_init() }
+func file_apis_widgets_widgets_proto_init() {
+	if File_apis_widgets_widgets_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_pkg_apis_widgets_widgets_proto_rawDesc), len(file_pkg_apis_widgets_widgets_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_apis_widgets_widgets_proto_rawDesc), len(file_apis_widgets_widgets_proto_rawDesc)),
 			NumEnums:      1,
 			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_pkg_apis_widgets_widgets_proto_goTypes,
-		DependencyIndexes: file_pkg_apis_widgets_widgets_proto_depIdxs,
-		EnumInfos:         file_pkg_apis_widgets_widgets_proto_enumTypes,
-		MessageInfos:      file_pkg_apis_widgets_widgets_proto_msgTypes,
+		GoTypes:           file_apis_widgets_widgets_proto_goTypes,
+		DependencyIndexes: file_apis_widgets_widgets_proto_depIdxs,
+		EnumInfos:         file_apis_widgets_widgets_proto_enumTypes,
+		MessageInfos:      file_apis_widgets_widgets_proto_msgTypes,
 	}.Build()
-	File_pkg_apis_widgets_widgets_proto = out.File
-	file_pkg_apis_widgets_widgets_proto_goTypes = nil
-	file_pkg_apis_widgets_widgets_proto_depIdxs = nil
+	File_apis_widgets_widgets_proto = out.File
+	file_apis_widgets_widgets_proto_goTypes = nil
+	file_apis_widgets_widgets_proto_depIdxs = nil
 }

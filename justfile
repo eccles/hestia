@@ -36,8 +36,10 @@ qa:
 	log_info "Format code"
 	go tool goimports -w .
 	gofmt -l -s -w $(find . -type f -name '*.go'| grep -v "/vendor/\|/.git/")
+	log_info "Vettting"
+	go vet ./...
 	log_info "Linting"
-	golangci-lint run -v
+	golangci-lint run -c ./.golangci.yml -v
 	log_info "Vulnerability checking"
 	go run golang.org/x/vuln/cmd/govulncheck@latest --show verbose ./...
 

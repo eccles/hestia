@@ -13,13 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package widgetsservice
 
 import (
-	"github.com/eccles/hestia/startup"
-	widgetsservice "github.com/eccles/hestia/widgets/service"
+	"github.com/eccles/hestia/logger"
 )
 
-func main() {
-	startup.Run("widgets", widgetsservice.Run)
-}
+type Logger = logger.Logger

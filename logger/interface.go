@@ -13,13 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package logger
 
 import (
-	"github.com/eccles/hestia/startup"
-	widgetsservice "github.com/eccles/hestia/widgets/service"
+	"log/slog"
 )
 
-func main() {
-	startup.Run("widgets", widgetsservice.Run)
+// Logger corresponds to most logger interfaces.
+type Logger interface {
+	Debug(fmt string, vals ...any)
+	Info(fmt string, vals ...any)
+
+	With(vals ...any) *slog.Logger
 }
