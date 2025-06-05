@@ -1,6 +1,6 @@
-# !/usr/bin/env just --justfile
+#!/usr/bin/env just --justfile
 #
-name := "hestie"
+name := "hestia"
 
 default:
 	@just --list --unsorted --justfile {{justfile()}} | grep -v default
@@ -11,6 +11,7 @@ tools:
 	set -euo pipefail
 	source ./scripts/source/environment
 	log_info "Install go tools"
+	which go
 	go get -tool google.golang.org/protobuf/cmd/protoc-gen-go
 	go get -tool google.golang.org/grpc/cmd/protoc-gen-go-grpc	
 	go get -tool golang.org/x/tools/cmd/goimports
@@ -23,6 +24,7 @@ generate:
 	set -euo pipefail
 	source ./scripts/source/environment
 	log_info "Generate code"
+	which go
 	go generate ./...
 
 # QA all code
@@ -31,15 +33,17 @@ qa:
 	set -euo pipefail
 	source ./scripts/source/environment
 	log_info "Check go.mod and lint code"
+	which go
 	go mod tidy
 	go mod verify
 	log_info "Format code"
 	go tool goimports -w .
 	gofmt -l -s -w $(find . -type f -name '*.go'| grep -v "/vendor/\|/.git/")
-	log_info "Vettting"
+	log_info "Vetting"
 	go vet ./...
 	log_info "Linting"
-	golangci-lint run -c ./.golangci.yml -v
+	which golangci-lint
+	golangci-lint run --config .golangci.yml -v ./...
 	log_info "Vulnerability checking"
 	go run golang.org/x/vuln/cmd/govulncheck@latest --show verbose ./...
 
@@ -49,6 +53,7 @@ unittest:
 	set -euo pipefail
 	source ./scripts/source/environment
 	log_info "Run unittests"
+	which go
 	go test -v -coverprofile=coverage.out ./...
 	go tool cover -html=coverage.out -o coverage.html
 
@@ -58,4 +63,5 @@ build:
 	set -euo pipefail
 	source ./scripts/source/environment
 	log_info "Build binariers"
+	which go
 	go build -o bin/ ./...

@@ -55,7 +55,6 @@ func (s *Service) StartGRPCService() error {
 	reflection.Register(grpcServer)
 
 	listen, err := net.Listen("tcp", ":"+s.GRPC.Port)
-
 	if err != nil {
 		return fmt.Errorf("listen ':%s' failure: %w", s.GRPC.Port, err)
 	}
