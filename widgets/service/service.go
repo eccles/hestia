@@ -34,7 +34,6 @@ type Service struct {
 
 func (s *Service) Run() error {
 	err := s.StartGRPCService()
-
 	if err != nil {
 		return fmt.Errorf("grpcservice start failure: %w", err)
 	}

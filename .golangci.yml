@@ -3112,12 +3112,12 @@ linters:
 formatters:
   # Enable specific formatter.
   # Default: [] (uses standard Go formatting)
-  # enable:
-  # - gci
-  # - gofmt
-  # - gofumpt
-  # - goimports
-  # - golines
+  enable:
+    - gci
+    - gofmt
+    - gofumpt
+    - goimports
+    - golines
 
   # Formatters settings.
   settings:
@@ -3130,7 +3130,7 @@ formatters:
       sections:
         - standard                       # Standard section: captures all standard packages.
         - default                        # Default section: contains all imports that could not be matched to another section type.
-        - prefix(github.com/org/project) # Custom section: groups all imports with the specified Prefix.
+        - prefix(github.com/eccles/hestia) # Custom section: groups all imports with the specified Prefix.
         - blank                          # Blank section: contains all blank imports. This section is not present unless explicitly enabled.
         - dot                            # Dot section: contains all dot imports. This section is not present unless explicitly enabled.
         - alias                          # Alias section: contains all alias imports. This section is not present unless explicitly enabled.
@@ -3156,7 +3156,7 @@ formatters:
     gofmt:
       # Simplify code: gofmt with `-s` option.
       # Default: true
-      simplify: false
+      simplify: true
       # Apply the rewrite rules to the source before reformatting.
       # https://pkg.go.dev/cmd/gofmt
       # Default: []
@@ -3169,7 +3169,7 @@ formatters:
     gofumpt:
       # Module path which contains the source code being formatted.
       # Default: ""
-      module-path: github.com/org/project
+      module-path: github.com/eccles/hestia
 
       # Choose whether to use the extra rules.
       # Default: false
@@ -3180,15 +3180,15 @@ formatters:
       # with the given prefixes are grouped after 3rd-party packages.
       # Default: []
       local-prefixes:
-        - github.com/org/project
+        - github.com/eccles/hestia
 
     golines:
       # Target maximum line length.
       # Default: 100
-      max-len: 200
+      max-len: 100
       # Length of a tabulation.
       # Default: 4
-      tab-len: 8
+      tab-len: 4
       # Shorten single-line comments.
       # Default: false
       shorten-comments: true
@@ -3215,24 +3215,24 @@ formatters:
     generated: strict
     # Which file paths to exclude.
     # Default: []
-    paths:
-      - ".*\\.my\\.go$"
-      - lib/bad.go
+    #paths:
+    #  - ".*\\.my\\.go$"
+    #  - lib/bad.go
 
 issues:
   # Maximum issues count per one linter.
   # Set to 0 to disable.
   # Default: 50
-  max-issues-per-linter: 0
+  max-issues-per-linter: 50
 
   # Maximum count of issues with the same text.
   # Set to 0 to disable.
   # Default: 3
-  max-same-issues: 0
+  max-same-issues: 3
 
   # Make issues output unique by line.
   # Default: true
-  uniq-by-line: false
+  uniq-by-line: true
 
   # Show only new issues: if there are unstaged changes or untracked files,
   # only those changes are analyzed, else only changes in HEAD~ are analyzed.
@@ -3241,15 +3241,15 @@ issues:
   # much better don't allow issues in new code.
   #
   # Default: false
-  new: true
+  new: false
 
   # Show only new issues created after the best common ancestor (merge-base against HEAD).
   # Default: ""
-  new-from-merge-base: main
+  new-from-merge-base: ""
 
   # Show only new issues created after git revision `REV`.
   # Default: ""
-  new-from-rev: HEAD
+  new-from-rev: ""
 
   # Show only new issues created in git patch with set file path.
   # Default: ""

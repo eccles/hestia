@@ -27,7 +27,6 @@ func (s *Service) Create(
 	ctx context.Context,
 	r *widgetsapi.CreateRequest,
 ) (*widgetsapi.Widget, error) {
-
 	return &widgetsapi.Widget{
 		Name: r.GetName(),
 	}, nil
@@ -37,7 +36,6 @@ func (s *Service) FindByID(
 	ctx context.Context,
 	r *widgetsapi.FindRequest,
 ) (*widgetsapi.Widget, error) {
-
 	return &widgetsapi.Widget{
 		Uuid: r.GetUuid(),
 	}, nil
@@ -47,7 +45,6 @@ func (s *Service) List(
 	ctx context.Context,
 	r *widgetsapi.ListRequest,
 ) (*widgetsapi.ListResponse, error) {
-
 	return &widgetsapi.ListResponse{}, nil
 }
 
@@ -55,7 +52,6 @@ func (s *Service) Update(
 	ctx context.Context,
 	r *widgetsapi.UpdateRequest,
 ) (*widgetsapi.Widget, error) {
-
 	return &widgetsapi.Widget{
 		Uuid: r.GetUuid(),
 	}, nil
@@ -65,6 +61,5 @@ func (s *Service) Delete(
 	ctx context.Context,
 	_ *widgetsapi.DeleteRequest,
 ) (*empty.Empty, error) {
-
 	return &empty.Empty{}, nil
 }

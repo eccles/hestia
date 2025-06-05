@@ -6,7 +6,6 @@ require (
 	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/viper v1.20.1
-	golang.org/x/exp v0.0.0-20250506013437-ce4c2cf36ca6
 	golang.org/x/sync v0.14.0
 	google.golang.org/grpc v1.72.0
 	google.golang.org/protobuf v1.36.6

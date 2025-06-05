@@ -55,7 +55,6 @@ func parseWidgetsCmd() {
 		widgetsAddress,
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
-
 	if err != nil {
 		rootLogger.Info("creating Widgets connection", "err", err)
 	}
@@ -81,7 +80,10 @@ func widgetsNew() {
 		"Address of widgets service",
 	)
 
-	_ = viper.BindPFlag(widgetsAddressLabel, widgetsCmd.PersistentFlags().Lookup(widgetsAddressLabel))
+	_ = viper.BindPFlag(
+		widgetsAddressLabel,
+		widgetsCmd.PersistentFlags().Lookup(widgetsAddressLabel),
+	)
 
 	rootCmd.AddCommand(widgetsCmd)
 }

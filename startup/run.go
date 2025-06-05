@@ -47,7 +47,6 @@ func Run(serviceName string, run Runner) {
 	log := logger.WithServiceName(serviceName)
 
 	err := run(serviceName, log)
-
 	if err != nil {
 		log.Info("Error terminating", "err", err)
 		exitCode = 1
