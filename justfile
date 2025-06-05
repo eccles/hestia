@@ -1,6 +1,6 @@
-# !/usr/bin/env just --justfile
+#!/usr/bin/env just --justfile
 #
-name := "hestie"
+name := "hestia"
 
 default:
 	@just --list --unsorted --justfile {{justfile()}} | grep -v default
