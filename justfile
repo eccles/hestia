@@ -16,6 +16,7 @@ tools:
 	go get -tool google.golang.org/grpc/cmd/protoc-gen-go-grpc	
 	go get -tool golang.org/x/tools/cmd/goimports
 	go get -tool golang.org/x/tools/cmd/stringer
+	go get -tool honnef.co/go/tools/cmd/staticcheck
 	go install tool
 
 # generate all code
@@ -42,8 +43,7 @@ qa:
 	log_info "Vetting"
 	go vet ./...
 	log_info "Linting"
-	which golangci-lint
-	golangci-lint run --config .golangci.yml -v ./...
+	go tool staticcheck ./...
 	log_info "Vulnerability checking"
 	go run golang.org/x/vuln/cmd/govulncheck@latest --show verbose ./...
 

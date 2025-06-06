@@ -29,3 +29,18 @@ https://github.com/zed-industries/zed/issues/22978
 Editing /etc/prime-discrete and setting 'on' to 'off' fixed the problem.
 
 This error seems to be specific to Pop OS.
+
+# Pop OS 24.04
+
+This is an experimental COSMIC desktop. Setting the /etc/prime-discrete value as
+described above led to system76-power dying and the NIC losing its IP address.
+
+On this platform setting
+
+```
+export ZED_ALLOW_EMULATED_GPU=1
+```
+
+in .bashrc worked.
+
+See https://github.com/pop-os/cosmic-epoch/issues/1976.

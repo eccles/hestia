@@ -1,0 +1,8 @@
+*.go eol=lf
+*.sh eol=lf
+*.tf eol=lf
+*.py eol=lf
+*.yaml eol=lf
+**/go.sum              -diff -merge
+**/go.sum              linguist-generated=true
+
