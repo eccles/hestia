@@ -14,8 +14,6 @@ tools:
 	which go
 	go get -tool google.golang.org/protobuf/cmd/protoc-gen-go
 	go get -tool google.golang.org/grpc/cmd/protoc-gen-go-grpc	
-	go get -tool golang.org/x/tools/cmd/goimports
-	go get -tool honnef.co/go/tools/cmd/staticcheck
 	go install tool
 
 # generate all code
@@ -36,13 +34,12 @@ qa:
 	which go
 	go mod tidy
 	go mod verify
-	log_info "Format code"
-	go tool goimports -w .
-	gofmt -l -s -w $(find . -type f -name '*.go'| grep -v "/vendor/\|/.git/")
 	log_info "Vetting"
 	go vet ./...
+	log_info "Formatting"
+	golangci-lint fmt ./...
 	log_info "Linting"
-	go tool staticcheck ./...
+	golangci-lint run ./...
 	log_info "Vulnerability checking"
 	go run golang.org/x/vuln/cmd/govulncheck@latest --show verbose ./...
 
