@@ -1,0 +1,39 @@
+---
+version: "2"
+run:
+  go: "1.24"
+linters:
+  default: none
+  enable:
+    - bodyclose
+    - dogsled
+    - exhaustive
+    - funlen
+    - gocritic
+    - gocyclo
+    - godot
+    - gosec
+    - govet
+    - ineffassign
+    - lll
+    - misspell
+    - staticcheck
+    - unused
+    - whitespace
+  settings:
+    funlen:
+      lines: 80
+      statements: 30
+    gosec:
+      excludes:
+        - G107
+    lll:
+      line-length: 100
+      tab-width: 4
+    misspell:
+      locale: UK
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
