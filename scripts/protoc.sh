@@ -8,7 +8,7 @@
 #      figure this out from the $(pwd) command.
 #
 cd $( dirname $( dirname $0))
-. scripts/source/environment
+. scripts/source/log
 
 log_info "Generate protobuf for ${1}"
 protoc -I . \
