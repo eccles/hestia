@@ -1,0 +1,11 @@
+#
+# set local environment
+#
+# this file is sourced - do not execute directly
+#
+# set local go environment from asdf - other users may not be using asdf
+ASDF=${ASDF_DATA_DIR:-$HOME/.asdf}/plugins/golang/set-env.bash
+if [ -s ${ASDF} ]
+then
+	. ${ASDF}
+fi

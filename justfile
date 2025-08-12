@@ -8,10 +8,12 @@ default:
 # Install grpc plugins and other go tools
 tools:
 	#!/usr/bin/env bash
-	set -euo pipefail
+	set -euxo pipefail
 	source ./scripts/source/log
+	source ./scripts/source/environment
 	log_info "Install go tools"
 	which go
+	go version
 	go get -tool google.golang.org/protobuf/cmd/protoc-gen-go
 	go get -tool google.golang.org/grpc/cmd/protoc-gen-go-grpc	
 	go install tool
@@ -21,6 +23,7 @@ generate:
 	#!/usr/bin/env bash
 	set -euo pipefail
 	source ./scripts/source/log
+	source ./scripts/source/environment
 	log_info "Generate code"
 	which go
 	go generate ./...
@@ -30,6 +33,7 @@ qa:
 	#!/usr/bin/env bash
 	set -euo pipefail
 	source ./scripts/source/log
+	source ./scripts/source/environment
 	log_info "Check go.mod and lint code"
 	which go
 	go mod tidy
@@ -48,6 +52,7 @@ unittest:
 	#!/usr/bin/env bash
 	set -euo pipefail
 	source ./scripts/source/log
+	source ./scripts/source/environment
 	log_info "Run unittests"
 	which go
 	go test -v -coverprofile=coverage.out ./...
@@ -58,6 +63,7 @@ build:
 	#!/usr/bin/env bash
 	set -euo pipefail
 	source ./scripts/source/log
+	source ./scripts/source/environment
 	log_info "Build binariers"
 	which go
 	go build -o bin/ ./...
