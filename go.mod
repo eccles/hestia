@@ -1,6 +1,6 @@
 module github.com/eccles/hestia
 
-go 1.24
+go 1.25
 
 require (
 	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0
@@ -8,7 +8,7 @@ require (
 	github.com/spf13/viper v1.20.1
 	golang.org/x/sync v0.15.0
 	google.golang.org/grpc v1.73.0
-	google.golang.org/protobuf v1.36.7
+	google.golang.org/protobuf v1.36.10
 )
 
 require (
