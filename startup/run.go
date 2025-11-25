@@ -22,7 +22,7 @@ import (
 	"github.com/eccles/hestia/logger"
 )
 
-type Runner func(string, Logger) error
+type Runner func(Logger) error
 
 var ErrLogLevelUndefined = errors.New("no loglevel specified")
 
@@ -46,7 +46,7 @@ func Run(serviceName string, run Runner) {
 
 	log := logger.WithServiceName(serviceName)
 
-	err := run(serviceName, log)
+	err := run(log)
 	if err != nil {
 		log.Info("Error terminating", "err", err)
 		exitCode = 1

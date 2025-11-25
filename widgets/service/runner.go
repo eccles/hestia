@@ -39,7 +39,7 @@ func port() string {
 // Run initialises the Service struct and executes its Run method.
 // The Service struct specifies the grpc server code and any other interfaces
 // to external services defined in connect.go.
-func Run(serviceName string, log Logger) error {
+func Run(log Logger) error {
 	var err error
 
 	s := Service{
