@@ -9,8 +9,7 @@ default:
 tools:
 	#!/usr/bin/env bash
 	set -euxo pipefail
-	source ./scripts/source/log
-	source ./scripts/source/environment
+	source ./scripts/environment
 	log_info "Install go tools"
 	which go
 	go version
@@ -22,8 +21,7 @@ tools:
 generate:
 	#!/usr/bin/env bash
 	set -euo pipefail
-	source ./scripts/source/log
-	source ./scripts/source/environment
+	source ./scripts/environment
 	log_info "Generate code"
 	which go
 	go generate ./...
@@ -32,8 +30,7 @@ generate:
 qa:
 	#!/usr/bin/env bash
 	set -euo pipefail
-	source ./scripts/source/log
-	source ./scripts/source/environment
+	source ./scripts/environment
 	log_info "Check go.mod and lint code"
 	which go
 	go mod tidy
@@ -47,12 +44,19 @@ qa:
 	log_info "Vulnerability checking"
 	go run golang.org/x/vuln/cmd/govulncheck@latest --show verbose ./...
 
+# check if there are ny uncommitted artifacts
+check:
+	#!/usr/bin/env bash
+	set -euo pipefail
+	source ./scripts/environment
+	log_info "Check for uncommitted artifacts"
+	git diff --exit-code
+
 # unittest all code
 unittest:
 	#!/usr/bin/env bash
 	set -euo pipefail
-	source ./scripts/source/log
-	source ./scripts/source/environment
+	source ./scripts/environment
 	log_info "Run unittests"
 	which go
 	go test -v -coverprofile=coverage.out ./...
@@ -62,8 +66,7 @@ unittest:
 build:
 	#!/usr/bin/env bash
 	set -euo pipefail
-	source ./scripts/source/log
-	source ./scripts/source/environment
+	source ./scripts/environment
 	log_info "Build binariers"
 	which go
 	go build -o bin/ ./...

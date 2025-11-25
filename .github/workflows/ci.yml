@@ -30,8 +30,7 @@ jobs:
         run: just qa
         shell: bash
       - name: Check if there are any uncommitted changes
-        run: |
-          git diff --exit-code
+        run: just check
         shell: bash
       - name: unittests
         run: just unittest
